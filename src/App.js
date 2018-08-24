@@ -50,10 +50,18 @@ class App extends Component {
   }
 
   async handleChangeHeight(value){
+    if(Number(value) > 50){
+      await this.setState({height: 50})
+      this.modifyPixels()
+    } else
       await this.setState({ height: Number(value) })
       this.modifyPixels()
   }
   async handleChangeWidth(value){
+    if(Number(value) > 50){
+      await this.setState({width: 50})
+      this.modifyPixels()
+    } else
       await this.setState({ width: Number(value) })
       this.modifyPixels()
   }
@@ -87,7 +95,8 @@ class App extends Component {
         <div className='colorChooser'>
           <SketchPicker color={this.state.color} onChangeComplete={(e) => this.handleColorChange(e)}/>
 
-          <div className='columns' style={{width: (this.state.pixSize*this.state.width +(this.state.width)) + 'px', height: (this.state.pixSize*this.state.height+(this.state.height)) + 'px'}}> 
+          <div className='columns' style={{width: this.state.pixSize === 10 ? (this.state.pixSize*this.state.width +(this.state.width * (this.state.pixSize / 10))) + 'px' : (this.state.pixSize*this.state.width) + 'px',
+                                           height: this.state.pixSize === 10 ? (this.state.pixSize*this.state.height+(this.state.height * (this.state.pixSize / 10))) + 'px' : (this.state.pixSize*this.state.height) + 'px'}}> 
             {this.state.pixelArr.map((pix, i, arr) => {
               return <Pixel key={i} 
                             pixel={pix} 
