@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {SketchPicker} from 'react-color'
+import axios from 'axios'
 
 import WidthBox from './components/WidthBox'
 import Pixel from './components/Pixel'
