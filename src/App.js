@@ -3,12 +3,11 @@ import React, { Component } from 'react';
 import {SketchPicker} from 'react-color'
 import axios from 'axios'
 
-import WidthBox from './components/WidthBox'
 import Pixel from './components/Pixel'
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+class PixelArt extends Component {
   constructor(){
     super()
     this.state = {
@@ -162,4 +161,4 @@ class App extends Component {
 // {this.state.widthArr.map((box, i) => {
 //   return <WidthBox key={i} heightArr={this.state.heightArr} pixSize={this.state.pixSize} widthIndex={i} chosenColor={this.state.color}/>
 // })}
-export default App;
+export default PixelArt;

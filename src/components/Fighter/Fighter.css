@@ -1,0 +1,9 @@
+.wholePage {
+    width: 100vw;
+    height: 100vh
+}
+
+.piece {
+    width: 50px;
+    height: 60px
+}
