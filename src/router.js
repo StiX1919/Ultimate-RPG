@@ -17,7 +17,7 @@ class Router extends Component{
         <Switch>
             <Route path='/' component={GameBox}/>
             
-            </Switch>
+        </Switch>
         )
     }
 }
