@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Router from './routers/gamesRouter';
+import router from './routers/gamesRouter';
 
 import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
@@ -12,7 +12,7 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(
     <Provider store = { store }>
         <BrowserRouter>
-            <Router />
+            {router}
         </BrowserRouter>
     </Provider>, document.getElementById('root'));
 registerServiceWorker();
