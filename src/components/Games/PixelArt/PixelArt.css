@@ -1,0 +1,23 @@
+.colorChooser {
+    display: flex;
+    justify-content: space-around
+  }
+  
+  .columns {
+    display: flex;
+    flex-wrap: wrap
+  }
+
+  .PixelArt {
+    display: flex;
+    flex-direction: column;
+    
+    width: 70vw;
+    min-width: 1000px
+  }
+
+  .inpBox {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+  }

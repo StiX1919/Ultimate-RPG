@@ -1,0 +1,50 @@
+.hero_Creation_Component {
+    display: flex
+}
+
+.hero_Creation_Box {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    border: solid black 2px
+}
+
+.classes {
+    display: flex
+}
+
+.indClass {
+    height: 120px;
+    position: relative
+}
+
+.classImg {
+    height: 120px
+}
+
+.classInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+    position: absolute;
+    top: 60px
+}
+
+.classStats {
+    display: flex;
+    width: 100%
+}
+
+.raceButtonHolder {
+    display: flex
+}
+
+.raceCardHolder {
+    display: flex;
+    justify-content: space-around
+}
+
+h5 {
+    margin: 0
+}
