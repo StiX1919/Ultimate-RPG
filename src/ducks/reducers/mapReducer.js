@@ -7,7 +7,7 @@ const GET_MAP = "GET_MAP"
 const UPDATE_AREA = 'UPDATE_AREA'
 
 const BUILD_MAP = "BUILD_MAP"
-const MOVE = 'MOVE'
+// const MOVE = 'MOVE'
 const DISCOVER = 'DISCOVER'
 
 
