@@ -136,21 +136,21 @@ export function buildMap(locations, areaX, areaY){
     return areaMap
   }
 
+
+
   export function discover(discObj, discovered) {
     const {area_x, area_y, discovered_by, x_location, y_location} = discObj
     let exists = false;
     let spots = []
-    let go = false
     if(area_x !== discovered[0].area_x || area_y !== discovered[0].area_y){
         axios.get(`/api/getMap/${area_x}/${area_y}`).then(response => {
             console.log(response)
             spots = response.data.find(spot => {
                 return (spot.x_location === x_location && spot.y_location === y_location)
             })
-            return go = true
+            
         })
-        console.log(go, 'go')
-        if(spots[0] && go === true){
+        if(spots[0]){
             return {
                 type: DISCOVER,
                 payload: axios.post('/api/newPlace', {
@@ -171,7 +171,7 @@ export function buildMap(locations, areaX, areaY){
                 }
                 
                     
-        } else if(go === true){
+        } else {
             return {
                 type: 'none',
                 payload: null
@@ -218,74 +218,6 @@ export function buildMap(locations, areaX, areaY){
 
         
   }
-
-
-// might change move functionality location
-
-//   export function move(e){
-//     switch(e.key){
-//       case 'ArrowRight':
-      
-//         if(initialState.heroX + 1 > initialState.mapX * 10) {
-//             getMap(initialState.mapX + 1, initialState.mapY)
-//             return {
-//                 type: MOVE,
-//                 payload: {
-//                     heroX: initialState.heroX + 1, 
-//                     mapX: initialState.mapX + 1, 
-//                     prevX: initialState.heroX
-//                 }
-//             }
-        
-//         }
-//         else {
-//             return {
-//                 type: MOVE,
-//                 payload: {
-//                     heroX: initialState.heroX + 1, 
-//                     mapX: initialState.mapX, 
-//                     prevX: initialState.heroX
-//                 }
-//             }
-//         }
-//           break;
-//       case 'ArrowLeft':
-//           this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1})
-
-//           if(this.state.currentX - 1 < ((this.state.areaX - 1) * 10) + 1) {
-//             this.setState({areaX: this.state.areaX - 1})
-//             this.props.getMap(this.state.areaX - 1, this.state.areaY)
-//             this.props.updateArea(this.state.areaX - 1, this.state.areaY)
-//           }
-//           break;
-//       case 'ArrowUp':
-//           this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1})
-
-//           if(this.state.currentY + 1 > this.state.areaY * 10) {
-//             this.setState({areaY: this.state.areaY + 1})
-//             this.props.getMap(this.state.areaX, this.state.areaY + 1)
-//             this.props.updateArea(this.state.areaX, this.state.areaY + 1)
-//           }
-//           break;
-//       case 'ArrowDown':
-//           this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1})
-          
-//           if(this.state.currentY - 1 < ((this.state.areaY - 1) * 10) + 1) {
-//             this.setState({areaY: this.state.areaY - 1})
-//             this.props.getMap(this.state.areaX, this.state.areaY - 1)
-//             this.props.updateArea(this.state.areaX, this.state.areaY - 1)
-//           }
-//           break;
-//       default: return null
-//     }
-//   }
-
-
-
-
-
-
-
 
 
 //Reducer
