@@ -136,54 +136,51 @@ export function buildMap(locations, areaX, areaY){
     return areaMap
   }
 
-  export async function discover(discObj, discovered) {
+  export function discover(discObj, discovered) {
     const {area_x, area_y, discovered_by, x_location, y_location} = discObj
     let exists = false;
-    let spots = discovered.slice()
-    if(area_x !== spots[0].area_x || area_y !== spots[0].area_y){
-        try {
-            axios.get(`/api/getMap/${area_x}/${area_y}`).then(response => {
-                console.log(response)
-                spots = response.data
-                response.data.map(spot => {
-                    if(spot.x_location === x_location && spot.y_location === y_location){
-                        console.log('hit')
-                        return exists = true
-                    }
-                })
+    let spots = []
+    let go = false
+    if(area_x !== discovered[0].area_x || area_y !== discovered[0].area_y){
+        axios.get(`/api/getMap/${area_x}/${area_y}`).then(response => {
+            console.log(response)
+            spots = response.data.find(spot => {
+                return (spot.x_location === x_location && spot.y_location === y_location)
             })
-
-        }
-        finally{
-            if(exists === false){
-                return {
-                    type: DISCOVER,
-                    payload: axios.post('/api/newPlace', {
-                                area_name: 'none',
-                                area_type: "Plain",
-                                area_x,
-                                area_y,
-                                discovered_by,
-                                x_location,
-                                y_location
-                            }).then(res => {
-                                let builtMap = buildMap(res.data, area_x, area_y)
-                                return {
-                                    spots: res.data,
-                                    builtMap
-                                }
-                            }).catch(err => console.log(err))
-                    }
+            return go = true
+        })
+        console.log(go, 'go')
+        if(spots[0] && go === true){
+            return {
+                type: DISCOVER,
+                payload: axios.post('/api/newPlace', {
+                            area_name: 'none',
+                            area_type: "Plain",
+                            area_x,
+                            area_y,
+                            discovered_by,
+                            x_location,
+                            y_location
+                        }).then(res => {
+                            let builtMap = buildMap(res.data, area_x, area_y)
+                            return {
+                                spots: res.data,
+                                builtMap
+                            }
+                        }).catch(err => console.log(err))
+                }
+                
                     
-                        
-            }
+        } else if(go === true){
             return {
                 type: 'none',
                 payload: null
             }
+
         }
 
     } else {
+        spots = discovered.slice()
         spots.map(spot => {
             if(spot.x_location === x_location && spot.y_location === y_location){
                 console.log('is true')
