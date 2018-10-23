@@ -8,8 +8,8 @@ import { getMap, updateArea, discover } from '../../../../../ducks/reducers/mapR
 
 
 class WorldMap extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       currentX: 3,
       currentY: 3,

@@ -83,6 +83,7 @@
     getMap = (req, res) => {
         req.app.get('db').getMap([req.params.X, req.params.Y])
         .then( response => {
+            console.log(response)
             res.status(200).json(response)
         })
     },
@@ -91,6 +92,9 @@
             area_name, area_type, area_x, area_y, discovered_by, x_location, y_location
         } = req.body
         req.app.get('db').newPlace([area_name, area_type, area_x, area_y, discovered_by, x_location, y_location])
+            .then(response => {
+                res.status(200).send(response)
+            })
     }
 
 module.exports = {

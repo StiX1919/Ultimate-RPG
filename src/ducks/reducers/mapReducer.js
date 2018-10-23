@@ -136,63 +136,84 @@ export function buildMap(locations, areaX, areaY){
     return areaMap
   }
 
-  export function discover(discObj, discovered) {
-      
-    //   let newMap = theMap.slice().map(row => {
-    //       row.map(spot => {
-    //             if(X === spot.x && Y === spot.y){
-    //             console.log('New Location!')
-    //             return {
-    //                 x: spot.x, 
-    //                 y: spot.y,
-    //                 type: 'Plain',
-    //                 name: undefined,
-    //                 discovered_by: undefined
-    //             }
-    //             } else {
-    //                 return spot
-    //             }
-    //         })
-    //     })
-    //     console.log(newMap)
+  export async function discover(discObj, discovered) {
     const {area_x, area_y, discovered_by, x_location, y_location} = discObj
     let exists = false;
     let spots = discovered.slice()
-    spots.map(spot => {
-        if(spot.x_location === x_location && spot.y_location === y_location){
-            console.log('is true')
-            return exists = true
+    if(area_x !== spots[0].area_x || area_y !== spots[0].area_y){
+        try {
+            axios.get(`/api/getMap/${area_x}/${area_y}`).then(response => {
+                console.log(response)
+                spots = response.data
+                response.data.map(spot => {
+                    if(spot.x_location === x_location && spot.y_location === y_location){
+                        console.log('hit')
+                        return exists = true
+                    }
+                })
+            })
+
         }
-    })
-    if(exists === false){
-        axios.post('/api/newPlace', {
-            area_name: 'none',
-            area_type: "Plain",
-            area_x,
-            area_y,
-            discovered_by,
-            x_location,
-            y_location
-        }).then(res => {
-            console.log(res)
-        }).catch(err => console.log(err))
+        finally{
+            if(exists === false){
+                return {
+                    type: DISCOVER,
+                    payload: axios.post('/api/newPlace', {
+                                area_name: 'none',
+                                area_type: "Plain",
+                                area_x,
+                                area_y,
+                                discovered_by,
+                                x_location,
+                                y_location
+                            }).then(res => {
+                                let builtMap = buildMap(res.data, area_x, area_y)
+                                return {
+                                    spots: res.data,
+                                    builtMap
+                                }
+                            }).catch(err => console.log(err))
+                    }
+                    
+                        
+            }
+            return {
+                type: 'none',
+                payload: null
+            }
+        }
 
-        spots.push({
-            area_name: undefined,
-            area_type: "Plain",
-            area_x,
-            area_y,
-            discovered_by,
-            x_location,
-            y_location
+    } else {
+        spots.map(spot => {
+            if(spot.x_location === x_location && spot.y_location === y_location){
+                console.log('is true')
+                return exists = true
+            }
         })
-        let builtMap = buildMap(spots, area_x, area_y)
 
-        return {
-            type: DISCOVER,
-            payload: {spots, builtMap}
+        if(exists === false){
+            return {
+                type: DISCOVER,
+                payload: axios.post('/api/newPlace', {
+                    area_name: 'none',
+                    area_type: "Plain",
+                    area_x,
+                    area_y,
+                    discovered_by,
+                    x_location,
+                    y_location
+                }).then(res => {
+                    let builtMap = buildMap(res.data, area_x, area_y)
+                    return {
+                        spots: res.data,
+                        builtMap
+                    }
+                }).catch(err => console.log(err))
+            }   
         }
     }
+
+    
     return{
         type: 'none',
         payload: null
@@ -273,7 +294,6 @@ export function buildMap(locations, areaX, areaY){
 //Reducer
 
 export default function mapReducer(state=initialState, action) {
-    console.log(action)
     switch(action.type) {
         case GET_MAP + '_PENDING':
             return {
@@ -281,7 +301,6 @@ export default function mapReducer(state=initialState, action) {
                 isLoading: true
             }
         case GET_MAP + '_FULFILLED':
-            console.log(state)
             return {
                 ...state,
                 isLoading: false,
@@ -297,16 +316,23 @@ export default function mapReducer(state=initialState, action) {
             }
     
         case BUILD_MAP:
-            console.log(action.payload, 'in build')
             return {
                 ...state,
                 areaMap: action.payload
             }
 
-        case DISCOVER:
-
+        case DISCOVER + '_PENDING':
+            
             return {
                 ...state,
+                isLoading: true
+            }
+
+        case DISCOVER + '_FULFILLED':
+            console.log(action)
+            return {
+                ...state,
+                isLoading: false, 
                 areaMap: action.payload.builtMap,
                 locations: action.payload.spots
             }
