@@ -22,12 +22,16 @@ class WorldMap extends Component {
       areaY: 1,
 
       map:[],
-      areaMonsters: []
+      areaMonsters: [],
+      activeSpot: {},
+
+      combatMons: []
     }
     this.move = this.move.bind(this)
     this.locationType = this.locationType.bind(this)
     this.moveMonsters = this.moveMonsters.bind(this)
-    
+    this.findMatchedMonsters = this.findMatchedMonsters.bind(this)
+
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
@@ -37,6 +41,21 @@ class WorldMap extends Component {
 
       this.refs.areaMap.focus()
       this.addMonLocation(this.props.monsters)
+      this.setState({activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY))}, () => {
+        this.findMatchedMonsters()
+      })
+  }
+
+  //finds monsters sharing characters spot
+  findMatchedMonsters(){
+    let {currentX, currentY} = this.state
+    let xArea = [currentX - 1, currentX, currentX + 1]
+    let yArea = [currentY - 1, currentY, currentY + 1]
+
+    let combatMons = this.state.areaMonsters.filter(mon => {
+      return (xArea.includes(mon.X) && yArea.includes(mon.Y))
+    })
+    this.setState({combatMons})
   }
 
   //generates locations for the monsters to start from
@@ -45,7 +64,7 @@ class WorldMap extends Component {
     const areaMonsters = mons.map(monster => {
       let randomX = Math.floor(Math.random() * (this.state.areaX * 10)) + 1
       let randomY = Math.floor(Math.random() * (this.state.areaY * 10)) + 1
-
+      
       return ({X: randomX, Y: randomY, monsterInfo: {...monster}})
     })
     this.setState({areaMonsters})
@@ -85,7 +104,9 @@ class WorldMap extends Component {
       
       
     })
-    this.setState({areaMonsters: movedMons})
+    this.setState({areaMonsters: movedMons}, () => {
+      this.findMatchedMonsters()
+    })
   }
 
 
@@ -128,7 +149,7 @@ class WorldMap extends Component {
     let spotType = ''
     switch(e.key){
       case 'ArrowRight':
-        this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1})
+        this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY))})
         spotType = this.locationType(this.state.currentX + 1, this.state.currentY, this.props.locations)
         
             if(this.state.currentX + 1 > this.state.areaX * 10) {
@@ -172,7 +193,7 @@ class WorldMap extends Component {
         break;
 
       case 'ArrowLeft':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1})
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY))})
           spotType = this.locationType(this.state.currentX - 1, this.state.currentY, this.props.locations)
 
           if(this.state.currentX - 1 < ((this.state.areaX - 1) * 10) + 1) {
@@ -214,7 +235,7 @@ class WorldMap extends Component {
             }
           break;
       case 'ArrowUp':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1})
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1))})
           spotType = this.locationType(this.state.currentX, this.state.currentY + 1, this.props.locations)
             
           if(this.state.currentY + 1 > this.state.areaY * 10) {
@@ -254,7 +275,7 @@ class WorldMap extends Component {
             }
           break;
       case 'ArrowDown':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1})
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1))})
           spotType = this.locationType(this.state.currentX, this.state.currentY - 1, this.props.locations)
           
           if(this.state.currentY - 1 < ((this.state.areaY - 1) * 10) + 1) {
@@ -302,40 +323,65 @@ class WorldMap extends Component {
   }
 
   render() {
+    const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
+    console.log(this.state.combatMons)
     return (
-      <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
-        {this.props.areaMap[0] && 
-          this.props.areaMap.map((row, r) => {
-            return (
-              <div className='row'>
-              {row.map((spot, j) => {
-                return (
-                  <div style={{height: '50px', width: '50px', border: 'solid black 1px', backgroundColor: spot.color}}>
-                    
-                    {spot.x === this.state.currentX && spot.y === this.state.currentY
+      <div className='mapComponent'>
+        <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
+          {this.props.areaMap[0] && 
+            this.props.areaMap.map((row, r) => {
+              return (
+                <div className='row'>
+                {row.map((spot, j) => {
+                  return (
+                    <div style={{height: '50px', width: '50px', border: 'solid black 1px', backgroundColor: spot.color}}>
                       
-                      ? <img style={{height: '50px', width: '50px'}} src='https://s1.piq.land/2015/07/23/wyTJ7WMj9DgDrDoJ3xYODfGq_400x400.png' alt='hello'/>
-                      : null
-                    }
-                    {this.state.areaMonsters.map( (mon, i) => {
-                      if(mon.X === spot.x && mon.Y === spot.y){
-                        return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
+                      {spot.x === this.state.currentX && spot.y === this.state.currentY
+                        
+                        ? <img style={{height: '50px', width: '50px'}} src='https://s1.piq.land/2015/07/23/wyTJ7WMj9DgDrDoJ3xYODfGq_400x400.png' alt='hello'/>
+                        : null
                       }
-                    })
-                    }
-                  </div>
-                )
-              })}
+                      {this.state.areaMonsters.map( (mon, i) => {
+                        if(mon.X === spot.x && mon.Y === spot.y){
+                          return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
+                        }
+                      })
+                      }
+                    </div>
+                  )
+                })}
 
-              </div>
-            )
-          })
-        }
+                </div>
+              )
+            })
+          }
+        </div>
+        <div className='infoBox'>
+          <div className='spotInfo'>
+            <h2>{x_location + ':' + y_location}</h2>
+            {area_name !== 'none' &&
+              <h2>{'Name: ' + area_name}</h2>
+            
+            }
+            <h2>{area_type}</h2>
+            <h4>{discovered_by}</h4>
+          </div>
+          <div className='closeMonsters'>
+            {this.state.combatMons.map((monster, i) => {
+              return (
+                <div className='monster'>
+                  <h3>{monster.monsterInfo.name}</h3>
+                  <button>Fight!!</button>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({...state.heroReducer, ...state.mapReducer, ...state.monsterReducer})
+const mapStateToProps = state => ({...state.heroReducer, ...state.mapReducer, ...state.monsterReducer, heroes: state.userReducer.heroes})
 
 export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover })(WorldMap));

@@ -1,3 +1,17 @@
+.mapComponent {
+  display: flex
+}
+
+
+
+
 .row {
     display: flex
   }
+
+
+
+.closeMonsters {
+  display: flex;
+  flex-direction: column;
+}
