@@ -41,7 +41,7 @@ class CreateCharacter extends Component {
 
     createNewHero() {
       this.props.createNewHero({name: this.state.name, heroClass: this.state.class})
-      window.location.href='/games/MegaRPG/CharacterSelect'
+      window.location.href='/MegaRPG/CharacterSelect'
     }
 
     render() {

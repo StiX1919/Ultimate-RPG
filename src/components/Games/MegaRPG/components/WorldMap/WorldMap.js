@@ -35,7 +35,7 @@ class WorldMap extends Component {
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
-      window.location.href= '/games/MegaRPG'
+      window.location.href= '/MegaRPG'
     } 
 
 

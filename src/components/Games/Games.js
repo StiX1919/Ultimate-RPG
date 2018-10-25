@@ -13,7 +13,7 @@ class Games extends Component {
   render() {
     let navLinks = this.state.links.map(link => {
         return (
-            <Link to={`/games/${link}`}><h4 className='nav-link'>{link}</h4></Link>
+            <Link to={`/${link}`}><h4 className='nav-link'>{link}</h4></Link>
         )
     })
     return (

@@ -27,7 +27,7 @@ class HeroHub extends Component {
     this.props.getMap(this.props.mapX, this.props.mapY)
 
     if(!this.props.heroes[0]){
-        window.location.href= '/games/MegaRPG'
+        window.location.href= '/MegaRPG'
     }
     
   }
@@ -61,7 +61,7 @@ class HeroHub extends Component {
 
         <CharacterBox />
         {/*add location here*/}
-        <Link to='/games/MegaRPG/Map'>
+        <Link to='/MegaRPG/Map'>
           <button onClick={ this.openMap }>Open Map</button>
         </Link>
 

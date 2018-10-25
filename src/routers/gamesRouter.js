@@ -19,13 +19,13 @@ import Games from '../components/Games/Games'
 //work on getting the map update call to work before the transition to a new area today
 export default (
         <Switch>
-            <Route path='/games/MegaRPG/Map' component={WorldMap} />         
-            <Route path='/games/MegaRPG/hero/:heroID' component={HeroHub} /> 
-            <Route path='/games/MegaRPG/CharacterSelect' component={CharacterSelect}/>
-            <Route path='/games/MegaRPG/CreateCharacter' component={CreateCharacter}/>
-            <Route path='/games/MegaRPG' component={MegaRPG}/>
+            <Route path='/MegaRPG/Map' component={WorldMap} />         
+            <Route path='/MegaRPG/hero/:heroID' component={HeroHub} /> 
+            <Route path='/MegaRPG/CharacterSelect' component={CharacterSelect}/>
+            <Route path='/MegaRPG/CreateCharacter' component={CreateCharacter}/>
+            <Route path='/MegaRPG' component={MegaRPG}/>
             
-            <Route path='/games/PixelArt' component={PixelArt}/>
+            <Route path='/PixelArt' component={PixelArt}/>
 
             <Route path='/' exact component={Games}/>
         </Switch>
