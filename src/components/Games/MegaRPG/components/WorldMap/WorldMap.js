@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './WorldMap.css';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
 import { getMap, updateArea, discover} from '../../../../../ducks/reducers/mapReducer'
+import { setMonster } from '../../../../../ducks/reducers/monsterReducer'
 
 
 class WorldMap extends Component {
@@ -371,7 +373,9 @@ class WorldMap extends Component {
               return (
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
-                  <button>Fight!!</button>
+                  <Link to={`/MegaRPG/battle/${monster.monsterInfo.name}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
+                    <button>Fight!!</button>
+                  </Link>
                 </div>
               )
             })}
@@ -384,4 +388,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({...state.heroReducer, ...state.mapReducer, ...state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster })(WorldMap));

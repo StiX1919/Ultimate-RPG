@@ -5,8 +5,10 @@ import axios from "axios";
 
 const GET_MONSTER = "GET_MONSTER"
 const GET_MONSTERS = 'GET_MONSTERS'
+const SET_MONSTER = 'SET_MONSTER'
 
 const ATTACKING = "ATTACKING"
+
 
 
 //Initial State
@@ -22,7 +24,12 @@ const initialState = {
 
 
 //Action Creators
-
+export function setMonster(mon){
+    return {
+        type: SET_MONSTER,
+        payload: mon
+    }
+}
 
 export function getMonster() {
     return {
@@ -85,11 +92,16 @@ export default function monsterReducer(state=initialState, action) {
             }
         
         case GET_MONSTERS + "_FULFILLED": 
-            console.log(action.payload)
             return {
                 ...state,
                 isLoading: false,
                 monsters: action.payload.data
+            }
+
+        case SET_MONSTER:
+            return {
+                ...state,
+                currentMonster: action.payload
             }
         
 

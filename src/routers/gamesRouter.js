@@ -7,6 +7,7 @@ import MegaRPG from '../components/Games/MegaRPG/Landing'
 import CreateCharacter from '../components/Games/MegaRPG/components/CreateCharacter/CreateCharacter'
 import CharacterSelect from '../components/Games/MegaRPG/components/CharacterSelect/CharacterSelect'
 import WorldMap from '../components/Games/MegaRPG/components/WorldMap/WorldMap'
+import AdventureScreen from '../components/Games/MegaRPG/components/AdventureScreen/AdventureScreen'
 // import AdventureScreen from '../components/Games/MegaRPG/components/AdventureScreen/AdventureScreen'
 import HeroHub from '../components/Games/MegaRPG/components/HeroHub/HeroHub'
 
@@ -19,6 +20,7 @@ import Games from '../components/Games/Games'
 //work on getting the map update call to work before the transition to a new area today
 export default (
         <Switch>
+            <Route path='/MegaRPG/battle/:monsterID' component={AdventureScreen} />
             <Route path='/MegaRPG/Map' component={WorldMap} />         
             <Route path='/MegaRPG/hero/:heroID' component={HeroHub} /> 
             <Route path='/MegaRPG/CharacterSelect' component={CharacterSelect}/>

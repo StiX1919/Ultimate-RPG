@@ -34,7 +34,7 @@ class AtkInterface extends Component {
     let bonus = Math.floor((critNum / (50 - luckFactor)))
     //^^^^^^prep for luck modification to attack damage
 
-    let damage = hero.strength + bonus - monster.defense
+    let damage = hero.strength + bonus - monster.def
     if(damage < 0){
         damage = 0
     }
@@ -43,13 +43,14 @@ class AtkInterface extends Component {
     }
     //^^^^determining actual damage done
 
-    let newHP = monster.HP - damage
-    if(newHP >= monster.HP){
-        newHP = monster.HP
+    let newHP = monster.hp - damage
+    if(newHP >= monster.hp){
+        newHP = monster.hp
     }
     //^^^Checking to make sure that damage done doesn't add to monster health.
     
-    let newMon = Object.assign({}, monster, {HP: newHP})
+    let newMon = Object.assign({}, monster, {hp: newHP})
+    console.log(newMon)
     this.setState({damageDone: damage})
     this.showDamageDone()
     this.props.attack(newMon)

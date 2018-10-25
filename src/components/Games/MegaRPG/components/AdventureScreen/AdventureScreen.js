@@ -25,7 +25,7 @@ class AdventureScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.getMonster()
+    console.log(this.props.match.params.monsterID)
   }
 
   openShop() {
@@ -51,7 +51,7 @@ class AdventureScreen extends Component {
     //             </div>
     //     })}
     //     {console.log(this.props.currentHero, 'top hero pors')}
-
+    console.log(this.props.currentMonster)
 
     return (
     <div className='page'>
@@ -60,13 +60,13 @@ class AdventureScreen extends Component {
         <CharacterBox getNewMon={this.props.getMonster}/>
         <AtkInterface />
         
-          {this.props.currentMonster && this.props.currentMonster.HP <= 0 &&
+          {this.props.currentMonster && this.props.currentMonster.hp <= 0 &&
             <h2>Monster is Dead!</h2>
           }
 
 
         
-          {this.props.currentMonster && this.props.currentMonster.HP > 0 && <MonsterBox />}
+          {this.props.currentMonster && this.props.currentMonster.hp > 0 && <MonsterBox />}
           
        
         
