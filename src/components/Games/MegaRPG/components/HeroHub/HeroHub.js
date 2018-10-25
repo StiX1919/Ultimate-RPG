@@ -7,6 +7,7 @@ import './HeroHub.css';
 import CharacterBox from '../AdventureScreen/AScomponents/CharacterBox/CharacterBox'
 
 import { getMap } from '../../../../../ducks/reducers/mapReducer'
+import { getMonsters } from '../../../../../ducks/reducers/monsterReducer'
 
 
 class HeroHub extends Component {
@@ -22,6 +23,7 @@ class HeroHub extends Component {
 
   }
   componentDidMount() {
+    this.props.getMonsters()
     this.props.getMap(this.props.mapX, this.props.mapY)
 
     if(!this.props.heroes[0]){
@@ -68,6 +70,6 @@ class HeroHub extends Component {
   }
 }
 // not today!
-const mapStateToProps = state => ({...state.heroReducer, ...state.userReducer, ...state.mapReducer})
+const mapStateToProps = state => ({...state.heroReducer, ...state.userReducer, ...state.mapReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, { getMap })(HeroHub));
+export default withRouter(connect(mapStateToProps, { getMap, getMonsters })(HeroHub));

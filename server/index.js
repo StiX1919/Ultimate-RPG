@@ -29,7 +29,7 @@ let shop = []
 //             {name: 'Bracelet', pwr: 1, spd: 0, def: 1, price: 12, type: 'arms'}, 
 //             {name: 'High heels', pwr: 1, spd: 0, def: 1, price: 12, type: 'legs'}]
 
-const {getClasses, getRaces, createNewHero, getHeroes, demoHero, getMap, newPlace} = require('./controllers/mainController.js')
+const {getClasses, getRaces, createNewHero, getHeroes, demoHero, getMap, newPlace, getMonsters} = require('./controllers/mainController.js')
 
 // SAVED FOR BUILD
 // app.use(express.static(`${__dirname}/public/build`));
@@ -138,6 +138,7 @@ app.post('/api/newHero', createNewHero)
 app.get('/api/getMap/:X/:Y', getMap)
 app.post('/api/newPlace', newPlace)
 
+app.get('/api/getMonsters', getMonsters)
 
 //LISTENING
 app.listen(port, () => {

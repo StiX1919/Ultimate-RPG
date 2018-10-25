@@ -4,7 +4,7 @@ import axios from "axios";
 //Action Constants
 
 const GET_MONSTER = "GET_MONSTER"
-
+const GET_MONSTERS = 'GET_MONSTERS'
 
 const ATTACKING = "ATTACKING"
 
@@ -15,7 +15,8 @@ const initialState = {
 
     // monster info
     monsterStatus: 'alive',
-    currentMonster: null
+    currentMonster: null,
+    monsters: []
     
 }
 
@@ -46,6 +47,14 @@ export function attack(newMon) {
     }
 }
 
+export function getMonsters() {
+    return {
+        type: GET_MONSTERS,
+        payload: axios.get('/api/getMonsters')
+    }
+
+}
+
 
 
 
@@ -68,6 +77,21 @@ export default function monsterReducer(state=initialState, action) {
 
         case ATTACKING:
             return {...state, currentMonster: action.payload, monsterHP: action.payload.HP}
+
+        case GET_MONSTERS + "_PENDING": 
+            return {
+                ...state,
+                isLoading: true
+            }
+        
+        case GET_MONSTERS + "_FULFILLED": 
+            console.log(action.payload)
+            return {
+                ...state,
+                isLoading: false,
+                monsters: action.payload.data
+            }
+        
 
         default:
             return state

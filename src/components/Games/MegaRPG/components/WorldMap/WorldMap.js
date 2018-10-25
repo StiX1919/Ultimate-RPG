@@ -21,15 +21,70 @@ class WorldMap extends Component {
       areaX: 1,
       areaY: 1,
 
-      map:[]
+      map:[],
+      areaMonsters: []
     }
     this.move = this.move.bind(this)
     this.locationType = this.locationType.bind(this)
+    this.moveMonsters = this.moveMonsters.bind(this)
     
   }
   componentDidMount(){
       this.refs.areaMap.focus()
+      this.addMonLocation(this.props.monsters)
   }
+
+  //generates locations for the monsters to start from
+  addMonLocation(mons){
+
+    const areaMonsters = mons.map(monster => {
+      let randomX = Math.floor(Math.random() * (this.state.areaX * 10)) + 1
+      let randomY = Math.floor(Math.random() * (this.state.areaY * 10)) + 1
+
+      return ({X: randomX, Y: randomY, monsterInfo: {...monster}})
+    })
+    this.setState({areaMonsters})
+  }
+  moveMonsters(){
+    let types = ['X', 'Y']
+    let directions = ['>', '<']
+
+    const movedMons = this.state.areaMonsters.map( monster => {
+      let randomMove = types[Math.floor(Math.random() * types.length)]
+      let randomDirec = directions[Math.floor(Math.random() * directions.length)]
+      switch(randomDirec){
+        case '>':
+          if(randomMove === 'X'){
+            if(monster[randomMove] <= this.state.areaX * 10 - 1){
+             return ({...monster, [randomMove]: ++monster[randomMove]})
+            } else return (monster)
+          } else if(randomMove === 'Y'){
+            if(monster[randomMove] <= this.state.areaY * 10 - 1){
+             return ({...monster, [randomMove]: ++monster[randomMove]})
+            } else return (monster)
+          }
+          break;
+        case '<':
+          if(randomMove === 'X'){
+            if(monster[randomMove] > ((this.state.areaX - 1) * 10) + 1){
+             return ({...monster, [randomMove]: --monster[randomMove]})
+            } else return (monster)
+          } else if(randomMove === 'Y'){
+            if(monster[randomMove] > ((this.state.areaY - 1) * 10) + 1){
+             return ({...monster, [randomMove]: --monster[randomMove]})
+            } else return (monster)
+          }
+          break;
+        default: null
+      }
+      
+      
+    })
+    this.setState({areaMonsters: movedMons})
+  }
+
+
+
   locationType(X, Y, spots){
     let mapTypes = ['River', 'Forest', 'Plains', 'Desert']
     // let mapTypes = ['Ocean', 'River', 'Forest', 'Plains', 'Desert', 'Mountains']
@@ -63,6 +118,8 @@ class WorldMap extends Component {
   }
 
   async move(e){
+    this.moveMonsters()
+
     let spotType = ''
     switch(e.key){
       case 'ArrowRight':
@@ -240,7 +297,6 @@ class WorldMap extends Component {
   }
 
   render() {
-    console.log(this.props.mapX, this.props.mapY)
     return (
       <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
         {this.props.areaMap[0] && 
@@ -250,9 +306,17 @@ class WorldMap extends Component {
               {row.map((spot, j) => {
                 return (
                   <div style={{height: '50px', width: '50px', border: 'solid black 1px', backgroundColor: spot.color}}>
-                    {spot.x === this.state.currentX && spot.y === this.state.currentY 
+                    
+                    {spot.x === this.state.currentX && spot.y === this.state.currentY
+                      
                       ? <img style={{height: '50px', width: '50px'}} src='https://s1.piq.land/2015/07/23/wyTJ7WMj9DgDrDoJ3xYODfGq_400x400.png' alt='hello'/>
-                      : <h6>{spot.x + ':' + spot.y}</h6>
+                      : null
+                    }
+                    {this.state.areaMonsters.map( (mon, i) => {
+                      if(mon.X === spot.x && mon.Y === spot.y){
+                        return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
+                      }
+                    })
                     }
                   </div>
                 )
@@ -267,6 +331,6 @@ class WorldMap extends Component {
   }
 }
 
-const mapStateToProps = state => ({...state.heroReducer, ...state.mapReducer})
+const mapStateToProps = state => ({...state.heroReducer, ...state.mapReducer, ...state.monsterReducer})
 
 export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover })(WorldMap));

@@ -1,4 +1,6 @@
+let monsters = []
 
+let mappedMonsters = []
 
     getClasses = (req, res) => {
       const dbInstance = req.app.get("db");
@@ -95,7 +97,21 @@
             .then(response => {
                 res.status(200).send(response)
             })
+    },
+
+    getMonsters = (req, res) => {
+        req.app.get('db').getAllMonsters().then( response => {
+            let mapMons = []
+            monsters = response
+            for(let i = 0; i < 10; i++){
+                mapMons.push(response[Math.floor(Math.random() * response.length)])
+            }
+            mappedMonsters = mapMons
+            res.status(200).send(mappedMonsters)
+        })
     }
+
+
 
 module.exports = {
     getClasses,
@@ -104,5 +120,6 @@ module.exports = {
     getHeroes,
     demoHero,
     getMap,
-    newPlace
+    newPlace,
+    getMonsters
 }
