@@ -62,12 +62,13 @@ class WorldMap extends Component {
 
   //generates locations for the monsters to start from
   addMonLocation(mons){
-
+    let ind = 0
     const areaMonsters = mons.map(monster => {
       let randomX = Math.floor(Math.random() * (this.state.areaX * 10)) + 1
       let randomY = Math.floor(Math.random() * (this.state.areaY * 10)) + 1
+      ind++
       
-      return ({X: randomX, Y: randomY, monsterInfo: {...monster}})
+      return ({ind: ind, X: randomX, Y: randomY, monsterInfo: {...monster}})
     })
     this.setState({areaMonsters})
   }
@@ -373,7 +374,7 @@ class WorldMap extends Component {
               return (
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
-                  <Link to={`/MegaRPG/battle/${monster.monsterInfo.name}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
+                  <Link to={`/MegaRPG/battle/${monster.ind}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
                     <button>Fight!!</button>
                   </Link>
                 </div>

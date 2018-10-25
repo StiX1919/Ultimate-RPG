@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import './AdventureScreen.css';
+
 
 import CharacterBox from './AScomponents/CharacterBox/CharacterBox'
 import MonsterBox from './AScomponents/MonsterBox/MonsterBox'
@@ -61,7 +63,9 @@ class AdventureScreen extends Component {
         <AtkInterface />
         
           {this.props.currentMonster && this.props.currentMonster.hp <= 0 &&
-            <h2>Monster is Dead!</h2>
+            <Link to='/MegaRPG/Map'>
+              <button>Back to Map</button>
+            </Link>
           }
 
 
@@ -81,13 +85,6 @@ class AdventureScreen extends Component {
               <h4>{skill.name}: Lv:{skill.level} {skill.exp}/{skill.level * 100}</h4>
             ])}
           </div>
-        }
-      </div>
-      <div className='shop'>
-        <button onClick={this.openShop}>Shop</button>
-        
-        {this.state.shop === true &&
-          <Shop />
         }
       </div>
     </div>
