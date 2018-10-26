@@ -25,7 +25,7 @@ class WorldMap extends Component {
 
       map:[],
       areaMonsters: [],
-      activeSpot: {},
+      activeSpot: {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
 
       combatMons: []
     }
@@ -152,7 +152,7 @@ class WorldMap extends Component {
     let spotType = ''
     switch(e.key){
       case 'ArrowRight':
-        this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY))})
+        this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
         spotType = this.locationType(this.state.currentX + 1, this.state.currentY, this.props.locations)
         
             if(this.state.currentX + 1 > this.state.areaX * 10) {
@@ -196,7 +196,7 @@ class WorldMap extends Component {
         break;
 
       case 'ArrowLeft':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY))})
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
           spotType = this.locationType(this.state.currentX - 1, this.state.currentY, this.props.locations)
 
           if(this.state.currentX - 1 < ((this.state.areaX - 1) * 10) + 1) {
@@ -238,7 +238,7 @@ class WorldMap extends Component {
             }
           break;
       case 'ArrowUp':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1))})
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
           spotType = this.locationType(this.state.currentX, this.state.currentY + 1, this.props.locations)
             
           if(this.state.currentY + 1 > this.state.areaY * 10) {
@@ -278,7 +278,7 @@ class WorldMap extends Component {
             }
           break;
       case 'ArrowDown':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1))})
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
           spotType = this.locationType(this.state.currentX, this.state.currentY - 1, this.props.locations)
           
           if(this.state.currentY - 1 < ((this.state.areaY - 1) * 10) + 1) {
