@@ -48,7 +48,10 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 10000000
+    }
   })
 );
 
@@ -78,8 +81,6 @@ passport.use(
         }
     })
 
-
-    // return done(null, profile);
   }
 ));
 
