@@ -51,6 +51,7 @@ export function updateArea(X, Y) {
     }
 }
 
+//
 export function buildMap(locations, areaX, areaY){
 
     function colorGen(place) {
