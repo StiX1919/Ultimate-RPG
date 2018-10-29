@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware'
+import thunk from 'redux-thunk'
 
 import CCReducer from './reducers/CCReducer';
 import userReducer from './reducers/userReducer'
@@ -11,4 +12,4 @@ import mapReducer from './reducers/mapReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 export default createStore(
-    combineReducers({CCReducer, userReducer, heroReducer, monsterReducer, shopReducer, mapReducer}), composeWithDevTools(applyMiddleware(promiseMiddleware())))
+    combineReducers({CCReducer, userReducer, heroReducer, monsterReducer, shopReducer, mapReducer}), composeWithDevTools(applyMiddleware(promiseMiddleware(), thunk)))

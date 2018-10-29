@@ -34,11 +34,70 @@ const initialState = {
 
 //Action Creators
 
-export function move(direction){
+export function move(direction, state){
+    let letter = ''
+    let type = ''
+    let mod = ''
+    let area = ''
+    let areaMap = state.areaMap
+    
+    if(direction === 'up' || direction === 'down'){
+      type = state.heroY
+      letter = 'Y'
+
+        switch(direction){
+            case 'up':
+                if(state.heroY >= state.mapY * 10){
+                    area = ++state.mapY
+                    areaMap = buildMap(state.locations, state.mapX, state.mapY)
+                } else area = state.mapY
+                break;
+            case 'down':
+                if(state.heroY - 1 < ((state.mapY - 1) * 10) + 1){
+                    area = --state.mapY
+                   areaMap = buildMap(state.locations, state.mapX, state.mapY)
+                } else area = state.mapY
+                break;
+            default: area = state.mapY
+        }
+    } else if(direction === 'left' || direction === 'right'){
+      type = state.heroX
+      letter = 'X'
+        switch(direction){
+            case 'right':
+                console.log('right', state.heroX >= (state.mapX * 10))
+                if(state.heroX >= (state.mapX * 10)){
+                    area = ++state.mapX
+                    areaMap = buildMap(state.locations, state.mapX, state.mapY)
+                } else area = state.mapX
+                break;
+            case 'left':
+                console.log('left', state.heroX - 1 < ((state.mapX - 1) * 10) + 1)
+                if(state.heroX - 1 < ((state.mapX - 1) * 10) + 1){
+                    area = --state.mapX
+                    areaMap = buildMap(state.locations, state.mapX, state.mapY)
+                } else area = state.mapX
+                break;
+
+            default: area = state.mapX
+        }
+    }
+    console.log(area)
+
+    if(direction === 'up' || direction === 'right'){
+      mod = type + 1
+    } else if(direction === 'left' || direction === 'down'){
+      mod = type - 1
+    }
+
     return {
         type: MOVE,
         payload: {
-            direction
+            letter,
+            mod,
+            type,
+            area,
+            areaMap
         }
     }
 }
@@ -63,6 +122,7 @@ export function updateArea(X, Y) {
 
 // rework discovory functionality to trigger area clear before moving
 export function buildMap(locations, areaX, areaY){
+    console.log('hit')
 
     function colorGen(place) {
         switch(place){
@@ -254,61 +314,14 @@ export default function mapReducer(state=initialState, action) {
 
 
         case MOVE:
-            let {heroX, heroY} = state
-            let {direction} = action.payload
-
-            let letter = ''
-            let type = ''
-            let mod = ''
-            let area = ''
-    
-            if(direction === 'up' || direction === 'down'){
-              type = state.heroY
-              letter = 'Y'
-
-                switch(direction){
-                    case 'up':
-                        if(state.heroY >= state.mapY * 10){
-                            area = ++state.mapY
-                        }
-                    case 'down':
-                        if(state.heroY - 1 < ((state.mapY - 1) * 10) + 1){
-                            area = --state.mapY
-                        }
-                    default: area = state.mapY
-                }
-            } else if(direction === 'left' || direction === 'right'){
-              type = state.heroX
-              letter = 'X'
-                switch(direction){
-                    case 'right':
-                        if(state.heroX >= (state.mapX * 10)){
-                            area = ++state.mapX
-                        }
-                    case 'left':
-                        if(state.heroX - 1 < ((state.mapX - 1) * 10) + 1){
-                            area = --state.mapX
-                        }
-                    default: area = state.mapX
-                }
-            }
-            console.log(area)
-
-            if(direction === 'up' || direction === 'right'){
-              mod = type + 1
-            } else if(direction === 'left' || direction === 'down'){
-              mod = type - 1
-            }
-
+            let {mod, type, letter, area, areaMap} = action.payload
             
-
-            // this.state.currentX + 1 > this.state.areaX * 10
-
             return {
                 ...state,
-                ['hero' + letter]: mod,
-                ['heroPrev' + letter]: type,
-                ['map' + letter]: area
+                [`hero${letter}`]: mod,
+                [`heroPrev${letter}`]: type,
+                [`map${letter}`]: area,
+                areaMap
             }
 
 

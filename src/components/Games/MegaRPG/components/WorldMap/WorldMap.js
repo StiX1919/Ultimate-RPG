@@ -42,8 +42,8 @@ class WorldMap extends Component {
 
 
       this.refs.areaMap.focus()
-      this.addMonLocation(this.props.monsters)
-      this.setState({activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY))}, () => {
+      this.addMonLocation(this.props.monsterReducer.monsters)
+      this.setState({activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY))}, () => {
         this.findMatchedMonsters()
       })
   }
@@ -152,8 +152,8 @@ class WorldMap extends Component {
     let spotType = ''
     switch(e.key){
       case 'ArrowRight':
-        this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-        spotType = this.locationType(this.state.currentX + 1, this.state.currentY, this.props.locations)
+        this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+        spotType = this.locationType(this.state.currentX + 1, this.state.currentY, this.props.mapReducer.locations)
         
             if(this.state.currentX + 1 > this.state.areaX * 10) {
               axios.post('/api/newPlace', {
@@ -161,7 +161,7 @@ class WorldMap extends Component {
                 area_type: spotType,
                 area_x: this.state.areaX + 1,
                 area_y: this.state.areaY,
-                discovered_by: this.props.currentHero.hero_name,
+                discovered_by: this.props.heroReducer.currentHero.hero_name,
                 x_location: this.state.currentX,
                 y_location: this.state.currentY
             }).then(response => {
@@ -173,7 +173,7 @@ class WorldMap extends Component {
                 this.props.discover({
                     area_x: this.state.areaX,
                     area_y: this.state.areaY,
-                    discovered_by: this.props.currentHero.hero_name,
+                    discovered_by: this.props.heroReducer.currentHero.hero_name,
                     x_location: this.state.currentX,
                     y_location: this.state.currentY
                 }, response.data, spotType)
@@ -187,17 +187,17 @@ class WorldMap extends Component {
                 this.props.discover({
                     area_x: this.state.areaX,
                     area_y: this.state.areaY,
-                    discovered_by: this.props.currentHero.hero_name,
+                    discovered_by: this.props.heroReducer.currentHero.hero_name,
                     x_location: this.state.currentX + 1,
                     y_location: this.state.currentY
-                }, this.props.locations, spotType)
+                }, this.props.mapReducer.locations, spotType)
             }
         
         break;
 
       case 'ArrowLeft':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-          spotType = this.locationType(this.state.currentX - 1, this.state.currentY, this.props.locations)
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+          spotType = this.locationType(this.state.currentX - 1, this.state.currentY, this.props.mapReducer.locations)
 
           if(this.state.currentX - 1 < ((this.state.areaX - 1) * 10) + 1) {
 
@@ -206,7 +206,7 @@ class WorldMap extends Component {
               area_type: spotType,
               area_x: this.state.areaX - 1,
               area_y: this.state.areaY,
-              discovered_by: this.props.currentHero.hero_name,
+              discovered_by: this.props.heroReducer.currentHero.hero_name,
               x_location: this.state.currentX - 1,
               y_location: this.state.currentY
           }).then(response => {
@@ -218,7 +218,7 @@ class WorldMap extends Component {
               this.props.discover({
                   area_x: this.state.areaX,
                   area_y: this.state.areaY,
-                  discovered_by: this.props.currentHero.hero_name,
+                  discovered_by: this.props.heroReducer.currentHero.hero_name,
                   x_location: this.state.currentX,
                   y_location: this.state.currentY
               }, response.data, spotType)
@@ -231,15 +231,15 @@ class WorldMap extends Component {
                 this.props.discover({
                     area_x: this.state.areaX,
                     area_y: this.state.areaY,
-                    discovered_by: this.props.currentHero.hero_name,
+                    discovered_by: this.props.heroReducer.currentHero.hero_name,
                     x_location: this.state.currentX - 1,
                     y_location: this.state.currentY
-                }, this.props.locations, spotType)
+                }, this.props.mapReducer.locations, spotType)
             }
           break;
       case 'ArrowUp':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-          spotType = this.locationType(this.state.currentX, this.state.currentY + 1, this.props.locations)
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+          spotType = this.locationType(this.state.currentX, this.state.currentY + 1, this.props.mapReducer.locations)
             
           if(this.state.currentY + 1 > this.state.areaY * 10) {
             axios.post('/api/newPlace', {
@@ -247,7 +247,7 @@ class WorldMap extends Component {
               area_type: spotType,
               area_x: this.state.areaX,
               area_y: this.state.areaY + 1,
-              discovered_by: this.props.currentHero.hero_name,
+              discovered_by: this.props.heroReducer.currentHero.hero_name,
               x_location: this.state.currentX,
               y_location: this.state.currentY + 1
           }).then(response => {
@@ -258,7 +258,7 @@ class WorldMap extends Component {
               this.props.discover({
                   area_x: this.state.areaX,
                   area_y: this.state.areaY,
-                  discovered_by: this.props.currentHero.hero_name,
+                  discovered_by: this.props.heroReducer.currentHero.hero_name,
                   x_location: this.state.currentX,
                   y_location: this.state.currentY
               }, response.data, spotType)
@@ -271,15 +271,15 @@ class WorldMap extends Component {
                 this.props.discover({
                     area_x: this.state.areaX,
                     area_y: this.state.areaY,
-                    discovered_by: this.props.currentHero.hero_name,
+                    discovered_by: this.props.heroReducer.currentHero.hero_name,
                     x_location: this.state.currentX,
                     y_location: this.state.currentY + 1
-                }, this.props.locations, spotType)
+                }, this.props.mapReducer.locations, spotType)
             }
           break;
       case 'ArrowDown':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-          spotType = this.locationType(this.state.currentX, this.state.currentY - 1, this.props.locations)
+          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+          spotType = this.locationType(this.state.currentX, this.state.currentY - 1, this.props.mapReducer.locations)
           
           if(this.state.currentY - 1 < ((this.state.areaY - 1) * 10) + 1) {
             axios.post('/api/newPlace', {
@@ -287,7 +287,7 @@ class WorldMap extends Component {
               area_type: spotType,
               area_x: this.state.areaX,
               area_y: this.state.areaY - 1,
-              discovered_by: this.props.currentHero.hero_name,
+              discovered_by: this.props.heroReducer.currentHero.hero_name,
               x_location: this.state.currentX,
               y_location: this.state.currentY - 1
           }).then(response => {
@@ -300,7 +300,7 @@ class WorldMap extends Component {
             this.props.discover({
                 area_x: this.state.areaX,
                 area_y: this.state.areaY,
-                discovered_by: this.props.currentHero.hero_name,
+                discovered_by: this.props.heroReducer.currentHero.hero_name,
                 x_location: this.state.currentX,
                 y_location: this.state.currentY
             }, response.data, spotType)
@@ -315,10 +315,10 @@ class WorldMap extends Component {
         this.props.discover({
             area_x: this.state.areaX,
             area_y: this.state.areaY,
-            discovered_by: this.props.currentHero.hero_name,
+            discovered_by: this.props.heroReducer.currentHero.hero_name,
             x_location: this.state.currentX,
             y_location: this.state.currentY - 1
-        }, this.props.locations, spotType)
+        }, this.props.mapReducer.locations, spotType)
     }
           break;
       default: return null
@@ -331,15 +331,15 @@ class WorldMap extends Component {
     return (
       <div className='mapComponent'>
         <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
-          {this.props.areaMap[0] && 
-            this.props.areaMap.map((row, r) => {
+          {this.props.mapReducer.areaMap[0] && 
+            this.props.mapReducer.areaMap.map((row, r) => {
               return (
                 <div className='row'>
                 {row.map((spot, j) => {
                   return (
                     <div style={{height: '50px', width: '50px', border: 'solid black 1px', backgroundColor: spot.color}}>
                       
-                      {spot.x === this.props.heroX && spot.y === this.props.heroY
+                      {spot.x === this.props.mapReducer.heroX && spot.y === this.props.mapReducer.heroY
                         
                         ? <img style={{height: '50px', width: '50px'}} src='https://s1.piq.land/2015/07/23/wyTJ7WMj9DgDrDoJ3xYODfGq_400x400.png' alt='hello'/>
                         : null
@@ -360,12 +360,12 @@ class WorldMap extends Component {
           }
         </div>
         <div className='directions'>
-          <span className='direction' onClick={() => this.props.move('up')}/>
+          <span className='direction' onClick={() => this.props.move('up', this.props.mapReducer)}/>
           <div className='left-right'>
-            <span className='direction' onClick={() => this.props.move('left')}/>
-            <span className='direction' onClick={() => this.props.move('right')}/>
+            <span className='direction' onClick={() => this.props.move('left', this.props.mapReducer)}/>
+            <span className='direction' onClick={() => this.props.move('right', this.props.mapReducer)}/>
           </div>
-          <span className='direction' onClick={() => this.props.move('down')}/>
+          <span className='direction' onClick={() => this.props.move('down', this.props.mapReducer)}/>
         </div>
         <div className='infoBox'>
           <div className='spotInfo'>
@@ -396,6 +396,6 @@ class WorldMap extends Component {
   }
 }
 
-const mapStateToProps = state => ({...state.heroReducer, ...state.mapReducer, ...state.monsterReducer, heroes: state.userReducer.heroes})
+const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
 export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move })(WorldMap));
