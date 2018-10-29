@@ -325,6 +325,10 @@ class WorldMap extends Component {
     }
   }
 
+  newMove(direction){
+
+  }
+
   render() {
     const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
     console.log(this.state.combatMons)
