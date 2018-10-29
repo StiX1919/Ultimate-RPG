@@ -122,8 +122,6 @@ export function updateArea(X, Y) {
 
 // rework discovory functionality to trigger area clear before moving
 export function buildMap(locations, areaX, areaY){
-    console.log('hit')
-
     function colorGen(place) {
         switch(place){
             case 'Town': 
@@ -142,73 +140,76 @@ export function buildMap(locations, areaX, areaY){
                 return '#f2a23a'
             default: return 'white'
         }
-      }
-
+    }
     let areaMap = [];
     let currRow = [];
-    
-    for(let row = areaY * 10, col = -9 + (areaX * 10); row > -10 + (areaY * 10); col++){
-    
-        let discovered = locations.filter(spot => {
-            return spot.x_location === col && spot.y_location === row
-        })
-        if(!discovered[0]){
-            discovered = null
-        }
 
-      if(col === 10 * areaX){
-        if(discovered !== null){
-            let color = colorGen(discovered[0].area_type)
-            console.log(discovered[0].area_type, color)
-
-
-            currRow.push({
-                x: discovered[0].x_location,
-                y: discovered[0].y_location,
-                type: discovered[0].area_type,
-                name: discovered[0].area_name,
-                discovered_by: discovered[0].discovered_by,
-                color
+    axios.get(`/api/getMap/${areaX}/${areaY}`).then(response => {
+        for(let row = areaY * 10, col = -9 + (areaX * 10); row > -10 + (areaY * 10); col++){
+        
+            let discovered = response.data.filter(spot => {
+                return spot.x_location === col && spot.y_location === row
             })
-            areaMap.push(currRow)
-            
-            currRow = []
-            
-            col = -10 + (areaX * 10);
-            row--
-        } else {
-            currRow.push({x: col, y: row});
-            areaMap.push(currRow)
+            if(!discovered[0]){
+                discovered = null
+            }
     
-            currRow = []
+          if(col === 10 * areaX){
+            if(discovered !== null){
+                let color = colorGen(discovered[0].area_type)
+                console.log(discovered[0].area_type, color)
     
-            col = -10 + (areaX * 10);
-            row--
-        }
-      } else {
-          if(discovered !== null){
-            let color = colorGen(discovered[0].area_type)
-
-            currRow.push({
-                x: discovered[0].x_location,
-                y: discovered[0].y_location,
-                type: discovered[0].area_type,
-                name: discovered[0].area_name,
-                discovered_by: discovered[0].discovered_by,
-                color
-            })
-          } else {
-              currRow.push({
-                  x: col, 
-                  y: row,
-                  type: undefined,
-                  name: undefined,
-                  discovered_by: undefined
+    
+                currRow.push({
+                    x: discovered[0].x_location,
+                    y: discovered[0].y_location,
+                    type: discovered[0].area_type,
+                    name: discovered[0].area_name,
+                    discovered_by: discovered[0].discovered_by,
+                    color
                 })
-
+                areaMap.push(currRow)
+                
+                currRow = []
+                
+                col = -10 + (areaX * 10);
+                row--
+            } else {
+                currRow.push({x: col, y: row});
+                areaMap.push(currRow)
+        
+                currRow = []
+        
+                col = -10 + (areaX * 10);
+                row--
+            }
+          } else {
+              if(discovered !== null){
+                let color = colorGen(discovered[0].area_type)
+    
+                currRow.push({
+                    x: discovered[0].x_location,
+                    y: discovered[0].y_location,
+                    type: discovered[0].area_type,
+                    name: discovered[0].area_name,
+                    discovered_by: discovered[0].discovered_by,
+                    color
+                })
+              } else {
+                  currRow.push({
+                      x: col, 
+                      y: row,
+                      type: undefined,
+                      name: undefined,
+                      discovered_by: undefined
+                    })
+    
+              }
           }
-      }
-    }
+        }
+
+    })
+    
     return areaMap
   }
 
