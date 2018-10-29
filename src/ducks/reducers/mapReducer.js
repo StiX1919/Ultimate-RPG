@@ -11,6 +11,8 @@ const BUILD_MAP = "BUILD_MAP"
 const DISCOVER = 'DISCOVER'
 const NO_DISCOVER = 'NO_DISCOVER'
 
+const MOVE = "MOVE"
+
 
 //Initial State
 
@@ -23,12 +25,50 @@ const initialState = {
 
     heroX: 3,
     heroY: 3,
+    heroPrevX: 3,
+    heroPrevY: 3,
     
     isLoading: false
 }
 
 
 //Action Creators
+
+export function move(direction){
+        // let letter = ''
+        // let type = ''
+        // let mod = ''
+
+        // if(direction === 'up' || direction === 'down'){
+        //   type = initialState.heroY
+        //   letter = 'Y'
+        // } else if(direction === 'left' || direction === 'right'){
+        //   type = initialState.heroX
+        //   letter = 'X'
+        // }
+        // if(direction === 'up' || direction === 'right'){
+        //   mod = type + 1
+        // } else if(direction === 'left' || direction === 'down'){
+        //   mod = type - 1
+        // }
+    
+        return {
+            type: MOVE,
+            payload: {
+                direction
+            }
+        }
+        // this.setState({
+        //   ['hero' + letter]: mod,
+        //   ['heroPrev' + letter]: type
+        // }, () => {
+        //   this.moveMonsters()
+        // })
+    
+    
+    
+    
+      }
 
 //need to get locations from db before map is built when area is changed
 export function getMap(X, Y) {
@@ -240,6 +280,33 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 areaMap: action.payload.builtMap,
                 locations: action.payload.spots
+            }
+
+        case MOVE:
+            let {direction} = action.payload
+            let letter = ''
+            let type = ''
+            let mod = ''
+    
+            if(direction === 'up' || direction === 'down'){
+              type = state.heroY
+              letter = 'Y'
+            } else if(direction === 'left' || direction === 'right'){
+              type = state.heroX
+              letter = 'X'
+            }
+            if(direction === 'up' || direction === 'right'){
+              mod = type + 1
+            } else if(direction === 'left' || direction === 'down'){
+              mod = type - 1
+            }
+
+
+
+            return {
+                ...state,
+                ['hero' + letter]: mod,
+                ['heroPrev' + letter]: type
             }
         default:
             return state

@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
-import { getMap, updateArea, discover} from '../../../../../ducks/reducers/mapReducer'
+import { getMap, updateArea, discover, move} from '../../../../../ducks/reducers/mapReducer'
 import { setMonster } from '../../../../../ducks/reducers/monsterReducer'
 
 
@@ -34,6 +34,7 @@ class WorldMap extends Component {
     this.moveMonsters = this.moveMonsters.bind(this)
     this.findMatchedMonsters = this.findMatchedMonsters.bind(this)
 
+    this.newMove = this.newMove.bind(this)
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
@@ -326,12 +327,17 @@ class WorldMap extends Component {
   }
 
   newMove(direction){
+
+
+    let letter = ''
     let type = ''
     let mod = ''
     if(direction === 'up' || direction === 'down'){
       type = this.state.currentY
+      letter = 'Y'
     } else if(direction === 'left' || direction === 'right'){
       type = this.state.currentX
+      letter = 'X'
     }
     if(direction === 'up' || direction === 'right'){
       mod = type + 1
@@ -340,7 +346,12 @@ class WorldMap extends Component {
     }
 
 
-
+    this.setState({
+      ['current' + letter]: mod,
+      ['prev' + letter]: type
+    }, () => {
+      this.moveMonsters()
+    })
 
 
 
@@ -349,7 +360,7 @@ class WorldMap extends Component {
 
   render() {
     const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
-    console.log(this.state.combatMons)
+    console.log(this.props.heroX, this.props.heroY)
     return (
       <div className='mapComponent'>
         <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
@@ -361,7 +372,7 @@ class WorldMap extends Component {
                   return (
                     <div style={{height: '50px', width: '50px', border: 'solid black 1px', backgroundColor: spot.color}}>
                       
-                      {spot.x === this.state.currentX && spot.y === this.state.currentY
+                      {spot.x === this.props.heroX && spot.y === this.props.heroY
                         
                         ? <img style={{height: '50px', width: '50px'}} src='https://s1.piq.land/2015/07/23/wyTJ7WMj9DgDrDoJ3xYODfGq_400x400.png' alt='hello'/>
                         : null
@@ -380,6 +391,14 @@ class WorldMap extends Component {
               )
             })
           }
+        </div>
+        <div className='directions'>
+          <span className='direction' onClick={() => this.props.move('up')}/>
+          <div className='left-right'>
+            <span className='direction' onClick={() => this.props.move('left')}/>
+            <span className='direction' onClick={() => this.props.move('right')}/>
+          </div>
+          <span className='direction' onClick={() => this.props.move('down')}/>
         </div>
         <div className='infoBox'>
           <div className='spotInfo'>
@@ -403,6 +422,7 @@ class WorldMap extends Component {
               )
             })}
           </div>
+
         </div>
       </div>
     );
@@ -411,4 +431,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({...state.heroReducer, ...state.mapReducer, ...state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move })(WorldMap));
