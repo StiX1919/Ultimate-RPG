@@ -35,55 +35,25 @@ const initialState = {
 //Action Creators
 
 export function move(direction){
-        // let letter = ''
-        // let type = ''
-        // let mod = ''
-
-        // if(direction === 'up' || direction === 'down'){
-        //   type = initialState.heroY
-        //   letter = 'Y'
-        // } else if(direction === 'left' || direction === 'right'){
-        //   type = initialState.heroX
-        //   letter = 'X'
-        // }
-        // if(direction === 'up' || direction === 'right'){
-        //   mod = type + 1
-        // } else if(direction === 'left' || direction === 'down'){
-        //   mod = type - 1
-        // }
-    
-        return {
-            type: MOVE,
-            payload: {
-                direction
-            }
+    return {
+        type: MOVE,
+        payload: {
+            direction
         }
-        // this.setState({
-        //   ['hero' + letter]: mod,
-        //   ['heroPrev' + letter]: type
-        // }, () => {
-        //   this.moveMonsters()
-        // })
-    
-    
-    
-    
-      }
+    }
+}
 
 //need to get locations from db before map is built when area is changed
 export function getMap(X, Y) {
-        return {
-            type: GET_MAP,
-            payload: axios.get(`/api/getMap/${X}/${Y}`)
-                .then(response => {
-                    let builtMap = buildMap(response.data, X, Y)
-
-                    return {locations: response.data, builtMap}
-                })
-        }
-    
-    
-  }
+    return {
+        type: GET_MAP,
+        payload: axios.get(`/api/getMap/${X}/${Y}`)
+        .then(response => {
+            let builtMap = buildMap(response.data, X, Y)
+            return {locations: response.data, builtMap}
+        })
+    }    
+}
 export function updateArea(X, Y) {
     return {
         type: UPDATE_AREA,
@@ -282,32 +252,66 @@ export default function mapReducer(state=initialState, action) {
                 locations: action.payload.spots
             }
 
+
         case MOVE:
+            let {heroX, heroY} = state
             let {direction} = action.payload
+
             let letter = ''
             let type = ''
             let mod = ''
+            let area = ''
     
             if(direction === 'up' || direction === 'down'){
               type = state.heroY
               letter = 'Y'
+
+                switch(direction){
+                    case 'up':
+                        if(state.heroY >= state.mapY * 10){
+                            area = ++state.mapY
+                        }
+                    case 'down':
+                        if(state.heroY - 1 < ((state.mapY - 1) * 10) + 1){
+                            area = --state.mapY
+                        }
+                    default: area = state.mapY
+                }
             } else if(direction === 'left' || direction === 'right'){
               type = state.heroX
               letter = 'X'
+                switch(direction){
+                    case 'right':
+                        if(state.heroX >= (state.mapX * 10)){
+                            area = ++state.mapX
+                        }
+                    case 'left':
+                        if(state.heroX - 1 < ((state.mapX - 1) * 10) + 1){
+                            area = --state.mapX
+                        }
+                    default: area = state.mapX
+                }
             }
+            console.log(area)
+
             if(direction === 'up' || direction === 'right'){
               mod = type + 1
             } else if(direction === 'left' || direction === 'down'){
               mod = type - 1
             }
 
+            
 
+            // this.state.currentX + 1 > this.state.areaX * 10
 
             return {
                 ...state,
                 ['hero' + letter]: mod,
-                ['heroPrev' + letter]: type
+                ['heroPrev' + letter]: type,
+                ['map' + letter]: area
             }
+
+
         default:
             return state
     }

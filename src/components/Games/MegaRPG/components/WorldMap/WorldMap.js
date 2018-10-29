@@ -34,7 +34,6 @@ class WorldMap extends Component {
     this.moveMonsters = this.moveMonsters.bind(this)
     this.findMatchedMonsters = this.findMatchedMonsters.bind(this)
 
-    this.newMove = this.newMove.bind(this)
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
@@ -326,41 +325,9 @@ class WorldMap extends Component {
     }
   }
 
-  newMove(direction){
-
-
-    let letter = ''
-    let type = ''
-    let mod = ''
-    if(direction === 'up' || direction === 'down'){
-      type = this.state.currentY
-      letter = 'Y'
-    } else if(direction === 'left' || direction === 'right'){
-      type = this.state.currentX
-      letter = 'X'
-    }
-    if(direction === 'up' || direction === 'right'){
-      mod = type + 1
-    } else if(direction === 'left' || direction === 'down'){
-      mod = type - 1
-    }
-
-
-    this.setState({
-      ['current' + letter]: mod,
-      ['prev' + letter]: type
-    }, () => {
-      this.moveMonsters()
-    })
-
-
-
-
-  }
-
   render() {
     const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
-    console.log(this.props.heroX, this.props.heroY)
+    console.log(this.props)
     return (
       <div className='mapComponent'>
         <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
