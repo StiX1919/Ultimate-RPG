@@ -326,6 +326,24 @@ class WorldMap extends Component {
   }
 
   newMove(direction){
+    let type = ''
+    let mod = ''
+    if(direction === 'up' || direction === 'down'){
+      type = this.state.currentY
+    } else if(direction === 'left' || direction === 'right'){
+      type = this.state.currentX
+    }
+    if(direction === 'up' || direction === 'right'){
+      mod = type + 1
+    } else if(direction === 'left' || direction === 'down'){
+      mod = type - 1
+    }
+
+
+
+
+
+
 
   }
 
