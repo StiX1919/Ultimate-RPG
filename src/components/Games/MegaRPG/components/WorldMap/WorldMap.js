@@ -326,7 +326,7 @@ class WorldMap extends Component {
   }
 
   render() {
-    const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
+    // const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
     console.log(this.props.mapReducer)
     return (
       <div className='mapComponent'>
@@ -367,7 +367,7 @@ class WorldMap extends Component {
           </div>
           <span className='direction' onClick={() => this.props.move('down', this.props.mapReducer)}/>
         </div>
-        <div className='infoBox'>
+        {/*<div className='infoBox'>
           <div className='spotInfo'>
             <h2>{x_location + ':' + y_location}</h2>
             {area_name !== 'none' &&
@@ -390,7 +390,7 @@ class WorldMap extends Component {
             })}
           </div>
 
-        </div>
+          </div>*/}
       </div>
     );
   }

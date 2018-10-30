@@ -35,70 +35,72 @@ const initialState = {
 //Action Creators
 
 export function move(direction, state){
-    let letter = ''
-    let type = ''
-    let mod = ''
-    let area = ''
-    let areaMap = state.areaMap
-    
-    if(direction === 'up' || direction === 'down'){
-      type = state.heroY
-      letter = 'Y'
+    return function(dispatch){
 
-        switch(direction){
-            case 'up':
+        let letter = ''
+        let type = ''
+        let mod = ''
+        let area = ''
+        let areaMap = state.areaMap
+        
+        if(direction === 'up' || direction === 'down'){
+            type = state.heroY
+            letter = 'Y'
+            
+            switch(direction){
+                case 'up':
                 if(state.heroY >= state.mapY * 10){
                     area = ++state.mapY
-                    areaMap = getMap(state.locations, state.mapX, state.mapY)
+                    dispatch(getMap(state.mapX, state.mapY))
                 } else area = state.mapY
                 break;
-            case 'down':
+                case 'down':
                 if(state.heroY - 1 < ((state.mapY - 1) * 10) + 1){
                     area = --state.mapY
-                   areaMap = getMap(state.locations, state.mapX, state.mapY)
+                    dispatch(getMap(state.mapX, state.mapY))
                 } else area = state.mapY
                 break;
-            default: area = state.mapY
-        }
-    } else if(direction === 'left' || direction === 'right'){
-      type = state.heroX
-      letter = 'X'
-        switch(direction){
-            case 'right':
+                default: area = state.mapY
+            }
+        } else if(direction === 'left' || direction === 'right'){
+            type = state.heroX
+            letter = 'X'
+            switch(direction){
+                case 'right':
                 console.log('right', state.heroX >= (state.mapX * 10))
                 if(state.heroX >= (state.mapX * 10)){
                     area = ++state.mapX
-                    areaMap = getMap(state.locations, state.mapX, state.mapY)
+                    dispatch(getMap(state.mapX, state.mapY))
                 } else area = state.mapX
                 break;
-            case 'left':
+                case 'left':
                 console.log('left', state.heroX - 1 < ((state.mapX - 1) * 10) + 1)
                 if(state.heroX - 1 < ((state.mapX - 1) * 10) + 1){
                     area = --state.mapX
-                    areaMap = getMap(state.locations, state.mapX, state.mapY)
+                    dispatch(getMap(state.mapX, state.mapY))
                 } else area = state.mapX
                 break;
-
-            default: area = state.mapX
+                
+                default: area = state.mapX
+            }
         }
-    }
-    console.log(area)
-
-    if(direction === 'up' || direction === 'right'){
-      mod = type + 1
-    } else if(direction === 'left' || direction === 'down'){
-      mod = type - 1
-    }
-
-    return {
-        type: MOVE,
-        payload: {
-            letter,
-            mod,
-            type,
-            area,
-            areaMap
+        console.log(area)
+        
+        if(direction === 'up' || direction === 'right'){
+            mod = type + 1
+        } else if(direction === 'left' || direction === 'down'){
+            mod = type - 1
         }
+        
+        dispatch({
+            type: MOVE,
+            payload: {
+                letter,
+                mod,
+                type,
+                area
+            }
+        })
     }
 }
 
@@ -122,7 +124,7 @@ export function updateArea(X, Y) {
 }
 
 // rework discovory functionality to trigger area clear before moving
-export function getMap(locations, areaX, areaY){
+export function getMap(areaX, areaY){
     function colorGen(place) {
         switch(place){
             case 'Town': 
@@ -146,6 +148,7 @@ export function getMap(locations, areaX, areaY){
     return {
         type: GET_MAP,
         payload: axios.get(`/api/getMap/${areaX}/${areaY}`).then(response => {
+            console.log('hit')
             let areaMap = [];
             let currRow = [];
             for(let row = areaY * 10, col = -9 + (areaX * 10); row > -10 + (areaY * 10); col++){
@@ -243,7 +246,7 @@ export function getMap(locations, areaX, areaY){
                             x_location,
                             y_location
                     }).then(res => {
-                        let builtMap = getMap(res.data, area_x, area_y)
+                        let builtMap = getMap(area_x, area_y)
                         return {
                             spots: res.data,
                             builtMap
@@ -257,7 +260,7 @@ export function getMap(locations, areaX, areaY){
                 type: NO_DISCOVER,
                 payload: {
                     spots: discovered,
-                    builtMap: getMap(discovered, area_x, area_y)
+                    builtMap: getMap(area_x, area_y)
                 }
             }
 
@@ -269,6 +272,7 @@ export function getMap(locations, areaX, areaY){
 //Reducer
 
 export default function mapReducer(state=initialState, action) {
+    console.log(action)
     switch(action.type) {
         case GET_MAP + '_PENDING':
             return {
@@ -322,8 +326,7 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 [`hero${letter}`]: mod,
                 [`heroPrev${letter}`]: type,
-                [`map${letter}`]: area,
-                areaMap
+                [`map${letter}`]: area
             }
 
 
