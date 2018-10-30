@@ -327,7 +327,7 @@ class WorldMap extends Component {
 
   render() {
     const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
-    console.log(this.props)
+    console.log(this.props.mapReducer)
     return (
       <div className='mapComponent'>
         <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
