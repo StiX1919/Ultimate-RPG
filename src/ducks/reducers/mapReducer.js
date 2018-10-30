@@ -12,6 +12,8 @@ const NO_DISCOVER = 'NO_DISCOVER'
 const MOVE = "MOVE"
 const GO_BACK = 'GO_BACK'
 
+const ENTER_AREA = 'ENTER_AREA'
+
 
 //Initial State
 
@@ -33,6 +35,60 @@ const initialState = {
 
 
 //Action Creators
+export function enterArea(X, Y, spotType){
+    let numArr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    let locations = []
+    console.log(spotType)
+    function colorGen(place) {
+        switch(place){
+            case 'Town': 
+                return '#808080';
+            case 'Plains': 
+                return '#90ee90';
+            case 'Forest': 
+                return '#006400';
+            case 'Ocean':
+                return '#00008b'
+            case 'River':
+                return '#add8e6'
+            case 'Mountains':
+                return '#803605'
+            case 'Desert':
+                return '#f2a23a'
+            default: return 'white'
+        }
+    }
+
+
+    let areaMap = numArr.map( col => {
+        let newRow = numArr.map( row => {
+            locations.push({
+                x_location: row,
+                y_location: col,
+                area_type: spotType,
+                area_name: 'none',
+                discovered_by: 'none',
+                color: colorGen(spotType)
+            })
+            return {
+                x: row,
+                y: col,
+                type: spotType,
+                name: 'none',
+                discovered_by: 'none',
+                color: colorGen(spotType)
+            }
+        }).reverse()
+        return newRow
+    })
+
+    console.log(areaMap)
+    return {
+        type: ENTER_AREA,
+        payload: {areaMap, locations}
+    }
+
+}
 
 export function goBack(){
     return {
@@ -323,12 +379,18 @@ export default function mapReducer(state=initialState, action) {
 
         case MOVE:
             let {mod, type, letter, area} = action.payload
+            let otherLet = ''
+            let otherData = 0
             let activeSpot = {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
             switch(action.payload.letter){
                 case 'X':
+                    otherLet = 'Y'
+                    otherData = state.heroY
                     activeSpot = state.locations.filter(spot => {return(spot.x_location === action.payload.mod && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
                     break;
                 case 'Y':
+                    otherLet = 'X'
+                    otherData = state.heroX
                     activeSpot = state.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === action.payload.mod)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
                     break;
                 default: return null
@@ -339,6 +401,7 @@ export default function mapReducer(state=initialState, action) {
                 [`hero${letter}`]: mod,
                 [`heroPrev${letter}`]: type,
                 [`map${letter}`]: area,
+                [`heroPrev${otherLet}`]: otherData,
                 activeSpot
             }
 
@@ -348,9 +411,16 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 heroX: state.heroPrevX,
                 heroY: state.heroPrevY,
-                activeSpot: state.locations.filter(spot => {return(spot.x_location === state.heroPrevX && spot.y_location === state.heroPrevY)})[0]
+                activeSpot: state.locations.filter(spot => {return(spot.x_location === state.heroPrevX && spot.y_location === state.heroPrevY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
             }
 
+        case ENTER_AREA:
+            return {
+                ...state,
+                areaMap: action.payload.areaMap,
+                locations: action.payload.locations,
+                activeSpot: action.payload.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+            }
 
         default:
             return state

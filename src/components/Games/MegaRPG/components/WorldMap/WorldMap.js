@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
-import { getMap, updateArea, discover, move, goBack} from '../../../../../ducks/reducers/mapReducer'
+import { getMap, updateArea, discover, move, goBack, enterArea } from '../../../../../ducks/reducers/mapReducer'
 import { setMonster } from '../../../../../ducks/reducers/monsterReducer'
 
 
@@ -53,7 +53,8 @@ class WorldMap extends Component {
   findMatchedMonsters(){
     let {heroX, heroY} = this.props.mapReducer
     let xArea = [heroX - 1, heroX, heroX + 1]
-    let yArea = [heroX - 1, heroY, heroY + 1]
+    let yArea = [heroY - 1, heroY, heroY + 1]
+    console.log(xArea, yArea)
 
     let combatMons = this.state.areaMonsters.filter(mon => {
       return (xArea.includes(mon.X) && yArea.includes(mon.Y))
@@ -80,6 +81,7 @@ class WorldMap extends Component {
     const movedMons = this.state.areaMonsters.map( monster => {
       let randomMove = types[Math.floor(Math.random() * types.length)]
       let randomDirec = directions[Math.floor(Math.random() * directions.length)]
+
       switch(randomDirec){
         case '>':
           if(randomMove === 'X'){
@@ -105,9 +107,10 @@ class WorldMap extends Component {
           break;
         default: return null
       }
-      
-      
+
     })
+
+    
     this.setState({areaMonsters: movedMons}, () => {
       this.findMatchedMonsters()
     })
@@ -121,7 +124,7 @@ class WorldMap extends Component {
 
       let xArea = [X - 1, X, X + 1]
       let yArea = [Y - 1, Y, Y + 1]
-      let found = spots.filter(spot => {
+      spots.filter(spot => {
           if(xArea.includes(spot.x_location) && yArea.includes(spot.y_location)){
               if(spot.area_type !== 'Town'){
                   switch(spot.area_type){
@@ -341,8 +344,8 @@ class WorldMap extends Component {
   }
 
   render() {
+    console.log(this.state.combatMons)
     const {area_name, area_type, x_location, y_location, discovered_by} = this.props.mapReducer.activeSpot
-    console.log(this.props.mapReducer)
     return (
       <div className='mapComponent'>
         <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
@@ -374,7 +377,7 @@ class WorldMap extends Component {
             })
           }
         </div>
-        {x_location !== 'none' 
+        {area_type !== 'none' 
           ? <div className='directions'>
             <span className='direction up' onClick={() => this.moveHandler('up')}/>
             <div className='left-right'>
@@ -384,7 +387,7 @@ class WorldMap extends Component {
             <span className='direction down' onClick={() => this.moveHandler('down')}/>
           </div>
           : <div>
-            <button>Enter New Land!</button>
+            <button onClick={() => this.props.enterArea(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.locationType(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.props.mapReducer.locations))}>Enter New Land!</button>
             <button onClick={this.props.goBack}>Return to the known.</button>
           </div>
         }
@@ -419,4 +422,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea })(WorldMap));

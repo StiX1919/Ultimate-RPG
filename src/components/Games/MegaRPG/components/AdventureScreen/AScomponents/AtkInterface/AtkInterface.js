@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import {attack} from '../../../../../../../ducks/reducers/monsterReducer'
@@ -71,6 +71,13 @@ class AtkInterface extends Component {
             null
         
         }
+        {this.props.currentMonster.hp > 0 &&
+            <Link to='/MegaRPG/Map'>
+                <button>Run!</button>
+            </Link>
+        }
+        
+        
     </div>
     );
   }

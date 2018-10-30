@@ -8,7 +8,7 @@ import './AdventureScreen.css';
 
 import CharacterBox from './AScomponents/CharacterBox/CharacterBox'
 import MonsterBox from './AScomponents/MonsterBox/MonsterBox'
-import Shop from './AScomponents/Shop/Shop'
+// import Shop from './AScomponents/Shop/Shop'
 import AtkInterface from './AScomponents/AtkInterface/AtkInterface'
 
 import {getMonster} from '../../../../../ducks/reducers/monsterReducer'
