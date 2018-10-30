@@ -326,7 +326,7 @@ class WorldMap extends Component {
   }
 
   render() {
-    const {area_name, area_type, x_location, y_location, discovered_by} = this.state.activeSpot
+    const {area_name, area_type, x_location, y_location, discovered_by} = this.props.mapReducer.activeSpot
     console.log(this.props.mapReducer)
     return (
       <div className='mapComponent'>
@@ -360,12 +360,12 @@ class WorldMap extends Component {
           }
         </div>
         <div className='directions'>
-          <span className='direction' onClick={() => this.props.move('up', this.props.mapReducer)}/>
+          <span className='direction up' onClick={() => this.props.move('up', this.props.mapReducer)}/>
           <div className='left-right'>
-            <span className='direction' onClick={() => this.props.move('left', this.props.mapReducer)}/>
-            <span className='direction' onClick={() => this.props.move('right', this.props.mapReducer)}/>
+            <span className='direction left' onClick={() => this.props.move('left', this.props.mapReducer)}/>
+            <span className='direction right' onClick={() => this.props.move('right', this.props.mapReducer)}/>
           </div>
-          <span className='direction' onClick={() => this.props.move('down', this.props.mapReducer)}/>
+          <span className='direction down' onClick={() => this.props.move('down', this.props.mapReducer)}/>
         </div>
         <div className='infoBox'>
           <div className='spotInfo'>

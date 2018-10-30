@@ -6,8 +6,6 @@ import axios from "axios";
 const GET_MAP = "GET_MAP"
 const UPDATE_AREA = 'UPDATE_AREA'
 
-const BUILD_MAP = "BUILD_MAP"
-// const MOVE = 'MOVE'
 const DISCOVER = 'DISCOVER'
 const NO_DISCOVER = 'NO_DISCOVER'
 
@@ -28,6 +26,7 @@ const initialState = {
     heroPrevX: 3,
     heroPrevY: 3,
     
+    activeSpot: {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
     isLoading: false
 }
 
@@ -98,7 +97,7 @@ export function move(direction, state){
                 letter,
                 mod,
                 type,
-                area
+                area,
             }
         })
     }
@@ -279,13 +278,16 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 isLoading: true
             }
+            break;
         case GET_MAP + '_FULFILLED':
             return {
                 ...state,
                 isLoading: false,
                 locations: action.payload.locations,
-                areaMap: action.payload.areaMap
+                areaMap: action.payload.areaMap,
+                activeSpot: action.payload.locations.find(spot => (spot.x_location === state.heroX && spot.y_location === state.heroY))
             }
+            break;
 
         case UPDATE_AREA:
             return {
@@ -293,7 +295,7 @@ export default function mapReducer(state=initialState, action) {
                 mapX: action.payload.X,
                 mapY: action.payload.Y
             }
-    
+            break;
 
         case DISCOVER + '_PENDING':
             
@@ -301,7 +303,7 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 isLoading: true
             }
-
+            break;
         case DISCOVER + '_FULFILLED':
             console.log(action)
             return {
@@ -310,6 +312,7 @@ export default function mapReducer(state=initialState, action) {
                 areaMap: action.payload.builtMap,
                 locations: action.payload.spots
             }
+            break;
         case NO_DISCOVER:
             console.log(action)
             return{
@@ -317,17 +320,28 @@ export default function mapReducer(state=initialState, action) {
                 areaMap: action.payload.builtMap,
                 locations: action.payload.spots
             }
-
+            break;
 
         case MOVE:
             let {mod, type, letter, area, areaMap} = action.payload
+            let activeSpot = {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+            switch(letter){
+                case 'X':
+                    activeSpot = state.locations.filter(spot => {return(spot.x_location === mod && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                case 'Y':
+                    activeSpot = state.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === mod)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                default: null
+            }
+            console.log(activeSpot)
             
             return {
                 ...state,
                 [`hero${letter}`]: mod,
                 [`heroPrev${letter}`]: type,
-                [`map${letter}`]: area
+                [`map${letter}`]: area,
+                activeSpot
             }
+            break;
 
 
         default:
