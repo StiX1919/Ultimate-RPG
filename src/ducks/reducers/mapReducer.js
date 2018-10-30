@@ -45,10 +45,9 @@ export function move(direction, state){
     return function(dispatch){
 
         let letter = ''
-        let type = ''
-        let mod = ''
-        let area = ''
-        let areaMap = state.areaMap
+        let type = 0
+        let mod = 0
+        let area = 0
         
         if(direction === 'up' || direction === 'down'){
             type = state.heroY
@@ -232,9 +231,8 @@ export function getMap(areaX, areaY){
 
 
   export function discover(discObj, discovered, spotType) {
-      const {area_x, area_y, discovered_by, x_location, y_location} = discObj
+    const {area_x, area_y, discovered_by, x_location, y_location} = discObj
 
-    let exists = false;
     let spots = discovered.slice().filter(spot => {
         return (spot.x_location === x_location && spot.y_location === y_location)
     })
@@ -285,7 +283,6 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 isLoading: true
             }
-            break;
         case GET_MAP + '_FULFILLED':
             return {
                 ...state,
@@ -294,7 +291,6 @@ export default function mapReducer(state=initialState, action) {
                 areaMap: action.payload.areaMap,
                 activeSpot: action.payload.locations.find(spot => (spot.x_location === state.heroX && spot.y_location === state.heroY))
             }
-            break;
 
         case UPDATE_AREA:
             return {
@@ -302,7 +298,6 @@ export default function mapReducer(state=initialState, action) {
                 mapX: action.payload.X,
                 mapY: action.payload.Y
             }
-            break;
 
         case DISCOVER + '_PENDING':
             
@@ -310,7 +305,6 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 isLoading: true
             }
-            break;
         case DISCOVER + '_FULFILLED':
             console.log(action)
             return {
@@ -319,7 +313,6 @@ export default function mapReducer(state=initialState, action) {
                 areaMap: action.payload.builtMap,
                 locations: action.payload.spots
             }
-            break;
         case NO_DISCOVER:
             console.log(action)
             return{
@@ -327,10 +320,9 @@ export default function mapReducer(state=initialState, action) {
                 areaMap: action.payload.builtMap,
                 locations: action.payload.spots
             }
-            break;
 
         case MOVE:
-            let {mod, type, letter, area, areaMap} = action.payload
+            let {mod, type, letter, area} = action.payload
             let activeSpot = {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
             switch(action.payload.letter){
                 case 'X':
@@ -339,7 +331,7 @@ export default function mapReducer(state=initialState, action) {
                 case 'Y':
                     activeSpot = state.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === action.payload.mod)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
                     break;
-                default: null
+                default: return null
             }
             
             return {
@@ -349,13 +341,14 @@ export default function mapReducer(state=initialState, action) {
                 [`map${letter}`]: area,
                 activeSpot
             }
-            break;
 
         case GO_BACK:
+            
             return {
                 ...state,
                 heroX: state.heroPrevX,
-                heroY: state.heroPrevY
+                heroY: state.heroPrevY,
+                activeSpot: state.locations.filter(spot => {return(spot.x_location === state.heroPrevX && spot.y_location === state.heroPrevY)})[0]
             }
 
 

@@ -103,7 +103,7 @@ class WorldMap extends Component {
             } else return (monster)
           }
           break;
-        default: null
+        default: return null
       }
       
       
@@ -127,14 +127,18 @@ class WorldMap extends Component {
                   switch(spot.area_type){
                     case 'Plain':
                         mapTypes.push('Plains', 'Plains', 'Forest');
+                        break;
                     case 'Forest':
                         mapTypes.push('Forest', 'Plains');
+                        break;
                     // case 'Ocean':
                     //     mapTypes.push('Ocean', 'Ocean');
                     case 'River':
                         mapTypes.push('River');
+                        break;
                     case 'Desert':
                         mapTypes.push('Desert');
+                        break;
                     // case 'Mountains':
                     //     mapTypes.push('Mountains', 'Desert');
                     default: mapTypes.push('Plains')

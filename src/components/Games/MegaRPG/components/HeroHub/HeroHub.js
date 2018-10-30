@@ -46,16 +46,6 @@ class HeroHub extends Component {
 
   render() {
 
-    let dungs = <h3>Scouting</h3>;
-
-    if(this.props.dungeons[0]){
-        dungs = this.props.dungeons.map((dungeon, i) => {
-            return (
-                <h1 key={i}>{dungeon.name}</h1>
-            )
-        })
-    }
-
     return (
     <div className='page'>
 
