@@ -38,7 +38,7 @@ const initialState = {
 export function enterArea(X, Y, spotType){
     let numArr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
     let locations = []
-    console.log(spotType)
+    
     function colorGen(place) {
         switch(place){
             case 'Town': 
@@ -82,7 +82,6 @@ export function enterArea(X, Y, spotType){
         return newRow
     })
 
-    console.log(areaMap)
     return {
         type: ENTER_AREA,
         payload: {areaMap, locations}
@@ -129,14 +128,12 @@ export function move(direction, state){
             letter = 'X'
             switch(direction){
                 case 'right':
-                console.log('right', state.heroX >= (state.mapX * 10))
                 if(state.heroX >= (state.mapX * 10)){
                     area = ++state.mapX
                     dispatch(getMap(state.mapX, state.mapY))
                 } else area = state.mapX
                 break;
                 case 'left':
-                console.log('left', state.heroX - 1 < ((state.mapX - 1) * 10) + 1)
                 if(state.heroX - 1 < ((state.mapX - 1) * 10) + 1){
                     area = --state.mapX
                     dispatch(getMap(state.mapX, state.mapY))
@@ -146,8 +143,7 @@ export function move(direction, state){
                 default: area = state.mapX
             }
         }
-        console.log(area)
-        
+
         if(direction === 'up' || direction === 'right'){
             mod = type + 1
         } else if(direction === 'left' || direction === 'down'){
@@ -210,7 +206,6 @@ export function getMap(areaX, areaY){
     return {
         type: GET_MAP,
         payload: axios.get(`/api/getMap/${areaX}/${areaY}`).then(response => {
-            console.log('hit')
             let areaMap = [];
             let currRow = [];
             for(let row = areaY * 10, col = -9 + (areaX * 10); row > -10 + (areaY * 10); col++){
@@ -225,8 +220,6 @@ export function getMap(areaX, areaY){
               if(col === 10 * areaX){
                 if(discovered !== null){
                     let color = colorGen(discovered[0].area_type)
-                    console.log(discovered[0].area_type, color)
-        
         
                     currRow.push({
                         x: discovered[0].x_location,
@@ -292,7 +285,6 @@ export function getMap(areaX, areaY){
     let spots = discovered.slice().filter(spot => {
         return (spot.x_location === x_location && spot.y_location === y_location)
     })
-    console.log('areas', area_x, area_y)
 
 
     if(!spots[0]){
@@ -362,7 +354,6 @@ export default function mapReducer(state=initialState, action) {
                 isLoading: true
             }
         case DISCOVER + '_FULFILLED':
-            console.log(action)
             return {
                 ...state,
                 isLoading: false, 
@@ -370,7 +361,6 @@ export default function mapReducer(state=initialState, action) {
                 locations: action.payload.spots
             }
         case NO_DISCOVER:
-            console.log(action)
             return{
                 ...state,
                 areaMap: action.payload.builtMap,

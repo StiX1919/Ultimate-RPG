@@ -50,7 +50,6 @@ class AtkInterface extends Component {
     //^^^Checking to make sure that damage done doesn't add to monster health.
     
     let newMon = Object.assign({}, monster, {hp: newHP})
-    console.log(newMon)
     this.setState({damageDone: damage})
     this.showDamageDone()
     this.props.attack(newMon)

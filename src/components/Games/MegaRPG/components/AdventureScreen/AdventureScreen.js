@@ -26,10 +26,6 @@ class AdventureScreen extends Component {
 
   }
 
-  componentDidMount() {
-    console.log(this.props.match.params.monsterID)
-  }
-
   openShop() {
     if(this.state.shop === true){
       this.setState({shop: false})
@@ -53,7 +49,6 @@ class AdventureScreen extends Component {
     //             </div>
     //     })}
     //     {console.log(this.props.currentHero, 'top hero pors')}
-    console.log(this.props.currentMonster)
 
     return (
     <div className='page'>

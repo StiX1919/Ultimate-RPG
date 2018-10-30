@@ -116,7 +116,6 @@ app.get('/api/getShop', (req, res) => {
       
       return item
     })
-    console.log(newRes)
     res.status(200).send(response)
   })
 })

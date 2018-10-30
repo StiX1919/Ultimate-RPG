@@ -85,7 +85,6 @@ let mappedMonsters = []
     getMap = (req, res) => {
         req.app.get('db').getMap([req.params.X, req.params.Y])
         .then( response => {
-            console.log(response)
             res.status(200).json(response)
         })
     },

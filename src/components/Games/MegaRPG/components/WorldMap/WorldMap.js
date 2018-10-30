@@ -29,7 +29,7 @@ class WorldMap extends Component {
 
       combatMons: []
     }
-    this.move = this.move.bind(this)
+    // this.move = this.move.bind(this)
     this.locationType = this.locationType.bind(this)
     this.moveMonsters = this.moveMonsters.bind(this)
     this.findMatchedMonsters = this.findMatchedMonsters.bind(this)
@@ -41,8 +41,6 @@ class WorldMap extends Component {
       window.location.href= '/MegaRPG'
     } 
 
-
-      this.refs.areaMap.focus()
       this.addMonLocation(this.props.monsterReducer.monsters)
       this.setState({activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY))}, () => {
         this.findMatchedMonsters()
@@ -54,7 +52,6 @@ class WorldMap extends Component {
     let {heroX, heroY} = this.props.mapReducer
     let xArea = [heroX - 1, heroX, heroX + 1]
     let yArea = [heroY - 1, heroY, heroY + 1]
-    console.log(xArea, yArea)
 
     let combatMons = this.state.areaMonsters.filter(mon => {
       return (xArea.includes(mon.X) && yArea.includes(mon.Y))
@@ -154,184 +151,184 @@ class WorldMap extends Component {
       return mapTypes[Math.floor(Math.random() * (mapTypes.length - 1))]
   }
 
-  async move(e){
-    this.moveMonsters()
+  // async move(e){
+  //   this.moveMonsters()
 
-    let spotType = ''
-    switch(e.key){
-      case 'ArrowRight':
-        this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-        spotType = this.locationType(this.state.currentX + 1, this.state.currentY, this.props.mapReducer.locations)
+  //   let spotType = ''
+  //   switch(e.key){
+  //     case 'ArrowRight':
+  //       this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+  //       spotType = this.locationType(this.state.currentX + 1, this.state.currentY, this.props.mapReducer.locations)
         
-            if(this.state.currentX + 1 > this.state.areaX * 10) {
-              axios.post('/api/newPlace', {
-                area_name: 'none',
-                area_type: spotType,
-                area_x: this.state.areaX + 1,
-                area_y: this.state.areaY,
-                discovered_by: this.props.heroReducer.currentHero.hero_name,
-                x_location: this.state.currentX,
-                y_location: this.state.currentY
-            }).then(response => {
-                this.setState({areaX: this.state.areaX + 1})
-                // this.props.getMap(this.state.areaX + 1, this.state.areaY)
-                this.props.updateArea(this.state.areaX, this.state.areaY)
+  //           if(this.state.currentX + 1 > this.state.areaX * 10) {
+  //             axios.post('/api/newPlace', {
+  //               area_name: 'none',
+  //               area_type: spotType,
+  //               area_x: this.state.areaX + 1,
+  //               area_y: this.state.areaY,
+  //               discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //               x_location: this.state.currentX,
+  //               y_location: this.state.currentY
+  //           }).then(response => {
+  //               this.setState({areaX: this.state.areaX + 1})
+  //               // this.props.getMap(this.state.areaX + 1, this.state.areaY)
+  //               this.props.updateArea(this.state.areaX, this.state.areaY)
 
       
-                this.props.discover({
-                    area_x: this.state.areaX,
-                    area_y: this.state.areaY,
-                    discovered_by: this.props.heroReducer.currentHero.hero_name,
-                    x_location: this.state.currentX,
-                    y_location: this.state.currentY
-                }, response.data, spotType)
+  //               this.props.discover({
+  //                   area_x: this.state.areaX,
+  //                   area_y: this.state.areaY,
+  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //                   x_location: this.state.currentX,
+  //                   y_location: this.state.currentY
+  //               }, response.data, spotType)
 
-              })
+  //             })
              
 
             
-            } else {
+  //           } else {
                 
-                this.props.discover({
-                    area_x: this.state.areaX,
-                    area_y: this.state.areaY,
-                    discovered_by: this.props.heroReducer.currentHero.hero_name,
-                    x_location: this.state.currentX + 1,
-                    y_location: this.state.currentY
-                }, this.props.mapReducer.locations, spotType)
-            }
+  //               this.props.discover({
+  //                   area_x: this.state.areaX,
+  //                   area_y: this.state.areaY,
+  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //                   x_location: this.state.currentX + 1,
+  //                   y_location: this.state.currentY
+  //               }, this.props.mapReducer.locations, spotType)
+  //           }
         
-        break;
+  //       break;
 
-      case 'ArrowLeft':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-          spotType = this.locationType(this.state.currentX - 1, this.state.currentY, this.props.mapReducer.locations)
+  //     case 'ArrowLeft':
+  //         this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+  //         spotType = this.locationType(this.state.currentX - 1, this.state.currentY, this.props.mapReducer.locations)
 
-          if(this.state.currentX - 1 < ((this.state.areaX - 1) * 10) + 1) {
+  //         if(this.state.currentX - 1 < ((this.state.areaX - 1) * 10) + 1) {
 
-            axios.post('/api/newPlace', {
-              area_name: 'none',
-              area_type: spotType,
-              area_x: this.state.areaX - 1,
-              area_y: this.state.areaY,
-              discovered_by: this.props.heroReducer.currentHero.hero_name,
-              x_location: this.state.currentX - 1,
-              y_location: this.state.currentY
-          }).then(response => {
-              this.setState({areaX: this.state.areaX - 1})
-              // this.props.getMap(this.state.areaX - 1, this.state.areaY)
-              this.props.updateArea(this.state.areaX, this.state.areaY)
+  //           axios.post('/api/newPlace', {
+  //             area_name: 'none',
+  //             area_type: spotType,
+  //             area_x: this.state.areaX - 1,
+  //             area_y: this.state.areaY,
+  //             discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //             x_location: this.state.currentX - 1,
+  //             y_location: this.state.currentY
+  //         }).then(response => {
+  //             this.setState({areaX: this.state.areaX - 1})
+  //             // this.props.getMap(this.state.areaX - 1, this.state.areaY)
+  //             this.props.updateArea(this.state.areaX, this.state.areaY)
 
 
-              this.props.discover({
-                  area_x: this.state.areaX,
-                  area_y: this.state.areaY,
-                  discovered_by: this.props.heroReducer.currentHero.hero_name,
-                  x_location: this.state.currentX,
-                  y_location: this.state.currentY
-              }, response.data, spotType)
+  //             this.props.discover({
+  //                 area_x: this.state.areaX,
+  //                 area_y: this.state.areaY,
+  //                 discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //                 x_location: this.state.currentX,
+  //                 y_location: this.state.currentY
+  //             }, response.data, spotType)
 
-            })
+  //           })
 
     
-            } else {
+  //           } else {
                 
-                this.props.discover({
-                    area_x: this.state.areaX,
-                    area_y: this.state.areaY,
-                    discovered_by: this.props.heroReducer.currentHero.hero_name,
-                    x_location: this.state.currentX - 1,
-                    y_location: this.state.currentY
-                }, this.props.mapReducer.locations, spotType)
-            }
-          break;
-      case 'ArrowUp':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-          spotType = this.locationType(this.state.currentX, this.state.currentY + 1, this.props.mapReducer.locations)
+  //               this.props.discover({
+  //                   area_x: this.state.areaX,
+  //                   area_y: this.state.areaY,
+  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //                   x_location: this.state.currentX - 1,
+  //                   y_location: this.state.currentY
+  //               }, this.props.mapReducer.locations, spotType)
+  //           }
+  //         break;
+  //     case 'ArrowUp':
+  //         this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+  //         spotType = this.locationType(this.state.currentX, this.state.currentY + 1, this.props.mapReducer.locations)
             
-          if(this.state.currentY + 1 > this.state.areaY * 10) {
-            axios.post('/api/newPlace', {
-              area_name: 'none',
-              area_type: spotType,
-              area_x: this.state.areaX,
-              area_y: this.state.areaY + 1,
-              discovered_by: this.props.heroReducer.currentHero.hero_name,
-              x_location: this.state.currentX,
-              y_location: this.state.currentY + 1
-          }).then(response => {
+  //         if(this.state.currentY + 1 > this.state.areaY * 10) {
+  //           axios.post('/api/newPlace', {
+  //             area_name: 'none',
+  //             area_type: spotType,
+  //             area_x: this.state.areaX,
+  //             area_y: this.state.areaY + 1,
+  //             discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //             x_location: this.state.currentX,
+  //             y_location: this.state.currentY + 1
+  //         }).then(response => {
 
-              this.setState({areaY: this.state.areaY + 1})
-              // this.props.getMap(this.state.areaX, this.state.areaY + 1)
-              this.props.updateArea(this.state.areaX, this.state.areaY)
-              this.props.discover({
-                  area_x: this.state.areaX,
-                  area_y: this.state.areaY,
-                  discovered_by: this.props.heroReducer.currentHero.hero_name,
-                  x_location: this.state.currentX,
-                  y_location: this.state.currentY
-              }, response.data, spotType)
+  //             this.setState({areaY: this.state.areaY + 1})
+  //             // this.props.getMap(this.state.areaX, this.state.areaY + 1)
+  //             this.props.updateArea(this.state.areaX, this.state.areaY)
+  //             this.props.discover({
+  //                 area_x: this.state.areaX,
+  //                 area_y: this.state.areaY,
+  //                 discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //                 x_location: this.state.currentX,
+  //                 y_location: this.state.currentY
+  //             }, response.data, spotType)
 
-            })
+  //           })
 
     
-            } else {
+  //           } else {
                 
-                this.props.discover({
-                    area_x: this.state.areaX,
-                    area_y: this.state.areaY,
-                    discovered_by: this.props.heroReducer.currentHero.hero_name,
-                    x_location: this.state.currentX,
-                    y_location: this.state.currentY + 1
-                }, this.props.mapReducer.locations, spotType)
-            }
-          break;
-      case 'ArrowDown':
-          this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-          spotType = this.locationType(this.state.currentX, this.state.currentY - 1, this.props.mapReducer.locations)
+  //               this.props.discover({
+  //                   area_x: this.state.areaX,
+  //                   area_y: this.state.areaY,
+  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //                   x_location: this.state.currentX,
+  //                   y_location: this.state.currentY + 1
+  //               }, this.props.mapReducer.locations, spotType)
+  //           }
+  //         break;
+  //     case 'ArrowDown':
+  //         this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
+  //         spotType = this.locationType(this.state.currentX, this.state.currentY - 1, this.props.mapReducer.locations)
           
-          if(this.state.currentY - 1 < ((this.state.areaY - 1) * 10) + 1) {
-            axios.post('/api/newPlace', {
-              area_name: 'none',
-              area_type: spotType,
-              area_x: this.state.areaX,
-              area_y: this.state.areaY - 1,
-              discovered_by: this.props.heroReducer.currentHero.hero_name,
-              x_location: this.state.currentX,
-              y_location: this.state.currentY - 1
-          }).then(response => {
-            this.setState({areaY: this.state.areaY - 1})
-            // this.props.getMap(this.state.areaX, this.state.areaY - 1)
-            this.props.updateArea(this.state.areaX, this.state.areaY)
+  //         if(this.state.currentY - 1 < ((this.state.areaY - 1) * 10) + 1) {
+  //           axios.post('/api/newPlace', {
+  //             area_name: 'none',
+  //             area_type: spotType,
+  //             area_x: this.state.areaX,
+  //             area_y: this.state.areaY - 1,
+  //             discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //             x_location: this.state.currentX,
+  //             y_location: this.state.currentY - 1
+  //         }).then(response => {
+  //           this.setState({areaY: this.state.areaY - 1})
+  //           // this.props.getMap(this.state.areaX, this.state.areaY - 1)
+  //           this.props.updateArea(this.state.areaX, this.state.areaY)
 
           
           
-            this.props.discover({
-                area_x: this.state.areaX,
-                area_y: this.state.areaY,
-                discovered_by: this.props.heroReducer.currentHero.hero_name,
-                x_location: this.state.currentX,
-                y_location: this.state.currentY
-            }, response.data, spotType)
+  //           this.props.discover({
+  //               area_x: this.state.areaX,
+  //               area_y: this.state.areaY,
+  //               discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //               x_location: this.state.currentX,
+  //               y_location: this.state.currentY
+  //           }, response.data, spotType)
 
-          })
+  //         })
 
             
 
     
-    } else {
+  //   } else {
         
-        this.props.discover({
-            area_x: this.state.areaX,
-            area_y: this.state.areaY,
-            discovered_by: this.props.heroReducer.currentHero.hero_name,
-            x_location: this.state.currentX,
-            y_location: this.state.currentY - 1
-        }, this.props.mapReducer.locations, spotType)
-    }
-          break;
-      default: return null
-    }
-  }
+  //       this.props.discover({
+  //           area_x: this.state.areaX,
+  //           area_y: this.state.areaY,
+  //           discovered_by: this.props.heroReducer.currentHero.hero_name,
+  //           x_location: this.state.currentX,
+  //           y_location: this.state.currentY - 1
+  //       }, this.props.mapReducer.locations, spotType)
+  //   }
+  //         break;
+  //     default: return null
+  //   }
+  // }
 
 
   async moveHandler(direction){
@@ -344,11 +341,10 @@ class WorldMap extends Component {
   }
 
   render() {
-    console.log(this.state.combatMons)
     const {area_name, area_type, x_location, y_location, discovered_by} = this.props.mapReducer.activeSpot
     return (
       <div className='mapComponent'>
-        <div ref='areaMap' onKeyDown={this.move} tabIndex='-1'>
+        <div>
           {this.props.mapReducer.areaMap[0] && 
             this.props.mapReducer.areaMap.map((row, r) => {
               return (
