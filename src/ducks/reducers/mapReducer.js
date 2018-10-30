@@ -10,6 +10,7 @@ const DISCOVER = 'DISCOVER'
 const NO_DISCOVER = 'NO_DISCOVER'
 
 const MOVE = "MOVE"
+const GO_BACK = 'GO_BACK'
 
 
 //Initial State
@@ -32,6 +33,13 @@ const initialState = {
 
 
 //Action Creators
+
+export function goBack(){
+    return {
+        type: GO_BACK,
+        payload: 'none'
+    }
+}
 
 export function move(direction, state){
     return function(dispatch){
@@ -271,7 +279,6 @@ export function getMap(areaX, areaY){
 //Reducer
 
 export default function mapReducer(state=initialState, action) {
-    console.log(action)
     switch(action.type) {
         case GET_MAP + '_PENDING':
             return {
@@ -325,14 +332,15 @@ export default function mapReducer(state=initialState, action) {
         case MOVE:
             let {mod, type, letter, area, areaMap} = action.payload
             let activeSpot = {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
-            switch(letter){
+            switch(action.payload.letter){
                 case 'X':
-                    activeSpot = state.locations.filter(spot => {return(spot.x_location === mod && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                    activeSpot = state.locations.filter(spot => {return(spot.x_location === action.payload.mod && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                    break;
                 case 'Y':
-                    activeSpot = state.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === mod)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                    activeSpot = state.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === action.payload.mod)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                    break;
                 default: null
             }
-            console.log(activeSpot)
             
             return {
                 ...state,
@@ -342,6 +350,13 @@ export default function mapReducer(state=initialState, action) {
                 activeSpot
             }
             break;
+
+        case GO_BACK:
+            return {
+                ...state,
+                heroX: state.heroPrevX,
+                heroY: state.heroPrevY
+            }
 
 
         default:

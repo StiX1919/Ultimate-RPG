@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
-import { getMap, updateArea, discover, move} from '../../../../../ducks/reducers/mapReducer'
+import { getMap, updateArea, discover, move, goBack} from '../../../../../ducks/reducers/mapReducer'
 import { setMonster } from '../../../../../ducks/reducers/monsterReducer'
 
 
@@ -34,6 +34,7 @@ class WorldMap extends Component {
     this.moveMonsters = this.moveMonsters.bind(this)
     this.findMatchedMonsters = this.findMatchedMonsters.bind(this)
 
+    this.moveHandler = this.moveHandler.bind(this)
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
@@ -50,9 +51,9 @@ class WorldMap extends Component {
 
   //finds monsters sharing characters spot
   findMatchedMonsters(){
-    let {currentX, currentY} = this.state
-    let xArea = [currentX - 1, currentX, currentX + 1]
-    let yArea = [currentY - 1, currentY, currentY + 1]
+    let {heroX, heroY} = this.props.mapReducer
+    let xArea = [heroX - 1, heroX, heroX + 1]
+    let yArea = [heroX - 1, heroY, heroY + 1]
 
     let combatMons = this.state.areaMonsters.filter(mon => {
       return (xArea.includes(mon.X) && yArea.includes(mon.Y))
@@ -325,6 +326,16 @@ class WorldMap extends Component {
     }
   }
 
+
+  async moveHandler(direction){
+    try {
+      await this.props.move(direction, this.props.mapReducer)
+    }
+    finally{
+      this.moveMonsters()
+    }
+  }
+
   render() {
     const {area_name, area_type, x_location, y_location, discovered_by} = this.props.mapReducer.activeSpot
     console.log(this.props.mapReducer)
@@ -359,14 +370,20 @@ class WorldMap extends Component {
             })
           }
         </div>
-        <div className='directions'>
-          <span className='direction up' onClick={() => this.props.move('up', this.props.mapReducer)}/>
-          <div className='left-right'>
-            <span className='direction left' onClick={() => this.props.move('left', this.props.mapReducer)}/>
-            <span className='direction right' onClick={() => this.props.move('right', this.props.mapReducer)}/>
+        {x_location !== 'none' 
+          ? <div className='directions'>
+            <span className='direction up' onClick={() => this.moveHandler('up')}/>
+            <div className='left-right'>
+              <span className='direction left' onClick={() => this.moveHandler('left')}/>
+              <span className='direction right' onClick={() => this.moveHandler('right')}/>
+            </div>
+            <span className='direction down' onClick={() => this.moveHandler('down')}/>
           </div>
-          <span className='direction down' onClick={() => this.props.move('down', this.props.mapReducer)}/>
-        </div>
+          : <div>
+            <button>Enter New Land!</button>
+            <button onClick={this.props.goBack}>Return to the known.</button>
+          </div>
+        }
         <div className='infoBox'>
           <div className='spotInfo'>
             <h2>{x_location + ':' + y_location}</h2>
@@ -398,4 +415,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack })(WorldMap));
