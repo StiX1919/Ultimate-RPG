@@ -6,8 +6,8 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
-import { getMap, updateArea, discover, move, goBack, enterArea } from '../../../../../ducks/reducers/mapReducer'
-import { setMonster } from '../../../../../ducks/reducers/monsterReducer'
+import { getMap, updateArea, discover, move, goBack, enterArea, retreat } from '../../../../../ducks/reducers/mapReducer'
+import { setMonster, getMonsters } from '../../../../../ducks/reducers/monsterReducer'
 
 
 class WorldMap extends Component {
@@ -35,6 +35,8 @@ class WorldMap extends Component {
     this.findMatchedMonsters = this.findMatchedMonsters.bind(this)
 
     this.moveHandler = this.moveHandler.bind(this)
+    this.enterHandler = this.enterHandler.bind(this)
+    this.retreat = this.retreat.bind(this)
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
@@ -339,6 +341,18 @@ class WorldMap extends Component {
       this.moveMonsters()
     }
   }
+  enterHandler(){
+    this.props.getMonsters()
+    this.props.enterArea(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.locationType(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.props.mapReducer.locations))
+  }
+
+  async retreat(){
+    await this.props.goBack()
+      this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
+      this.props.retreat()
+      this.props.getMonsters()
+    
+  }
 
   render() {
     const {area_name, area_type, x_location, y_location, discovered_by} = this.props.mapReducer.activeSpot
@@ -383,9 +397,14 @@ class WorldMap extends Component {
             <span className='direction down' onClick={() => this.moveHandler('down')}/>
           </div>
           : <div>
-            <button onClick={() => this.props.enterArea(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.locationType(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.props.mapReducer.locations))}>Enter New Land!</button>
+            <button onClick={() => this.enterHandler()}>Enter New Land!</button>
             <button onClick={this.props.goBack}>Return to the known.</button>
           </div>
+        }
+        {/* build this up to leave entered zone and rebuild map from current area. also trigger monster rebuild when switching areas. 
+        */}
+        {this.props.mapReducer.entered &&
+          <button onClick={this.retreat}>Retreat!</button>
         }
         <div className='infoBox'>
           <div className='spotInfo'>
@@ -402,7 +421,7 @@ class WorldMap extends Component {
               return (
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
-                  <Link to={`/MegaRPG/battle/${monster.ind}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
+                  <Link to={`/MegaRPG/battle/${i}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
                     <button>Fight!!</button>
                   </Link>
                 </div>
@@ -418,4 +437,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea, retreat, getMonsters })(WorldMap));

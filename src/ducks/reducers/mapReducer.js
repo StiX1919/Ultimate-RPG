@@ -13,6 +13,7 @@ const MOVE = "MOVE"
 const GO_BACK = 'GO_BACK'
 
 const ENTER_AREA = 'ENTER_AREA'
+const RETREAT = 'RETREAT'
 
 
 //Initial State
@@ -28,13 +29,25 @@ const initialState = {
     heroY: 3,
     heroPrevX: 3,
     heroPrevY: 3,
+
+    retreatX: 3,
+    retreatY: 3,
     
     activeSpot: {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
+    entered: false,
     isLoading: false
 }
 
 
 //Action Creators
+export function retreat(){
+    return {
+        type: RETREAT,
+        payload: false
+    }
+
+}
+
 export function enterArea(X, Y, spotType){
     let numArr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
     let locations = []
@@ -84,7 +97,7 @@ export function enterArea(X, Y, spotType){
 
     return {
         type: ENTER_AREA,
-        payload: {areaMap, locations}
+        payload: {areaMap, locations, entered: true}
     }
 
 }
@@ -409,7 +422,19 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 areaMap: action.payload.areaMap,
                 locations: action.payload.locations,
-                activeSpot: action.payload.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                retreatX: state.heroPrevX,
+                retreatY: state.heroPrevY,
+                activeSpot: action.payload.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
+                entered: action.payload.entered
+            }
+        case RETREAT:
+            return {
+                ...state,
+                entered: action.payload,
+                heroX: state.retreatX,
+                heroY: state.retreatY,
+                activeSpot: state.locations.filter(spot => {return(spot.x_location === state.retreatX && spot.y_location === state.retreatY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
+                
             }
 
         default:

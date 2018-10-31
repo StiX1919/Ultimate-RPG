@@ -8,6 +8,7 @@ const GET_MONSTERS = 'GET_MONSTERS'
 const SET_MONSTER = 'SET_MONSTER'
 
 const ATTACKING = "ATTACKING"
+const REMOVE_MON = 'REMOVE_MON'
 
 
 
@@ -62,6 +63,12 @@ export function getMonsters() {
 
 }
 
+export function removeMonster(id){
+    return {
+        type: REMOVE_MON,
+        payload: id
+    }
+}
 
 
 
@@ -103,7 +110,15 @@ export default function monsterReducer(state=initialState, action) {
                 ...state,
                 currentMonster: action.payload
             }
-        
+
+        case REMOVE_MON:
+            let slicedMons = state.monsters.slice()
+            slicedMons.splice(action.payload, 1)
+            
+            return {
+                ...state,
+                monsters: slicedMons
+            }
 
         default:
             return state
