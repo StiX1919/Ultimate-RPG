@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
 import { getMap, updateArea, discover, move, goBack, enterArea, retreat } from '../../../../../ducks/reducers/mapReducer'
-import { setMonster, getMonsters, moveMonsters } from '../../../../../ducks/reducers/monsterReducer'
+import { setMonster, getMonsters, moveMonsters, matchedMonsters } from '../../../../../ducks/reducers/monsterReducer'
 
 
 class WorldMap extends Component {
@@ -31,7 +31,7 @@ class WorldMap extends Component {
     }
     // this.move = this.move.bind(this)
     this.locationType = this.locationType.bind(this)
-    this.moveMonsters = this.moveMonsters.bind(this)
+    // this.moveMonsters = this.moveMonsters.bind(this)
     this.findMatchedMonsters = this.findMatchedMonsters.bind(this)
 
     this.moveHandler = this.moveHandler.bind(this)
@@ -42,11 +42,8 @@ class WorldMap extends Component {
     if(!this.props.heroes[0]){
       window.location.href= '/MegaRPG'
     } 
-
-      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
-      this.setState({activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY))}, () => {
-        this.findMatchedMonsters()
-      })
+    this.props.matchedMonsters(this.props.mapReducer.heroX, this.props.mapReducer.heroY)
+      
   }
 
   //finds monsters sharing characters spot
@@ -55,7 +52,7 @@ class WorldMap extends Component {
     let xArea = [heroX - 1, heroX, heroX + 1]
     let yArea = [heroY - 1, heroY, heroY + 1]
 
-    let combatMons = this.state.areaMonsters.filter(mon => {
+    let combatMons = this.props.monsterReducer.monsters.filter(mon => {
       return (xArea.includes(mon.X) && yArea.includes(mon.Y))
     })
     this.setState({combatMons})
@@ -71,47 +68,47 @@ class WorldMap extends Component {
   //   })
   //   this.setState({areaMonsters})
   // }
-  moveMonsters(){
-    let types = ['X', 'Y']
-    let directions = ['>', '<']
+  // moveMonsters(){
+  //   let types = ['X', 'Y']
+  //   let directions = ['>', '<']
 
-    const movedMons = this.state.areaMonsters.map( monster => {
-      let randomMove = types[Math.floor(Math.random() * types.length)]
-      let randomDirec = directions[Math.floor(Math.random() * directions.length)]
+  //   const movedMons = this.state.areaMonsters.map( monster => {
+  //     let randomMove = types[Math.floor(Math.random() * types.length)]
+  //     let randomDirec = directions[Math.floor(Math.random() * directions.length)]
 
-      switch(randomDirec){
-        case '>':
-          if(randomMove === 'X'){
-            if(monster[randomMove] <= this.state.areaX * 10 - 1){
-             return ({...monster, [randomMove]: ++monster[randomMove]})
-            } else return (monster)
-          } else if(randomMove === 'Y'){
-            if(monster[randomMove] <= this.state.areaY * 10 - 1){
-             return ({...monster, [randomMove]: ++monster[randomMove]})
-            } else return (monster)
-          }
-          break;
-        case '<':
-          if(randomMove === 'X'){
-            if(monster[randomMove] > ((this.state.areaX - 1) * 10) + 1){
-             return ({...monster, [randomMove]: --monster[randomMove]})
-            } else return (monster)
-          } else if(randomMove === 'Y'){
-            if(monster[randomMove] > ((this.state.areaY - 1) * 10) + 1){
-             return ({...monster, [randomMove]: --monster[randomMove]})
-            } else return (monster)
-          }
-          break;
-        default: return null
-      }
+  //     switch(randomDirec){
+  //       case '>':
+  //         if(randomMove === 'X'){
+  //           if(monster[randomMove] <= this.state.areaX * 10 - 1){
+  //            return ({...monster, [randomMove]: ++monster[randomMove]})
+  //           } else return (monster)
+  //         } else if(randomMove === 'Y'){
+  //           if(monster[randomMove] <= this.state.areaY * 10 - 1){
+  //            return ({...monster, [randomMove]: ++monster[randomMove]})
+  //           } else return (monster)
+  //         }
+  //         break;
+  //       case '<':
+  //         if(randomMove === 'X'){
+  //           if(monster[randomMove] > ((this.state.areaX - 1) * 10) + 1){
+  //            return ({...monster, [randomMove]: --monster[randomMove]})
+  //           } else return (monster)
+  //         } else if(randomMove === 'Y'){
+  //           if(monster[randomMove] > ((this.state.areaY - 1) * 10) + 1){
+  //            return ({...monster, [randomMove]: --monster[randomMove]})
+  //           } else return (monster)
+  //         }
+  //         break;
+  //       default: return null
+  //     }
 
-    })
+  //   })
 
     
-    this.setState({areaMonsters: movedMons}, () => {
-      this.findMatchedMonsters()
-    })
-  }
+  //   this.setState({areaMonsters: movedMons}, () => {
+  //     this.findMatchedMonsters()
+  //   })
+  // }
 
 
 
@@ -334,21 +331,34 @@ class WorldMap extends Component {
   async moveHandler(direction){
     try{
       await this.props.move(direction, this.props.mapReducer)
-
-    } finally {
       this.props.moveMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.monsterReducer.monsters)
+
+    } catch(e) {
+      console.log(e)
+    }
+    finally {
+      this.props.matchedMonsters(this.props.mapReducer.heroX, this.props.mapReducer.heroY)
     }
   }
-  enterHandler(){
-    this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
-    this.props.enterArea(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.locationType(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.props.mapReducer.locations))
+  async enterHandler(){
+    try {
+      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.heroX, this.props.mapReducer.heroY)
+      await this.props.enterArea(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.locationType(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.props.mapReducer.locations))
+
+    } finally {
+      this.props.matchedMonsters(this.props.mapReducer.heroX, this.props.mapReducer.heroY)      
+    }
   }
 
   async retreat(){
-    await this.props.goBack()
+    try{
+      await this.props.goBack()
       this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
       this.props.retreat()
-      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
+      await this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
+    } finally {
+      this.props.matchedMonsters(this.props.mapReducer.retreatX, this.props.mapReducer.retreatY)
+    }
     
   }
 
@@ -415,7 +425,7 @@ class WorldMap extends Component {
             <h4>{discovered_by}</h4>
           </div>
           <div className='closeMonsters'>
-            {this.state.combatMons.map((monster, i) => {
+            {this.props.monsterReducer.combatMons.map((monster, i) => {
               return (
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
@@ -435,4 +445,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea, retreat, getMonsters, moveMonsters })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea, retreat, getMonsters, moveMonsters, matchedMonsters })(WorldMap));

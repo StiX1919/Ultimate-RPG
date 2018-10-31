@@ -23,7 +23,7 @@ class HeroHub extends Component {
 
   }
   componentDidMount() {
-    // this.props.getMonsters()
+    this.props.getMonsters(this.props.mapX, this.props.mapY)
     this.props.getMap(this.props.mapX, this.props.mapY)
 
     if(!this.props.heroes[0]){
