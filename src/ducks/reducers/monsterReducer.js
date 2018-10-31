@@ -10,6 +10,8 @@ const SET_MONSTER = 'SET_MONSTER'
 const ATTACKING = "ATTACKING"
 const REMOVE_MON = 'REMOVE_MON'
 
+const MOVE_MON = 'MOVE_MON'
+
 
 
 //Initial State
@@ -55,10 +57,21 @@ export function attack(newMon) {
     }
 }
 
-export function getMonsters() {
+export function getMonsters(X, Y) {
     return {
         type: GET_MONSTERS,
-        payload: axios.get('/api/getMonsters')
+        payload: axios.get('/api/getMonsters').then ( response => {
+                const areaMonsters = response.data.map(monster => {
+                    let randomX = Math.floor(Math.random() * (X * 10)) + 1
+                    let randomY = Math.floor(Math.random() * (Y * 10)) + 1
+                    
+                    return ({ X: randomX, Y: randomY, monsterInfo: {...monster}})
+                  })
+                return areaMonsters
+                // this.setState({currentMonster: response.data, currentMonsterHP: response.data.HP, monsterStatus: 'alive', exp: currExp})
+                
+              
+        })
     }
 
 }
@@ -70,11 +83,54 @@ export function removeMonster(id){
     }
 }
 
+export function moveMonsters(X, Y, mons){
+    let types = ['X', 'Y']
+    let directions = ['>', '<']
+
+    const movedMons = mons.map( monster => {
+      let randomMove = types[Math.floor(Math.random() * types.length)]
+      let randomDirec = directions[Math.floor(Math.random() * directions.length)]
+
+      switch(randomDirec){
+        case '>':
+          if(randomMove === 'X'){
+            if(monster[randomMove] <= X * 10 - 1){
+             return ({...monster, [randomMove]: ++monster[randomMove]})
+            } else return (monster)
+          } else if(randomMove === 'Y'){
+            if(monster[randomMove] <= Y * 10 - 1){
+             return ({...monster, [randomMove]: ++monster[randomMove]})
+            } else return (monster)
+          }
+          break;
+        case '<':
+          if(randomMove === 'X'){
+            if(monster[randomMove] > ((X - 1) * 10) + 1){
+             return ({...monster, [randomMove]: --monster[randomMove]})
+            } else return (monster)
+          } else if(randomMove === 'Y'){
+            if(monster[randomMove] > ((Y - 1) * 10) + 1){
+             return ({...monster, [randomMove]: --monster[randomMove]})
+            } else return (monster)
+          }
+          break;
+        default: return null
+      }
+
+      return {
+          type: MOVE_MON,
+          payload: movedMons
+      }
+
+    })
+}
+
 
 
 //Reducer
 
 export default function monsterReducer(state=initialState, action) {
+    console.log('mon reducer', action)
     switch(action.type) {
 
         case GET_MONSTER + "_PENDING":
@@ -102,7 +158,7 @@ export default function monsterReducer(state=initialState, action) {
             return {
                 ...state,
                 isLoading: false,
-                monsters: action.payload.data
+                monsters: action.payload
             }
 
         case SET_MONSTER:
@@ -118,6 +174,13 @@ export default function monsterReducer(state=initialState, action) {
             return {
                 ...state,
                 monsters: slicedMons
+            }
+
+
+        case MOVE_MON:
+            return {
+                ...state,
+                monsters: action.payload
             }
 
         default:

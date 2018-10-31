@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
 import { getMap, updateArea, discover, move, goBack, enterArea, retreat } from '../../../../../ducks/reducers/mapReducer'
-import { setMonster, getMonsters } from '../../../../../ducks/reducers/monsterReducer'
+import { setMonster, getMonsters, moveMonsters } from '../../../../../ducks/reducers/monsterReducer'
 
 
 class WorldMap extends Component {
@@ -43,7 +43,7 @@ class WorldMap extends Component {
       window.location.href= '/MegaRPG'
     } 
 
-      this.addMonLocation(this.props.monsterReducer.monsters)
+      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
       this.setState({activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY))}, () => {
         this.findMatchedMonsters()
       })
@@ -62,17 +62,15 @@ class WorldMap extends Component {
   }
 
   //generates locations for the monsters to start from
-  addMonLocation(mons){
-    let ind = 0
-    const areaMonsters = mons.map(monster => {
-      let randomX = Math.floor(Math.random() * (this.state.areaX * 10)) + 1
-      let randomY = Math.floor(Math.random() * (this.state.areaY * 10)) + 1
-      ind++
+  // addMonLocation(mons){
+  //   const areaMonsters = mons.map(monster => {
+  //     let randomX = Math.floor(Math.random() * (this.state.areaX * 10)) + 1
+  //     let randomY = Math.floor(Math.random() * (this.state.areaY * 10)) + 1
       
-      return ({ind: ind, X: randomX, Y: randomY, monsterInfo: {...monster}})
-    })
-    this.setState({areaMonsters})
-  }
+  //     return ({ind: ind, X: randomX, Y: randomY, monsterInfo: {...monster}})
+  //   })
+  //   this.setState({areaMonsters})
+  // }
   moveMonsters(){
     let types = ['X', 'Y']
     let directions = ['>', '<']
@@ -334,15 +332,15 @@ class WorldMap extends Component {
 
 
   async moveHandler(direction){
-    try {
+    try{
       await this.props.move(direction, this.props.mapReducer)
-    }
-    finally{
-      this.moveMonsters()
+
+    } finally {
+      this.props.moveMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.monsterReducer.monsters)
     }
   }
   enterHandler(){
-    this.props.getMonsters()
+    this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     this.props.enterArea(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.locationType(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.props.mapReducer.locations))
   }
 
@@ -350,7 +348,7 @@ class WorldMap extends Component {
     await this.props.goBack()
       this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
       this.props.retreat()
-      this.props.getMonsters()
+      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     
   }
 
@@ -372,7 +370,7 @@ class WorldMap extends Component {
                         ? <img style={{height: '50px', width: '50px'}} src='https://s1.piq.land/2015/07/23/wyTJ7WMj9DgDrDoJ3xYODfGq_400x400.png' alt='hello'/>
                         : null
                       }
-                      {this.state.areaMonsters.map( (mon, i) => {
+                      {this.props.monsterReducer.monsters.map( (mon, i) => {
                         if(mon.X === spot.x && mon.Y === spot.y){
                           return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
                         }
@@ -437,4 +435,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea, retreat, getMonsters })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea, retreat, getMonsters, moveMonsters })(WorldMap));
