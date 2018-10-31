@@ -342,7 +342,7 @@ class WorldMap extends Component {
   }
   async enterHandler(){
     try {
-      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.heroX, this.props.mapReducer.heroY)
+      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
       await this.props.enterArea(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.locationType(this.props.mapReducer.heroX, this.props.mapReducer.heroY, this.props.mapReducer.locations))
 
     } finally {

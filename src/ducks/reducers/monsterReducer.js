@@ -47,7 +47,7 @@ export function attack(newMon) {
   };
 }
 
-export function getMonsters(mapX, mapY, heroX, heroY) {
+export function getMonsters(X, Y) {
   return {
     type: GET_MONSTERS,
     payload: axios.get('/api/getMonsters').then(response => {
