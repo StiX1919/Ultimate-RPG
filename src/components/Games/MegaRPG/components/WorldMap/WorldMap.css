@@ -19,11 +19,14 @@
 .directions {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
+  justify-content: center;
 }
 
 .left-right {
   display: flex;
+  justify-content: space-between;
+  width: 120px;
 }
 
 .direction {
