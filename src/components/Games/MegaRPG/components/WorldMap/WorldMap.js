@@ -193,7 +193,7 @@ class WorldMap extends Component {
           </div>
           : <div>
             <button onClick={() => this.enterHandler()}>Enter New Land!</button>
-            <button onClick={this.props.goBack}>Return to the known.</button>
+            <button onClick={() => this.props.goBack(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)}>Return to the known.</button>
           </div>
         }
         {/* build this up to leave entered zone and rebuild map from current area. also trigger monster rebuild when switching areas. 

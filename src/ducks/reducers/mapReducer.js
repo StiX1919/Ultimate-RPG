@@ -21,6 +21,8 @@ const initialState = {
 
     mapX: 1,
     mapY: 1,
+    mapPrevX: 1,
+    mapPrevY: 1,
 
     heroX: 3,
     heroY: 3,
@@ -102,10 +104,16 @@ export function enterArea(X, Y, spotType){
 
 }
 
-export function goBack(){
-    return {
-        type: GO_BACK,
-        payload: 'none'
+export function goBack(X, Y, oldX, oldY){
+    return function(dispatch){
+        if(X !== oldX || Y !== oldY){
+            dispatch(getMap(oldX, oldY))
+        }
+
+        dispatch({
+            type: GO_BACK,
+            payload: {X, Y}
+        })
     }
 }
 
@@ -116,6 +124,7 @@ export function move(direction, state){
         let type = 0
         let mod = 0
         let area = 0
+        let oldArea
         
         if(direction === 'up' || direction === 'down'){
             type = state.heroY
@@ -124,14 +133,20 @@ export function move(direction, state){
             switch(direction){
                 case 'up':
                 if(state.heroY >= state.mapY * 10){
+                    oldArea = state.mapY
                     area = ++state.mapY
-                    dispatch(getMap(state.mapX, state.mapY))
+                    if(state.entered === false){
+                        dispatch(getMap(state.mapX, state.mapY))
+                    }
                 } else area = state.mapY
                 break;
                 case 'down':
                 if(state.heroY - 1 < ((state.mapY - 1) * 10) + 1){
+                    oldArea = state.mapY
                     area = --state.mapY
-                    dispatch(getMap(state.mapX, state.mapY))
+                    if(state.entered === false){
+                        dispatch(getMap(state.mapX, state.mapY))
+                    }
                 } else area = state.mapY
                 break;
                 default: area = state.mapY
@@ -142,14 +157,20 @@ export function move(direction, state){
             switch(direction){
                 case 'right':
                 if(state.heroX >= (state.mapX * 10)){
+                    oldArea = state.mapX
                     area = ++state.mapX
-                    dispatch(getMap(state.mapX, state.mapY))
+                    if(state.entered === false){
+                        dispatch(getMap(state.mapX, state.mapY))
+                    }
                 } else area = state.mapX
                 break;
                 case 'left':
                 if(state.heroX - 1 < ((state.mapX - 1) * 10) + 1){
+                    oldArea = state.mapX
                     area = --state.mapX
-                    dispatch(getMap(state.mapX, state.mapY))
+                    if(state.entered === false){
+                        dispatch(getMap(state.mapX, state.mapY))
+                    }
                 } else area = state.mapX
                 break;
                 
@@ -170,8 +191,11 @@ export function move(direction, state){
                 mod,
                 type,
                 area,
+                oldArea,
+                entered: state.entered
             }
         })
+        
     }
 }
 
@@ -295,7 +319,7 @@ export default function mapReducer(state=initialState, action) {
                 isLoading: false,
                 locations: action.payload.locations,
                 areaMap: action.payload.areaMap,
-                activeSpot: action.payload.locations.find(spot => (spot.x_location === state.heroX && spot.y_location === state.heroY))
+                activeSpot: action.payload.locations.find(spot => (spot.x_location === state.heroX && spot.y_location === state.heroY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
             }
 
         case UPDATE_AREA:
@@ -307,30 +331,44 @@ export default function mapReducer(state=initialState, action) {
 
 
         case MOVE:
-            let {mod, type, letter, area} = action.payload
+            let {mod, type, letter, area, oldArea, entered} = action.payload
             let otherLet = ''
             let otherData = 0
+            let otherArea = 0
+
             let activeSpot = {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
             switch(action.payload.letter){
                 case 'X':
                     otherLet = 'Y'
                     otherData = state.heroY
+                    otherArea = state.mapY
                     activeSpot = state.locations.filter(spot => {return(spot.x_location === action.payload.mod && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
                     break;
                 case 'Y':
                     otherLet = 'X'
                     otherData = state.heroX
+                    otherArea = state.mapX
                     activeSpot = state.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === action.payload.mod)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
                     break;
                 default: return null
             }
+            if(entered === true){
+                if(mod > 10){
+                    mod = 10
+                } else if(mod < 1){
+                    mod = 1
+                }
+            }
+            console.log(state.mapX, state.mapY)
             
             return {
                 ...state,
                 [`hero${letter}`]: mod,
                 [`heroPrev${letter}`]: type,
-                [`map${letter}`]: area,
                 [`heroPrev${otherLet}`]: otherData,
+                [`map${letter}`]: area,
+                [`mapPrev${letter}`]: oldArea,
+                [`mapPrev${otherLet}`]: otherArea,
                 activeSpot
             }
 
@@ -340,6 +378,8 @@ export default function mapReducer(state=initialState, action) {
                 ...state,
                 heroX: state.heroPrevX,
                 heroY: state.heroPrevY,
+                mapX: state.mapPrevX,
+                mapY: state.mapPrevY,
                 activeSpot: state.locations.filter(spot => {return(spot.x_location === state.heroPrevX && spot.y_location === state.heroPrevY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
             }
 
