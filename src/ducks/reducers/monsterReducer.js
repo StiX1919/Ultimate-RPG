@@ -51,11 +51,13 @@ export function getMonsters(X, Y) {
   return {
     type: GET_MONSTERS,
     payload: axios.get('/api/getMonsters').then(response => {
+      let index = 0
       const areaMonsters = response.data.map(monster => {
         let randomX = Math.floor(Math.random() * (X * 10)) + 1;
         let randomY = Math.floor(Math.random() * (Y * 10)) + 1;
+        index += 1
 
-        return { X: randomX, Y: randomY, monsterInfo: { ...monster } };
+        return { index, X: randomX, Y: randomY, monsterInfo: { ...monster } };
       });
       return areaMonsters;
     })
@@ -164,8 +166,11 @@ export default function monsterReducer(state = initialState, action) {
       };
 
     case REMOVE_MON:
-      let slicedMons = state.monsters.slice();
-      slicedMons.splice(action.payload, 1);
+      let slicedMons = state.monsters.filter(monster => {
+        if(monster.index !== action.payload){
+          return true
+        }
+      });
 
       return {
         ...state,

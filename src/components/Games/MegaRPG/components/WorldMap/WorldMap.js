@@ -412,7 +412,12 @@ class WorldMap extends Component {
         {/* build this up to leave entered zone and rebuild map from current area. also trigger monster rebuild when switching areas. 
         */}
         {this.props.mapReducer.entered &&
-          <button onClick={this.retreat}>Retreat!</button>
+          <div>
+            <button onClick={this.retreat}>Retreat!</button>
+            {!this.props.monsterReducer.monsters[0] &&
+              <button>Clear and discover!</button>
+            }
+          </div>
         }
         <div className='infoBox'>
           <div className='spotInfo'>
@@ -429,7 +434,7 @@ class WorldMap extends Component {
               return (
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
-                  <Link to={`/MegaRPG/battle/${i}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
+                  <Link to={`/MegaRPG/battle/${monster.index}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
                     <button>Fight!!</button>
                   </Link>
                 </div>
