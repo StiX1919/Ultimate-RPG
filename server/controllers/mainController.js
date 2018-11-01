@@ -89,6 +89,7 @@ let mappedMonsters = []
         })
     },
     newPlace = (req, res) => {
+        console.log('hit')
         const {
             area_name, area_type, area_x, area_y, discovered_by, x_location, y_location
         } = req.body

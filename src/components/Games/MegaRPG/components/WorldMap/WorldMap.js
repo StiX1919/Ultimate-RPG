@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
-import { getMap, updateArea, discover, move, goBack, enterArea, retreat } from '../../../../../ducks/reducers/mapReducer'
+import { getMap, updateArea, move, goBack, enterArea, retreat } from '../../../../../ducks/reducers/mapReducer'
 import { setMonster, getMonsters, moveMonsters, matchedMonsters } from '../../../../../ducks/reducers/monsterReducer'
 
 
@@ -37,6 +37,8 @@ class WorldMap extends Component {
     this.moveHandler = this.moveHandler.bind(this)
     this.enterHandler = this.enterHandler.bind(this)
     this.retreat = this.retreat.bind(this)
+
+    this.discoverHandler = this.discoverHandler.bind(this)
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
@@ -57,59 +59,6 @@ class WorldMap extends Component {
     })
     this.setState({combatMons})
   }
-
-  //generates locations for the monsters to start from
-  // addMonLocation(mons){
-  //   const areaMonsters = mons.map(monster => {
-  //     let randomX = Math.floor(Math.random() * (this.state.areaX * 10)) + 1
-  //     let randomY = Math.floor(Math.random() * (this.state.areaY * 10)) + 1
-      
-  //     return ({ind: ind, X: randomX, Y: randomY, monsterInfo: {...monster}})
-  //   })
-  //   this.setState({areaMonsters})
-  // }
-  // moveMonsters(){
-  //   let types = ['X', 'Y']
-  //   let directions = ['>', '<']
-
-  //   const movedMons = this.state.areaMonsters.map( monster => {
-  //     let randomMove = types[Math.floor(Math.random() * types.length)]
-  //     let randomDirec = directions[Math.floor(Math.random() * directions.length)]
-
-  //     switch(randomDirec){
-  //       case '>':
-  //         if(randomMove === 'X'){
-  //           if(monster[randomMove] <= this.state.areaX * 10 - 1){
-  //            return ({...monster, [randomMove]: ++monster[randomMove]})
-  //           } else return (monster)
-  //         } else if(randomMove === 'Y'){
-  //           if(monster[randomMove] <= this.state.areaY * 10 - 1){
-  //            return ({...monster, [randomMove]: ++monster[randomMove]})
-  //           } else return (monster)
-  //         }
-  //         break;
-  //       case '<':
-  //         if(randomMove === 'X'){
-  //           if(monster[randomMove] > ((this.state.areaX - 1) * 10) + 1){
-  //            return ({...monster, [randomMove]: --monster[randomMove]})
-  //           } else return (monster)
-  //         } else if(randomMove === 'Y'){
-  //           if(monster[randomMove] > ((this.state.areaY - 1) * 10) + 1){
-  //            return ({...monster, [randomMove]: --monster[randomMove]})
-  //           } else return (monster)
-  //         }
-  //         break;
-  //       default: return null
-  //     }
-
-  //   })
-
-    
-  //   this.setState({areaMonsters: movedMons}, () => {
-  //     this.findMatchedMonsters()
-  //   })
-  // }
-
 
 
   locationType(X, Y, spots){
@@ -148,184 +97,6 @@ class WorldMap extends Component {
       return mapTypes[Math.floor(Math.random() * (mapTypes.length - 1))]
   }
 
-  // async move(e){
-  //   this.moveMonsters()
-
-  //   let spotType = ''
-  //   switch(e.key){
-  //     case 'ArrowRight':
-  //       this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX + 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-  //       spotType = this.locationType(this.state.currentX + 1, this.state.currentY, this.props.mapReducer.locations)
-        
-  //           if(this.state.currentX + 1 > this.state.areaX * 10) {
-  //             axios.post('/api/newPlace', {
-  //               area_name: 'none',
-  //               area_type: spotType,
-  //               area_x: this.state.areaX + 1,
-  //               area_y: this.state.areaY,
-  //               discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //               x_location: this.state.currentX,
-  //               y_location: this.state.currentY
-  //           }).then(response => {
-  //               this.setState({areaX: this.state.areaX + 1})
-  //               // this.props.getMap(this.state.areaX + 1, this.state.areaY)
-  //               this.props.updateArea(this.state.areaX, this.state.areaY)
-
-      
-  //               this.props.discover({
-  //                   area_x: this.state.areaX,
-  //                   area_y: this.state.areaY,
-  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //                   x_location: this.state.currentX,
-  //                   y_location: this.state.currentY
-  //               }, response.data, spotType)
-
-  //             })
-             
-
-            
-  //           } else {
-                
-  //               this.props.discover({
-  //                   area_x: this.state.areaX,
-  //                   area_y: this.state.areaY,
-  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //                   x_location: this.state.currentX + 1,
-  //                   y_location: this.state.currentY
-  //               }, this.props.mapReducer.locations, spotType)
-  //           }
-        
-  //       break;
-
-  //     case 'ArrowLeft':
-  //         this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentX: this.state.currentX - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX - 1 && spot.y_location === this.state.currentY)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-  //         spotType = this.locationType(this.state.currentX - 1, this.state.currentY, this.props.mapReducer.locations)
-
-  //         if(this.state.currentX - 1 < ((this.state.areaX - 1) * 10) + 1) {
-
-  //           axios.post('/api/newPlace', {
-  //             area_name: 'none',
-  //             area_type: spotType,
-  //             area_x: this.state.areaX - 1,
-  //             area_y: this.state.areaY,
-  //             discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //             x_location: this.state.currentX - 1,
-  //             y_location: this.state.currentY
-  //         }).then(response => {
-  //             this.setState({areaX: this.state.areaX - 1})
-  //             // this.props.getMap(this.state.areaX - 1, this.state.areaY)
-  //             this.props.updateArea(this.state.areaX, this.state.areaY)
-
-
-  //             this.props.discover({
-  //                 area_x: this.state.areaX,
-  //                 area_y: this.state.areaY,
-  //                 discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //                 x_location: this.state.currentX,
-  //                 y_location: this.state.currentY
-  //             }, response.data, spotType)
-
-  //           })
-
-    
-  //           } else {
-                
-  //               this.props.discover({
-  //                   area_x: this.state.areaX,
-  //                   area_y: this.state.areaY,
-  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //                   x_location: this.state.currentX - 1,
-  //                   y_location: this.state.currentY
-  //               }, this.props.mapReducer.locations, spotType)
-  //           }
-  //         break;
-  //     case 'ArrowUp':
-  //         this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY + 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY + 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-  //         spotType = this.locationType(this.state.currentX, this.state.currentY + 1, this.props.mapReducer.locations)
-            
-  //         if(this.state.currentY + 1 > this.state.areaY * 10) {
-  //           axios.post('/api/newPlace', {
-  //             area_name: 'none',
-  //             area_type: spotType,
-  //             area_x: this.state.areaX,
-  //             area_y: this.state.areaY + 1,
-  //             discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //             x_location: this.state.currentX,
-  //             y_location: this.state.currentY + 1
-  //         }).then(response => {
-
-  //             this.setState({areaY: this.state.areaY + 1})
-  //             // this.props.getMap(this.state.areaX, this.state.areaY + 1)
-  //             this.props.updateArea(this.state.areaX, this.state.areaY)
-  //             this.props.discover({
-  //                 area_x: this.state.areaX,
-  //                 area_y: this.state.areaY,
-  //                 discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //                 x_location: this.state.currentX,
-  //                 y_location: this.state.currentY
-  //             }, response.data, spotType)
-
-  //           })
-
-    
-  //           } else {
-                
-  //               this.props.discover({
-  //                   area_x: this.state.areaX,
-  //                   area_y: this.state.areaY,
-  //                   discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //                   x_location: this.state.currentX,
-  //                   y_location: this.state.currentY + 1
-  //               }, this.props.mapReducer.locations, spotType)
-  //           }
-  //         break;
-  //     case 'ArrowDown':
-  //         this.setState({prevX: this.state.currentX, prevY: this.state.currentY, currentY: this.state.currentY - 1, activeSpot: this.props.mapReducer.locations.find(spot => (spot.x_location === this.state.currentX && spot.y_location === this.state.currentY - 1)) || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}})
-  //         spotType = this.locationType(this.state.currentX, this.state.currentY - 1, this.props.mapReducer.locations)
-          
-  //         if(this.state.currentY - 1 < ((this.state.areaY - 1) * 10) + 1) {
-  //           axios.post('/api/newPlace', {
-  //             area_name: 'none',
-  //             area_type: spotType,
-  //             area_x: this.state.areaX,
-  //             area_y: this.state.areaY - 1,
-  //             discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //             x_location: this.state.currentX,
-  //             y_location: this.state.currentY - 1
-  //         }).then(response => {
-  //           this.setState({areaY: this.state.areaY - 1})
-  //           // this.props.getMap(this.state.areaX, this.state.areaY - 1)
-  //           this.props.updateArea(this.state.areaX, this.state.areaY)
-
-          
-          
-  //           this.props.discover({
-  //               area_x: this.state.areaX,
-  //               area_y: this.state.areaY,
-  //               discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //               x_location: this.state.currentX,
-  //               y_location: this.state.currentY
-  //           }, response.data, spotType)
-
-  //         })
-
-            
-
-    
-  //   } else {
-        
-  //       this.props.discover({
-  //           area_x: this.state.areaX,
-  //           area_y: this.state.areaY,
-  //           discovered_by: this.props.heroReducer.currentHero.hero_name,
-  //           x_location: this.state.currentX,
-  //           y_location: this.state.currentY - 1
-  //       }, this.props.mapReducer.locations, spotType)
-  //   }
-  //         break;
-  //     default: return null
-  //   }
-  // }
 
 
   async moveHandler(direction){
@@ -360,6 +131,22 @@ class WorldMap extends Component {
       this.props.matchedMonsters(this.props.mapReducer.retreatX, this.props.mapReducer.retreatY)
     }
     
+  }
+
+  discoverHandler(){
+    axios.post('/api/newPlace', {
+      area_name: 'none',
+      area_type: this.props.mapReducer.areaMap[0][0].type,
+      area_x: this.props.mapReducer.mapX,
+      area_y: this.props.mapReducer.mapX,
+      discovered_by: this.props.heroReducer.currentHero.hero_name,
+      x_location: this.props.mapReducer.clearLocX,
+      y_location: this.props.mapReducer.clearLocY
+    }).then(res => {
+      this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapX)
+      this.props.retreat()
+      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
+    })
   }
 
   render() {
@@ -415,7 +202,9 @@ class WorldMap extends Component {
           <div>
             <button onClick={this.retreat}>Retreat!</button>
             {!this.props.monsterReducer.monsters[0] &&
-              <button>Clear and discover!</button>
+              <button onClick={() => this.discoverHandler()} >
+                  Clear and discover!
+              </button>
             }
           </div>
         }
@@ -450,4 +239,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, discover, setMonster, move, goBack, enterArea, retreat, getMonsters, moveMonsters, matchedMonsters })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, setMonster, move, goBack, enterArea, retreat, getMonsters, moveMonsters, matchedMonsters })(WorldMap));

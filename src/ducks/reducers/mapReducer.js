@@ -6,9 +6,6 @@ import axios from "axios";
 const GET_MAP = "GET_MAP"
 const UPDATE_AREA = 'UPDATE_AREA'
 
-const DISCOVER = 'DISCOVER'
-const NO_DISCOVER = 'NO_DISCOVER'
-
 const MOVE = "MOVE"
 const GO_BACK = 'GO_BACK'
 
@@ -32,6 +29,9 @@ const initialState = {
 
     retreatX: 3,
     retreatY: 3,
+
+    clearLocX: null,
+    clearLocY: null,
     
     activeSpot: {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
     entered: false,
@@ -97,7 +97,7 @@ export function enterArea(X, Y, spotType){
 
     return {
         type: ENTER_AREA,
-        payload: {areaMap, locations, entered: true}
+        payload: {areaMap, locations, entered: true, X, Y}
     }
 
 }
@@ -175,18 +175,6 @@ export function move(direction, state){
     }
 }
 
-//need to get locations from db before map is built when area is changed
-// export function getMap(X, Y) {
-//     return {
-//         type: GET_MAP,
-//         payload: axios.get(`/api/getMap/${X}/${Y}`)
-//         .then(response => {
-//             let builtMap = buildMap(response.data, X, Y)
-//             console.log(builtMap)
-//             return {locations: response.data, builtMap}
-//         })
-//     }    
-// }
 export function updateArea(X, Y) {
     return {
         type: UPDATE_AREA,
@@ -292,49 +280,6 @@ export function getMap(areaX, areaY){
 
 
 
-  export function discover(discObj, discovered, spotType) {
-    const {area_x, area_y, discovered_by, x_location, y_location} = discObj
-
-    let spots = discovered.slice().filter(spot => {
-        return (spot.x_location === x_location && spot.y_location === y_location)
-    })
-
-
-    if(!spots[0]){
-        return {
-            type: DISCOVER,
-            payload: axios.post('/api/newPlace', {
-                            area_name: 'none',
-                            area_type: spotType,
-                            area_x,
-                            area_y,
-                            discovered_by,
-                            x_location,
-                            y_location
-                    }).then(res => {
-                        let builtMap = getMap(area_x, area_y)
-                        return {
-                            spots: res.data,
-                            builtMap
-                        }
-                    }).catch(err => console.log(err))
-        }
-                
-                    
-        } else {
-            return {
-                type: NO_DISCOVER,
-                payload: {
-                    spots: discovered,
-                    builtMap: getMap(area_x, area_y)
-                }
-            }
-
-        }
-        
-  }
-
-
 //Reducer
 
 export default function mapReducer(state=initialState, action) {
@@ -360,25 +305,6 @@ export default function mapReducer(state=initialState, action) {
                 mapY: action.payload.Y
             }
 
-        case DISCOVER + '_PENDING':
-            
-            return {
-                ...state,
-                isLoading: true
-            }
-        case DISCOVER + '_FULFILLED':
-            return {
-                ...state,
-                isLoading: false, 
-                areaMap: action.payload.builtMap,
-                locations: action.payload.spots
-            }
-        case NO_DISCOVER:
-            return{
-                ...state,
-                areaMap: action.payload.builtMap,
-                locations: action.payload.spots
-            }
 
         case MOVE:
             let {mod, type, letter, area} = action.payload
@@ -425,7 +351,9 @@ export default function mapReducer(state=initialState, action) {
                 retreatX: state.heroPrevX,
                 retreatY: state.heroPrevY,
                 activeSpot: action.payload.locations.filter(spot => {return(spot.x_location === state.heroX && spot.y_location === state.heroY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
-                entered: action.payload.entered
+                entered: action.payload.entered,
+                clearLocX: action.payload.X,
+                clearLocY: action.payload.Y
             }
         case RETREAT:
             return {

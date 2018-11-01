@@ -125,7 +125,6 @@ export function matchedMonsters(X, Y){
 //Reducer
 
 export default function monsterReducer(state = initialState, action) {
-    console.log(action.payload)
   switch (action.type) {
     case GET_MONSTER + '_PENDING':
       return Object.assign({}, state, {
@@ -167,9 +166,9 @@ export default function monsterReducer(state = initialState, action) {
 
     case REMOVE_MON:
       let slicedMons = state.monsters.filter(monster => {
-        if(monster.index !== action.payload){
-          return true
-        }
+        console.log(monster.index, action.payload, monster.index === action.payload)
+        return monster.index !== +action.payload
+          
       });
 
       return {
