@@ -102,7 +102,7 @@ class WorldMap extends Component {
   async moveHandler(direction){
     try{
       await this.props.move(direction, this.props.mapReducer)
-      this.props.moveMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.monsterReducer.monsters)
+      this.props.moveMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.monsterReducer.monsters, this.props.mapReducer.entered)
 
     } catch(e) {
       console.log(e)
@@ -124,7 +124,7 @@ class WorldMap extends Component {
   async retreat(){
     try{
       await this.props.goBack()
-      this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
+      this.props.getMap(this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)
       this.props.retreat()
       await this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     } finally {
@@ -138,12 +138,12 @@ class WorldMap extends Component {
       area_name: 'none',
       area_type: this.props.mapReducer.areaMap[0][0].type,
       area_x: this.props.mapReducer.mapX,
-      area_y: this.props.mapReducer.mapX,
+      area_y: this.props.mapReducer.mapY,
       discovered_by: this.props.heroReducer.currentHero.hero_name,
       x_location: this.props.mapReducer.clearLocX,
       y_location: this.props.mapReducer.clearLocY
     }).then(res => {
-      this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapX)
+      this.props.getMap(this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)
       this.props.retreat()
       this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     })

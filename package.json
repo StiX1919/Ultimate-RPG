@@ -10,6 +10,7 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "massive": "^5.5.1",
+    "node-sass": "^4.9.4",
     "passport": "^0.4.0",
     "passport-auth0": "^1.0.0",
     "pixel-grid-react": "^0.0.4",
@@ -19,7 +20,7 @@
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.5",
+    "react-scripts": "2.0.3",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-promise-middleware": "^5.1.1",
@@ -31,5 +32,11 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

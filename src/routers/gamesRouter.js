@@ -14,7 +14,7 @@ import HeroHub from '../components/Games/MegaRPG/components/HeroHub/HeroHub'
 //Pixart links
 import PixelArt from '../components/Games/PixelArt/PixelArt'
 
-import Games from '../components/Games/Games'
+import Landing from '../components/Landing/Landing'
 
 
 //work on getting the map update call to work before the transition to a new area today
@@ -29,6 +29,6 @@ export default (
             
             <Route path='/PixelArt' component={PixelArt}/>
 
-            <Route path='/' exact component={Games}/>
+            <Route path='/' exact component={Landing}/>
         </Switch>
     )

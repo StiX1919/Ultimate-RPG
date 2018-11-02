@@ -71,9 +71,13 @@ export function removeMonster(id) {
   };
 }
 
-export function moveMonsters(X, Y, mons) {
+export function moveMonsters(X, Y, mons, entered) {
   let types = ['X', 'Y'];
   let directions = ['>', '<'];
+  if(entered === true){
+    X = 1
+    Y = 1
+  }
 
   const movedMons = mons.map(monster => {
     let randomMove = types[Math.floor(Math.random() * types.length)];
