@@ -3,7 +3,22 @@
 }
 
 
+.testPic {
+    height: 50px;
+    width: 50px;
+    animation: enterFromLeft 1s forwards
+}
 
+@keyframes enterFromLeft {
+    from{
+        opacity: 0;
+        left: 200px
+    }
+    to{
+        opacity: 1;
+        left: 100px
+    }
+}
 
 
 
@@ -11,9 +26,6 @@
     display: flex;
     flex-direction: column
 }
-
-
-
 
 
 .square-top {
