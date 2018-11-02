@@ -35,11 +35,11 @@ const {getClasses, getRaces, createNewHero, getHeroes, demoHero, getMap, newPlac
 // app.use(express.static(`${__dirname}/public/build`));
 
 
-massive(process.env.CONNECTION_STRING)
-  .then(db => {
-    app.set("db", db);
-  })
-  .catch(err => console.log(err));
+// massive(process.env.CONNECTION_STRING)
+//   .then(db => {
+//     app.set("db", db);
+//   })
+//   .catch(err => console.log('massive-err', err));
 
 app.use(json());
 app.use(cors());
