@@ -9,7 +9,7 @@ class Games extends Component {
             links: ['MegaRPG', 'PixelArt']
         }
     }
-
+//try to start styling tomorrow
 
   render() {
     let navLinks = this.state.links.map(link => {
