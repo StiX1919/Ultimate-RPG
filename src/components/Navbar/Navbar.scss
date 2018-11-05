@@ -5,6 +5,9 @@
 
     height: 80px;
     width: 100%;
+
+    background: #6F8695;
+    color: #1C448E
 }
 .navContents {
     display: flex;
@@ -36,7 +39,7 @@
 .square-top .top-1{
     height: 0;
     width: 0;
-    border-bottom: solid black 20px;
+    border-bottom: solid #EE6352 20px;
     border-left: 70px solid transparent;
     border-right: 70px solid transparent;
     animation: spin-top-top 10s forwards infinite linear
@@ -44,7 +47,7 @@
 .square-top .top-2{
     height: 0;
     width: 0;
-    border-top: solid black 20px;
+    border-top: solid #EE6352 20px;
     border-left: 70px solid transparent;
     border-right: 70px solid transparent;
     animation: spin-top-bottom 10s forwards infinite linear
@@ -74,19 +77,19 @@
     0% {
         border-left: 100px solid transparent;
         border-right: 20px solid transparent;
-        border-bottom: solid black 20px;
+        border-bottom: solid #EE6352 20px;
         
     }
     50%{
         border-left: 20px solid transparent;
         border-right: 100px solid transparent;
-        border-bottom: solid black 20px;
+        border-bottom: solid #EE6352 20px;
         
     }
     100% {
         border-left: 100px solid transparent;
         border-right: 20px solid transparent;
-        border-bottom: solid black 20px;
+        border-bottom: solid #EE6352 20px;
         
     }
 }
@@ -94,19 +97,19 @@
     0% {
         border-right: 100px solid transparent;
         border-left: 20px solid transparent;
-        border-top: solid black 20px;
+        border-top: solid #EE6352 20px;
         
     }
     50%{
         border-right: 20px solid transparent;
         border-left: 100px solid transparent;
-        border-top: solid black 20px;
+        border-top: solid #EE6352 20px;
         
     }
     100% {
         border-right: 100px solid transparent;
         border-left: 20px solid transparent;
-        border-top: solid black 20px;
+        border-top: solid #EE6352 20px;
         
     }
    

@@ -15,24 +15,21 @@ import HeroHub from '../components/Games/MegaRPG/components/HeroHub/HeroHub'
 import PixelArt from '../components/Games/PixelArt/PixelArt'
 
 import Landing from '../components/Landing/Landing'
-import Navbar from '../components/Navbar/Navbar'
 
 
 //work on getting the map update call to work before the transition to a new area today
 export default (
-        <div>
-            <Navbar />
-            <Switch>
-                <Route path='/MegaRPG/battle/:monsterID' component={AdventureScreen} />
-                <Route path='/MegaRPG/Map' component={WorldMap} />         
-                <Route path='/MegaRPG/hero/:heroID' component={HeroHub} /> 
-                <Route path='/MegaRPG/CharacterSelect' component={CharacterSelect}/>
-                <Route path='/MegaRPG/CreateCharacter' component={CreateCharacter}/>
-                <Route path='/MegaRPG' component={MegaRPG}/>
-                
-                <Route path='/PixelArt' component={PixelArt}/>
+        
+        <Switch>
+            <Route path='/MegaRPG/battle/:monsterID' component={AdventureScreen} />
+            <Route path='/MegaRPG/Map' component={WorldMap} />         
+            <Route path='/MegaRPG/hero/:heroID' component={HeroHub} /> 
+            <Route path='/MegaRPG/CharacterSelect' component={CharacterSelect}/>
+            <Route path='/MegaRPG/CreateCharacter' component={CreateCharacter}/>
+            <Route path='/MegaRPG' component={MegaRPG}/>
+            
+            <Route path='/PixelArt' component={PixelArt}/>
 
-                <Route path='/' exact component={Landing}/>
-            </Switch>
-        </div>
+            <Route path='/' exact component={Landing}/>
+        </Switch>
     )

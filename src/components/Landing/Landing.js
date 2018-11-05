@@ -6,10 +6,22 @@ class Games extends Component {
     constructor(){
         super()
         this.state = {
-            links: ['MegaRPG', 'PixelArt']
+            links: ['MegaRPG', 'PixelArt'],
+            hover: 'none',
+            changed: false
+        }
+        this.mouseHover = this.mouseHover.bind(this)
+    }
+    
+    mouseHover(side){
+        if(this.state.changed === false){
+            this.setState({hover: side, changed: true}, () => {
+                setTimeout(() => {
+                    this.setState({changed: false})
+                }, 500)
+            })
         }
     }
-//try to start styling tomorrow
 
   render() {
     let navLinks = this.state.links.map(link => {
@@ -23,7 +35,22 @@ class Games extends Component {
     return (
 
       <div className='landing-page'>
-        {navLinks}
+        <div className='page-split'>
+            <div className={this.state.hover === 'left' ? 'page-left hovered' : this.state.hover === 'none' ? 'page-left' : 'page-left not-hovered'} 
+                onMouseEnter={() => this.mouseHover('left')} 
+                onMouseLeave={() => this.mouseHover('right')}>
+
+                <h1 className='title-left'>Ferret</h1>
+
+            </div>
+            <div className={this.state.hover === 'right' ? 'page-right hovered' : this.state.hover === 'none' ? 'page-right' : 'page-right not-hovered'}
+                onMouseEnter={() => this.mouseHover('right')}
+                onMouseLeave={() => this.mouseHover('right')}>
+                
+                <h1 className='title-right'>Playground</h1>
+            </div>
+        </div>
+        
       </div>
     );
   }

@@ -1,3 +1,110 @@
 .landing-page {
-    background: blue
+    width: 100vw;
+    height: 100vh
+}
+
+.app-title {
+    width: 100%;
+    display: flex;
+}
+.title-left{
+    display: flex;
+    justify-self: end;
+    
+
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 10vw;
+    color: #F7F9FF
+}
+.title-right{
+    display: flex;
+    justify-self: start;
+    align-self: end;
+
+    justify-content: flex-start;
+    width: 100%;
+    height: 120px;
+    font-size: 10vw;
+    overflow: hidden;
+    color: #F7F9FF;
+    
+}
+.shrunk{
+    animation: shrinkText 1s forwards
+}
+.grown{
+    animation: growText 1s forwards
+}
+@keyframes shrinkText {
+    from {
+        font-size: 10vw
+    }
+    to {
+        font-size: 5vw
+    }
+}
+@keyframes growText {
+    from {
+        font-size: 5vw
+    }
+    to {
+        font-size: 10vw
+    }
+}
+
+.page-split {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+}
+
+.page-left{
+    height: 100%;
+    width: 30%;
+
+    background: #D8D8F6;
+
+    opacity: .7
+}
+
+
+.page-right{
+    height: 100%;
+    width: 70%;
+
+    background: #B18FCF;
+    opacity: .7
+}
+
+.hovered{
+    animation: grow 1s forwards
+}
+.not-hovered{
+    animation: shrink 1s forwards
+}
+@keyframes grow{
+    from {
+        width:30%
+    }
+    to {
+        width:70%
+    }
+}
+@keyframes shrink{
+    from {
+        width: 70%
+    }
+    to {
+        width:30%
+    }
+}
+
+
+
+h1{
+    margin:0
 }
