@@ -42,7 +42,7 @@ class Games extends Component {
     else if(this.state.hover !== 'left'){
         deets = (
             <div className='deets right-deet'>
-                <p>A pixel art app that you can draw with. Long term it will be connected to the Ultimate RPG for character, monster and items sprites built by the community.</p>
+                <p>A pixel art app that you can draw with. Long term it will be connected to the Ultimate RPG for character, monster and item sprites built by the community.</p>
             </div>
         )
     }

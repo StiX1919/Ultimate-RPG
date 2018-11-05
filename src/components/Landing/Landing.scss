@@ -1,3 +1,7 @@
+$lightpurp: #D8D8F6;
+$darkpurp: #B18FCF;
+
+
 .landing-page {
     width: 100vw;
     height: 100vh
@@ -50,7 +54,7 @@
     height: 100%;
     width: 30%;
 
-    background: #D8D8F6;
+    background: $lightpurp;
 
     opacity: .7
 }
@@ -65,7 +69,7 @@
     height: 100%;
     width: 70%;
 
-    background: #B18FCF;
+    background: $darkpurp;
     opacity: .7
 }
 
@@ -138,12 +142,10 @@
     font-weight: 300
 }
 .left-deet {
-    background: #B18FCF90;
-    // opacity: .6;
+    background: rgba(176, 143, 207, 0.85);
 }
 .right-deet {
-    background: #D8D8F690;
-    // opacity: .6;
+    background: rgba(216, 216, 246, 0.85);
 }
 
 
