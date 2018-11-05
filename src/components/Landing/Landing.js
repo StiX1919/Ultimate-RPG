@@ -23,20 +23,7 @@ class Games extends Component {
     return (
 
       <div className='landing-page'>
-        <h1>Games</h1>
         {navLinks}
-        {/* animation idea*/}
-        <div className='rotate-square'>
-            <div className='square-top'>
-                <div className='top-1'/>
-                <div className='top-2'/>
-            </div>
-            <div className='square-front-left'>
-                <div className='left-1'/>
-                <div className='left-2'/>
-            </div>
-            <div className='square-front-right'/>
-        </div>
       </div>
     );
   }
