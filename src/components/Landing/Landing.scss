@@ -13,11 +13,11 @@
     
 
     width: 100%;
-    height: 120px;
     display: flex;
     justify-content: flex-end;
     font-size: 10vw;
-    color: #F7F9FF
+    color: #F7F9FF;
+    text-shadow: 3px 0px 2px rgba(45, 45, 45, 0.51);
 }
 .title-right{
     display: flex;
@@ -26,34 +26,13 @@
 
     justify-content: flex-start;
     width: 100%;
-    height: 120px;
     font-size: 10vw;
     overflow: hidden;
     color: #F7F9FF;
+    text-shadow: 3px 0px 2px #2d2d2d82;
     
 }
-.shrunk{
-    animation: shrinkText 1s forwards
-}
-.grown{
-    animation: growText 1s forwards
-}
-@keyframes shrinkText {
-    from {
-        font-size: 10vw
-    }
-    to {
-        font-size: 5vw
-    }
-}
-@keyframes growText {
-    from {
-        font-size: 5vw
-    }
-    to {
-        font-size: 10vw
-    }
-}
+
 
 .page-split {
     display: flex;
@@ -63,6 +42,11 @@
 }
 
 .page-left{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
     height: 100%;
     width: 30%;
 
@@ -73,6 +57,11 @@
 
 
 .page-right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
     height: 100%;
     width: 70%;
 
@@ -101,6 +90,84 @@
     to {
         width:30%
     }
+}
+
+.intro-pic-left{
+    height: 300px;
+}
+.intro-pic-right{
+    height: 400px;
+}
+
+.img-grow {
+    animation: imgGrow 1s forwards
+}
+.img-shrink {
+    animation: imgShrink 1s forwards
+}
+@keyframes imgGrow{
+    from {
+        height: 300px
+    }
+    to {
+        height: 400px
+    }
+}
+@keyframes imgShrink{
+    from {
+        height: 400px
+    }
+    to {
+        height: 300px
+    }
+}
+
+
+.deets {
+    display: flex;
+    align-items: center;
+
+    justify-self: center;
+    position: absolute;
+    top: 40%;
+
+    height: 200px;
+    width: 400px;
+    border: solid black 2px;
+    font-size: 20px;
+    font-weight: 300
+}
+.left-deet {
+    background: #B18FCF90;
+    // opacity: .6;
+}
+.right-deet {
+    background: #D8D8F690;
+    // opacity: .6;
+}
+
+
+.see-more-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+
+    border: solid #000000 10px;
+    border-radius: 40px;
+
+    cursor: pointer
+}
+.left-play {
+    left: 100px;
+    bottom: 30px;
+}
+.right-play {
+    right: 100px;
+    bottom: 30px
 }
 
 
