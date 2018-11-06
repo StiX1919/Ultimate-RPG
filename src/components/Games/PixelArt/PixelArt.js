@@ -39,6 +39,7 @@ class PixelArt extends Component {
   componentDidMount(){
     this.modifyPixels()
   }
+
   
   modifyPixels(){
     let oldArr = this.state.pixelArr.slice()
@@ -128,8 +129,9 @@ class PixelArt extends Component {
 
     return (
       <div className="PixelArt">
+        <h1 className='pix-art-title'>Pixel Art</h1>
 
-        <Link to='/games'><h1>Back to Games</h1></Link>
+        
         
         <div className='colorChooser'>
 
@@ -151,20 +153,23 @@ class PixelArt extends Component {
                         />
                     })}
                 </div>
-                <div className='inpBox'>
+                
+            </div>
+        
+                {/*
+                  <div className='inpBox'>
+                    <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
                     <h3>Height:</h3><input type='number' value={this.state.newHeight} placeholder={this.state.height} onChange={(e) => this.handleChangeHeight(e.target.value)} onKeyDown={this.updateTable}/>
                     <h3>Width:</h3><input type='number' value={this.state.newWidth} placeholder={this.state.width} onChange={(e) => this.handleChangeWidth(e.target.value)} onKeyDown={this.updateTable}/>
                     <h3>Pixel Size:</h3><input type='number' value={this.state.pixSize} placeholder={20} onChange={(e) => this.handlePixSize(e.target.value)}/>
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
                     <button onClick={this.toggleBorder}>Submit PixArt</button>
-                </div>  
-            </div>
-        
-            <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
+                  </div>  
+                */}
 
         </div>
         
-        
+        <Link to='/'><h1>Back to Games</h1></Link>
       </div>
     );
   }

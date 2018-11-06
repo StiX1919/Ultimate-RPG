@@ -91,7 +91,7 @@ passport.deserializeUser(function(obj, done) {
 })
 
 app.get('/api/login', passport.authenticate('auth0', {
-        successRedirect: 'http://localhost:3000/MegaRPG/CharacterSelect', 
+        successRedirect: 'http://localhost:3000/UltimateRPG/CharacterSelect', 
         failureRedirect: `http://localhost:3001/login`
     }
 ))

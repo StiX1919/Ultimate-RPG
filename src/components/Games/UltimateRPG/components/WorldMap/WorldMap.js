@@ -42,7 +42,7 @@ class WorldMap extends Component {
   }
   componentDidMount(){
     if(!this.props.heroes[0]){
-      window.location.href= '/MegaRPG'
+      window.location.href= '/UltimateRPG'
     } 
     this.props.matchedMonsters(this.props.mapReducer.heroX, this.props.mapReducer.heroY)
       
@@ -223,7 +223,7 @@ class WorldMap extends Component {
               return (
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
-                  <Link to={`/MegaRPG/battle/${monster.index}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
+                  <Link to={`/UltimateRPG/battle/${monster.index}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
                     <button>Fight!!</button>
                   </Link>
                 </div>

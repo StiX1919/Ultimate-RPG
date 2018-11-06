@@ -30,7 +30,7 @@ class CharacterBox extends Component {
         if(this.props.heroes[0]){
             this.setHero()
         } else
-        window.location.href= '/MegaRPG'
+        window.location.href= '/UltimateRPG'
     }
 
     async setHero(hero, direction, statType) {

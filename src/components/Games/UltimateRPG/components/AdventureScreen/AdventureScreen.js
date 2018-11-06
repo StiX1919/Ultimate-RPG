@@ -58,7 +58,7 @@ class AdventureScreen extends Component {
         <AtkInterface />
         
           {this.props.currentMonster && this.props.currentMonster.hp <= 0 &&
-            <Link to='/MegaRPG/Map' onClick={() => this.props.removeMonster(this.props.match.params.monsterID)}>
+            <Link to='/UltimateRPG/Map' onClick={() => this.props.removeMonster(this.props.match.params.monsterID)}>
               <button>Back to Map</button>
             </Link>
           }

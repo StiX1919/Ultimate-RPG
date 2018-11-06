@@ -6,7 +6,7 @@ class Games extends Component {
     constructor(){
         super()
         this.state = {
-            links: ['MegaRPG', 'PixelArt'],
+            links: ['UltimateRPG', 'PixelArt'],
             hover: 'none',
             changed: false
         }
@@ -72,7 +72,7 @@ class Games extends Component {
 
                 {this.state.hover !== 'left' 
                    ? <div className='see-more-button left-play' onClick={() => this.mouseHover('left')}>See More</div>
-                   : <Link className='see-more-button left-play' to={`/MegaRPG`}>Play now!</Link>
+                   : <Link className='see-more-button left-play' to={`/UltiamteRPG`}>Play now!</Link>
                 }
             </div>
 
