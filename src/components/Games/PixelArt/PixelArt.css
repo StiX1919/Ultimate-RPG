@@ -2,13 +2,21 @@
   display: flex;
   flex-direction: column;
   
-  width: 70vw;
-  min-width: 1000px
+  width: 100vw;
+  min-width: 1000px;
+  height: 100vh;
+  background: #1C448E
 }
 
 
 .pix-art-title {
+  font-size: 150px;
+  font-family: 'Alegreya Sans', sans-serif;  
+}
 
+.PixelBox {
+  box-shadow: 0px 0px 50px 13px rgba(79, 122, 150, 1);
+  background-image: url('https://www.bio.cmu.edu/labs/gittis/pictures/blank.png')
 }
 
 
@@ -23,8 +31,9 @@
   border-left: solid black 2px;
   border-right: solid black 2px;
   border-bottom: solid rgba(77, 77, 77, 0.726) 2px;
-  bottom: 0;
-  right: 48px;
+  bottom: 500px;
+  right: 0px;
+  background-color: #F7F9FF
 }
 .pallet-model {
   position: absolute;
@@ -32,7 +41,8 @@
   height: 300px;
 
   border: solid black 2px;
-  bottom: -202px;
+  right: -402px;
+  bottom: 198px;
 
   display: flex;
   justify-content: space-between;
@@ -49,23 +59,18 @@
 
 @keyframes palletOpening {
   from{
-    bottom: -302px;;
-    right: 100px;
+    right: -402px;
   }
   to{
-    display: block;
-    bottom: 0;
-    right: 100px;
+    right: 0px;
   }
 }
 @keyframes palletClosing {
   from{
-    bottom: 0;
-    right: 100px;
+    right: 0px;
   }
   to{
-    bottom: -302px;
-    right: 100px;
+    right: -402px;
   }
 }
 
