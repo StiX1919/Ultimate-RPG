@@ -12,7 +12,62 @@
 }
 
 
+.pallet-button{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-image: url('http://shopforclipart.com/images/artist-palette-cliparts/6.jpg');
+  background-size: 50px 50px;
 
+  border-top: solid black 2px;
+  border-left: solid black 2px;
+  border-right: solid black 2px;
+  border-bottom: solid rgba(77, 77, 77, 0.726) 2px;
+  bottom: 0;
+  right: 48px;
+}
+.pallet-model {
+  position: absolute;
+  width: 400px;
+  height: 300px;
+
+  border: solid black 2px;
+  bottom: -202px;
+
+  display: flex;
+  justify-content: space-between;
+  background: #F7F9FF
+}
+
+
+.pallet-opening{
+  animation: palletOpening 1s forwards;
+}
+.pallet-closing{
+  animation: palletClosing 1s forwards;
+}
+
+@keyframes palletOpening {
+  from{
+    bottom: -302px;;
+    right: 100px;
+  }
+  to{
+    display: block;
+    bottom: 0;
+    right: 100px;
+  }
+}
+@keyframes palletClosing {
+  from{
+    bottom: 0;
+    right: 100px;
+  }
+  to{
+    bottom: -302px;
+    right: 100px;
+  }
+}
 
 .colorChooser {
     display: flex;
@@ -29,5 +84,5 @@
   .inpBox {
     display: flex;
     flex-direction: column;
-    width: 100px;
+    width: 150px;
   }

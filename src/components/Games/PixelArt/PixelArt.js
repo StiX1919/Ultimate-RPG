@@ -21,7 +21,9 @@ class PixelArt extends Component {
       newHeight: 20,
       newWidth: 20,
 
-      border: true
+      border: true,
+      palletOpen: true,
+      pallet: true
     }
     this.handleColorChange=this.handleColorChange.bind(this)
     this.modifyPixels = this.modifyPixels.bind(this)
@@ -34,10 +36,25 @@ class PixelArt extends Component {
     this.updateTable=this.updateTable.bind(this)
 
     this.toggleBorder = this.toggleBorder.bind(this)
+    this.openPallet = this.openPallet.bind(this)
   }
 
   componentDidMount(){
     this.modifyPixels()
+  }
+
+  openPallet(){
+    if(this.state.palletOpen === null){
+      this.setState({palletOpen: true, pallet: true})
+    } else
+    this.setState({palletOpen: !this.state.palletOpen}, () => {
+      if(this.state.palletOpen === false){
+        setTimeout(() => {
+          this.setState({pallet: false})
+        }, 900)
+      }
+      else this.setState({pallet: true})
+    })
   }
 
   
@@ -154,22 +171,42 @@ class PixelArt extends Component {
                     })}
                 </div>
                 
+            
+            
             </div>
-        
-                {/*
-                  <div className='inpBox'>
-                    <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
-                    <h3>Height:</h3><input type='number' value={this.state.newHeight} placeholder={this.state.height} onChange={(e) => this.handleChangeHeight(e.target.value)} onKeyDown={this.updateTable}/>
-                    <h3>Width:</h3><input type='number' value={this.state.newWidth} placeholder={this.state.width} onChange={(e) => this.handleChangeWidth(e.target.value)} onKeyDown={this.updateTable}/>
-                    <h3>Pixel Size:</h3><input type='number' value={this.state.pixSize} placeholder={20} onChange={(e) => this.handlePixSize(e.target.value)}/>
-                    <button onClick={this.toggleBorder}>Toggle Borders</button>
-                    <button onClick={this.toggleBorder}>Submit PixArt</button>
-                  </div>  
-                */}
+            
+            {/*
+              <div className='inpBox'>
+              <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
+              <h3>Height:</h3><input type='number' value={this.state.newHeight} placeholder={this.state.height} onChange={(e) => this.handleChangeHeight(e.target.value)} onKeyDown={this.updateTable}/>
+              <h3>Width:</h3><input type='number' value={this.state.newWidth} placeholder={this.state.width} onChange={(e) => this.handleChangeWidth(e.target.value)} onKeyDown={this.updateTable}/>
+              <h3>Pixel Size:</h3><input type='number' value={this.state.pixSize} placeholder={20} onChange={(e) => this.handlePixSize(e.target.value)}/>
+              <button onClick={this.toggleBorder}>Toggle Borders</button>
+              <button onClick={this.toggleBorder}>Submit PixArt</button>
+              </div>  
+            */}
+            
+            </div>
 
-        </div>
-        
-        <Link to='/'><h1>Back to Games</h1></Link>
+            <button onClick={this.toggleBorder}>Toggle Borders</button>
+            <button onClick={this.toggleBorder}>Submit PixArt</button>
+            
+            <Link to='/'><h1>Back to Games</h1></Link>
+
+
+
+            <div className='pallet-button' onClick={this.openPallet}/>
+            {this.state.pallet &&
+              <div className={this.state.palletOpen ? 'pallet-model pallet-opening' : this.state.palletOpen === false ? 'pallet-model pallet-closing' : 'pallet-model'}>
+                <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
+                <div className='inpBox'>
+                  <h5>Hit enter to apply changes</h5>
+                  <h3>Height:</h3><input type='number' value={this.state.newHeight} placeholder={this.state.height} onChange={(e) => this.handleChangeHeight(e.target.value)} onKeyDown={this.updateTable}/>
+                  <h3>Width:</h3><input type='number' value={this.state.newWidth} placeholder={this.state.width} onChange={(e) => this.handleChangeWidth(e.target.value)} onKeyDown={this.updateTable}/>
+                  <h3>Pixel Size:</h3><input type='number' value={this.state.pixSize} placeholder={20} onChange={(e) => this.handlePixSize(e.target.value)}/>
+                </div>  
+              </div>
+            }
       </div>
     );
   }
