@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Landing.css';
+import './RPGLanding.css';
 import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
@@ -20,9 +20,9 @@ class UltimateRPG extends Component {
 
   render() {
 
-    let heroCards = (<h2>Loading Demo Hero</h2>)
+    let demoCard = (<h2>Loading Demo Hero</h2>)
     if(this.props.heroes[0]) {
-        heroCards = this.props.heroes.map((hero, ind) => {
+        demoCard = this.props.heroes.map((hero, ind) => {
             return  <Link key={ind} to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
                         <CaSeCard hero={hero} />
                     </Link>
@@ -31,11 +31,17 @@ class UltimateRPG extends Component {
 
 
     return (
-      <div>
-        <h1>MEGA RPG</h1>
-        <button onClick={() => this.userLogin()} >Login</button>
+      <div className='rpgLanding'>
+        <h1 className='RPG-title'>Ultimate RPG</h1>
+        <button className='rpg-login-button' onClick={() => this.userLogin()} >
+          <h3>Start/Continue your adventure!!</h3>
+          <div className='sword-container'>
+            <img className='left-sword login-sword' src='http://media.pyweek.org/dl/7/xkcd/sword.png' alt='left-login-sword'/>
+            <img className='right-sword login-sword' src='http://media.pyweek.org/dl/7/xkcd/sword.png' alt='right-login-sword'/>
+          </div>
+        </button>
         <h2>Demo Character</h2>
-        {heroCards}
+        {demoCard}
       </div>
     );
   }

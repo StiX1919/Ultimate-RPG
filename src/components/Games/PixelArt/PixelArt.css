@@ -1,11 +1,18 @@
-.PixelArt {
+.pixPage {
   display: flex;
-  flex-direction: column;
   
   width: 100vw;
   min-width: 1000px;
   height: 100vh;
   background: #1C448E
+}
+
+.PixelArt {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  
+  
 }
 
 

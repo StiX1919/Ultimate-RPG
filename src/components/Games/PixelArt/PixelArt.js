@@ -145,55 +145,62 @@ class PixelArt extends Component {
   render() {
 
     return (
-      <div className="PixelArt">
-        <h1 className='pix-art-title'>Pixel Art</h1>
+      <div className='pixPage'>
+        <div className="PixelArt">
+          <h1 className='pix-art-title'>Pixel Art</h1>
 
-        
-        
-        <div className='colorChooser'>
+          
+          
+          <div className='colorChooser'>
 
-        
-            <div className='PixelBox'>
-                <div className='columns' style={{width: this.state.border ? (this.state.pixSize*this.state.width +(this.state.width * (1))) + 'px' : (this.state.pixSize*this.state.width) + 'px',
-                                                height: this.state.border ? (this.state.pixSize*this.state.height+(this.state.height * (1))) + 'px': (this.state.pixSize*this.state.height) + 'px'}}> 
-                    {this.state.pixelArr.map((pix, i, arr) => {
-                        return (
-                          <Pixel key={i} 
-                                pixel={pix} 
-                                position={`${pix.cInd}x${pix.rInd}`} 
-                                index={i} 
-                                pixSize={this.state.pixSize}
-                                color={this.state.color}
-                                opacity={this.state.opacity}
-                                allArr={arr}
-                                chooseColor={this.choosePixColor}
-                                border={this.state.border}/>
-                        )
-                    })}
-                </div>
-    
+          
+              <div className='PixelBox'>
+                  <div className='columns' style={{width: this.state.border ? (this.state.pixSize*this.state.width +(this.state.width * (1))) + 'px' : (this.state.pixSize*this.state.width) + 'px',
+                                                  height: this.state.border ? (this.state.pixSize*this.state.height+(this.state.height * (1))) + 'px': (this.state.pixSize*this.state.height) + 'px'}}> 
+                      {this.state.pixelArr.map((pix, i, arr) => {
+                          return (
+                            <Pixel key={i} 
+                                  pixel={pix} 
+                                  position={`${pix.cInd}x${pix.rInd}`} 
+                                  index={i} 
+                                  pixSize={this.state.pixSize}
+                                  color={this.state.color}
+                                  opacity={this.state.opacity}
+                                  allArr={arr}
+                                  chooseColor={this.choosePixColor}
+                                  border={this.state.border}/>
+                          )
+                      })}
+                  </div>
+      
+              </div>
+              
+          </div>
+
+          <div className='pallet-button' onClick={this.openPallet}/>
+
+          {this.state.pallet &&
+            <div className={this.state.palletOpen ? 'pallet-model pallet-opening' : this.state.palletOpen === false ? 'pallet-model pallet-closing' : 'pallet-model'}>
+                <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
+                <div className='inpBox'>
+                    <h5>Hit enter to apply changes</h5>
+                    <h3>Height:</h3><input type='number' value={this.state.newHeight} placeholder={this.state.height} onChange={(e) => this.handleChangeHeight(e.target.value)} onKeyDown={this.updateTable}/>
+                    <h3>Width:</h3><input type='number' value={this.state.newWidth} placeholder={this.state.width} onChange={(e) => this.handleChangeWidth(e.target.value)} onKeyDown={this.updateTable}/>
+                    <h3>Pixel Size:</h3><input type='number' value={this.state.pixSize} placeholder={20} onChange={(e) => this.handlePixSize(e.target.value)}/>
+                </div>  
             </div>
-            
+          }
+        </div>
+        <div>
+
+          {/*build call to database to find pixel artless characters, monsters and items.*/}
+          <button onClick={this.toggleBorder}>Toggle Borders</button>
+          <button onClick={this.toggleBorder}>Submit PixArt</button>
+              
+          <Link to='/'><h1>Back to Games</h1></Link>
         </div>
 
-        <button onClick={this.toggleBorder}>Toggle Borders</button>
-        <button onClick={this.toggleBorder}>Submit PixArt</button>
-            
-        <Link to='/'><h1>Back to Games</h1></Link>
 
-        <div className='pallet-button' onClick={this.openPallet}/>
-
-        {this.state.pallet &&
-          <div className={this.state.palletOpen ? 'pallet-model pallet-opening' : this.state.palletOpen === false ? 'pallet-model pallet-closing' : 'pallet-model'}>
-              <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
-              <div className='inpBox'>
-                  <h5>Hit enter to apply changes</h5>
-                  <h3>Height:</h3><input type='number' value={this.state.newHeight} placeholder={this.state.height} onChange={(e) => this.handleChangeHeight(e.target.value)} onKeyDown={this.updateTable}/>
-                  <h3>Width:</h3><input type='number' value={this.state.newWidth} placeholder={this.state.width} onChange={(e) => this.handleChangeWidth(e.target.value)} onKeyDown={this.updateTable}/>
-                  <h3>Pixel Size:</h3><input type='number' value={this.state.pixSize} placeholder={20} onChange={(e) => this.handlePixSize(e.target.value)}/>
-              </div>  
-          </div>
-        }
       </div>
     );
   }
