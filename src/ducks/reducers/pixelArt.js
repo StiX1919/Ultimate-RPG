@@ -6,6 +6,8 @@ import axios from "axios";
 const PIX_FREE_MONS = 'PIX_FREE_MONS'
 const PIX_FREE_WEAPONS = 'PIX_FREE_WEAPONS'
 
+const SUBMIT = 'SUBMIT'
+
 //Initial State
 
 const initialState = {
@@ -30,6 +32,13 @@ export function getPixWeapons() {
     return {
         type: PIX_FREE_WEAPONS,
         payload: axios.get('/api/pixWeapons')
+    }
+}
+
+export function submitArt(table, name, image){
+    return {
+        type: SUBMIT,
+        payload: axios.post('/api/submitArt', {table, name, image})
     }
 }
 

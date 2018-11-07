@@ -5,7 +5,7 @@ import {SketchPicker} from 'react-color'
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import {getPixMons, getPixWeapons} from '../../../ducks/reducers/pixelArt'
+import {getPixMons, getPixWeapons, submitArt} from '../../../ducks/reducers/pixelArt'
 
 import Pixel from './components/Pixel/Pixel'
 import './PixelArt.css';
@@ -30,7 +30,9 @@ class PixelArt extends Component {
       pallet: true,
       image: '',
 
-      pixelArt: []
+      pixelArt: [],
+      artName: '',
+      artTable: ''
     }
     this.handleColorChange=this.handleColorChange.bind(this)
     this.modifyPixels = this.modifyPixels.bind(this)
@@ -177,10 +179,10 @@ class PixelArt extends Component {
   selectPixType(type){
     switch(type){
       case 'weapons':
-        this.setState({pixelArt: this.props.pixelArt.weapons})
+        this.setState({artTable: type, pixelArt: this.props.pixelArt.weapons})
         break;
       case 'monsters':
-        this.setState({pixelArt: this.props.pixelArt.monsters})
+        this.setState({artTable: type, pixelArt: this.props.pixelArt.monsters})
         break;
 
       default: return null
@@ -188,14 +190,17 @@ class PixelArt extends Component {
   }
   
   render() {
-    console.log(this.props)
+    console.log(this.state)
 
     return (
       <div className='pixPage'>
         <div className="PixelArt">
           <h1 className='pix-art-title'>Pixel Art</h1>
 
-          
+          <div style={{display: 'flex', width: '100%', justifyContent: 'space-around'}}>
+            <h2>Type: {this.state.artTable}</h2>
+            <h2>Item: {this.state.artName}</h2>
+          </div>
           
           <div className='colorChooser'>
 
@@ -247,7 +252,7 @@ class PixelArt extends Component {
                 <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
 
               <h5>Select what you want to submit for</h5>
-              <select >
+              <select onChange={(e) => this.setState({artName: e.target.value})}>
                 {this.state.pixelArt.map((target, i) => {
                   return (
                     <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>
@@ -261,7 +266,7 @@ class PixelArt extends Component {
 
           <button onClick={this.toggleBorder}>Toggle Borders</button>
           <button onClick={this.updatePreviewImage}>Preview Image</button>
-          <button>Submit PixArt</button>
+          <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
               
           <Link to='/'><h1>Back to Games</h1></Link>
           <img className='preview-image' src={this.state.image}/>
@@ -275,4 +280,4 @@ class PixelArt extends Component {
 
 const mapStateToProps = state => ({pixelArt: state.pixelArt})
 
-export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons})(PixelArt))
+export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons, submitArt})(PixelArt))
