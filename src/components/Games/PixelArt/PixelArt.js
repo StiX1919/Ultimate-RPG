@@ -5,7 +5,7 @@ import {SketchPicker} from 'react-color'
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import {getPixMons, getPixItems} from '../../../ducks/reducers/pixelArt'
+import {getPixMons, getPixWeapons} from '../../../ducks/reducers/pixelArt'
 
 import Pixel from './components/Pixel/Pixel'
 import './PixelArt.css';
@@ -52,7 +52,7 @@ class PixelArt extends Component {
   componentDidMount(){
     this.modifyPixels()
     this.props.getPixMons()
-    this.props.getPixItems()
+    this.props.getPixWeapons()
   }
 
   async updatePreviewImage(){
@@ -176,8 +176,8 @@ class PixelArt extends Component {
 
   selectPixType(type){
     switch(type){
-      case 'items':
-        this.setState({pixelArt: this.props.pixelArt.items})
+      case 'weapons':
+        this.setState({pixelArt: this.props.pixelArt.weapons})
         break;
       case 'monsters':
         this.setState({pixelArt: this.props.pixelArt.monsters})
@@ -239,19 +239,24 @@ class PixelArt extends Component {
         </div>
         <div>
 
-          {/*build call to database to find pixel artless characters, monsters and items.*/}
-          <ul>
-            <li onClick={() => this.selectPixType('items')}>Weapons</li>
-            <li onClick={() => this.selectPixType('monsters')}>Monsters</li>
-          </ul>
-          <select >
-            {this.state.pixelArt.map((target, i) => {
-              return (
-                <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>
-              )
-            })}
-          
-          </select>
+          <div className='submit-section'>
+              <h1>Submit your art for a chance to have it put in the game!</h1>
+
+              <h3>Categories</h3>
+                <button onClick={() => this.selectPixType('weapons')}>Weapons</button>
+                <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
+
+              <h5>Select what you want to submit for</h5>
+              <select >
+                {this.state.pixelArt.map((target, i) => {
+                  return (
+                    <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>
+                  )
+                })}
+              </select>
+            
+          </div>
+
 
 
           <button onClick={this.toggleBorder}>Toggle Borders</button>
@@ -270,4 +275,4 @@ class PixelArt extends Component {
 
 const mapStateToProps = state => ({pixelArt: state.pixelArt})
 
-export default withRouter(connect(mapStateToProps, {getPixMons, getPixItems})(PixelArt))
+export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons})(PixelArt))

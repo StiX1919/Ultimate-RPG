@@ -8,7 +8,7 @@ pixMons = (req, res, next) => {
         })
         .catch(err => console.log(err))
 }
-pixItems= (req, res, next) => {
+pixWeapons= (req, res, next) => {
     const dbInstance = req.app.get("db");
     
     dbInstance.query('select * from equipment').then(response => {
@@ -19,5 +19,5 @@ pixItems= (req, res, next) => {
 
 module.exports = {
     pixMons,
-    pixItems
+    pixWeapons
 }

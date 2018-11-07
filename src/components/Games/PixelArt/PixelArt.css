@@ -12,13 +12,14 @@
   flex-direction: column;
   justify-content: flex-start;
   
-  
+  width: 100%;
 }
 
 
 .pix-art-title {
   font-size: 150px;
   font-family: 'Alegreya Sans', sans-serif;  
+  
 }
 
 .PixelBox {
@@ -38,7 +39,7 @@
   border-left: solid black 2px;
   border-right: solid black 2px;
   border-bottom: solid rgba(77, 77, 77, 0.726) 2px;
-  bottom: 500px;
+  bottom: 302px;
   right: 0px;
   background-color: #F7F9FF
 }
@@ -49,7 +50,7 @@
 
   border: solid black 2px;
   right: -402px;
-  bottom: 198px;
+  bottom: 0px;
 
   display: flex;
   justify-content: space-between;
@@ -101,4 +102,8 @@
 
   .preview-image {
     height: 100px;
+  }
+
+  .submit-section {
+    width: 100%;
   }

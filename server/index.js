@@ -139,7 +139,7 @@ app.post('/api/newPlace', newPlace)
 app.get('/api/getMonsters', getMonsters)
 
 app.get('/api/pixMons', pixMons)
-app.get('/api/pixItems', pixItems)
+app.get('/api/pixWeapons', pixWeapons)
 
 //LISTENING
 app.listen(port, () => {
