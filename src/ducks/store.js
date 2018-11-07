@@ -8,8 +8,9 @@ import heroReducer from './reducers/heroReducer'
 import monsterReducer from './reducers/monsterReducer'
 import shopReducer from './reducers/shopReducer'
 import mapReducer from './reducers/mapReducer'
+import pixelArt from './reducers/pixelArt'
 
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 export default createStore(
-    combineReducers({CCReducer, userReducer, heroReducer, monsterReducer, shopReducer, mapReducer}), composeWithDevTools(applyMiddleware(promiseMiddleware(), thunk)))
+    combineReducers({CCReducer, userReducer, heroReducer, monsterReducer, shopReducer, mapReducer, pixelArt}), composeWithDevTools(applyMiddleware(promiseMiddleware(), thunk)))

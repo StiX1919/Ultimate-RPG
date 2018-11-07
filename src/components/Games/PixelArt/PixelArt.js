@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 
+import domtoimage from 'dom-to-image'
 import {SketchPicker} from 'react-color'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
+
+import {getPixMons, getPixItems} from '../../../ducks/reducers/pixelArt'
 
 import Pixel from './components/Pixel/Pixel'
 import './PixelArt.css';
@@ -23,7 +27,10 @@ class PixelArt extends Component {
 
       border: true,
       palletOpen: true,
-      pallet: true
+      pallet: true,
+      image: '',
+
+      pixelArt: []
     }
     this.handleColorChange=this.handleColorChange.bind(this)
     this.modifyPixels = this.modifyPixels.bind(this)
@@ -37,10 +44,35 @@ class PixelArt extends Component {
 
     this.toggleBorder = this.toggleBorder.bind(this)
     this.openPallet = this.openPallet.bind(this)
+
+    this.updatePreviewImage = this.updatePreviewImage.bind(this)
+    this.selectPixType = this.selectPixType.bind(this)
   }
 
   componentDidMount(){
     this.modifyPixels()
+    this.props.getPixMons()
+    this.props.getPixItems()
+  }
+
+  async updatePreviewImage(){
+    var node = document.getElementById('canvas');
+    let image = ''
+    try {
+  
+      await domtoimage.toPng(node)
+         .then(function (dataUrl) {
+            image = dataUrl
+            //  var img = new Image();
+            //  img.src = dataUrl;
+            //  document.body.appendChild(img);
+         })
+         .catch(function (error) {
+             console.error('oops, something went wrong!', error);
+         });
+    } finally {
+      this.setState({image})
+    }
   }
 
   openPallet(){
@@ -142,7 +174,21 @@ class PixelArt extends Component {
   }
   
 
+  selectPixType(type){
+    switch(type){
+      case 'items':
+        this.setState({pixelArt: this.props.pixelArt.items})
+        break;
+      case 'monsters':
+        this.setState({pixelArt: this.props.pixelArt.monsters})
+        break;
+
+      default: return null
+    }
+  }
+  
   render() {
+    console.log(this.props)
 
     return (
       <div className='pixPage'>
@@ -155,7 +201,7 @@ class PixelArt extends Component {
 
           
               <div className='PixelBox'>
-                  <div className='columns' style={{width: this.state.border ? (this.state.pixSize*this.state.width +(this.state.width * (1))) + 'px' : (this.state.pixSize*this.state.width) + 'px',
+                  <div id='canvas' className='columns' style={{width: this.state.border ? (this.state.pixSize*this.state.width +(this.state.width * (1))) + 'px' : (this.state.pixSize*this.state.width) + 'px',
                                                   height: this.state.border ? (this.state.pixSize*this.state.height+(this.state.height * (1))) + 'px': (this.state.pixSize*this.state.height) + 'px'}}> 
                       {this.state.pixelArr.map((pix, i, arr) => {
                           return (
@@ -194,10 +240,26 @@ class PixelArt extends Component {
         <div>
 
           {/*build call to database to find pixel artless characters, monsters and items.*/}
+          <ul>
+            <li onClick={() => this.selectPixType('items')}>Weapons</li>
+            <li onClick={() => this.selectPixType('monsters')}>Monsters</li>
+          </ul>
+          <select >
+            {this.state.pixelArt.map((target, i) => {
+              return (
+                <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>
+              )
+            })}
+          
+          </select>
+
+
           <button onClick={this.toggleBorder}>Toggle Borders</button>
-          <button onClick={this.toggleBorder}>Submit PixArt</button>
+          <button onClick={this.updatePreviewImage}>Preview Image</button>
+          <button>Submit PixArt</button>
               
           <Link to='/'><h1>Back to Games</h1></Link>
+          <img className='preview-image' src={this.state.image}/>
         </div>
 
 
@@ -206,4 +268,6 @@ class PixelArt extends Component {
   }
 }
 
-export default PixelArt;
+const mapStateToProps = state => ({pixelArt: state.pixelArt})
+
+export default withRouter(connect(mapStateToProps, {getPixMons, getPixItems})(PixelArt))

@@ -98,3 +98,7 @@
     flex-direction: column;
     width: 150px;
   }
+
+  .preview-image {
+    height: 100px;
+  }

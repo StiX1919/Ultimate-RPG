@@ -1,6 +1,6 @@
 let monsters = []
 
-let mappedMonsters = []
+let mappedMonsters = [],
 
     getClasses = (req, res) => {
       const dbInstance = req.app.get("db");
