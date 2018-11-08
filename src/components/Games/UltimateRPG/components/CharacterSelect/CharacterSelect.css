@@ -1,0 +1,22 @@
+.char-select-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100vw;
+    height: 100vh;
+}
+.choose-char-title {
+    font-size: 100px;
+    font-family: 'Alegreya Sans', sans-serif;  
+}
+
+
+.hero-card-holder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    width: 80%
+}

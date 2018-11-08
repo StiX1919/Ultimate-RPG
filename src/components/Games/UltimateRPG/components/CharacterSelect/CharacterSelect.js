@@ -8,6 +8,8 @@ import CaSeCard from './CaSeComps/CaSeCard/CaSeCard'
 import {getUser, getHeroes} from '../../../../../ducks/reducers/userReducer'
 import {selectHero} from '../../../../../ducks/reducers/heroReducer'
 
+import './CharacterSelect.css'
+
 class CharacterSelect extends Component {
     constructor(props) {
         super(props)
@@ -30,11 +32,17 @@ class CharacterSelect extends Component {
             })
         }
         return(
-            <div>
-                <Link to='/poop'><h1>ChooseCharacter</h1></Link>
-                {heroCards}
+            <div className='char-select-page'>
+                {this.props.heroes[0] 
+                    ?   <h1 className='choose-char-title'>Choose Character</h1>
+                    :   <h1 className='choose-char-title'>Create A Hero</h1>
+                }
+                
+                <div className='hero-card-holder'>
+                    {heroCards}
+                </div>
                 {this.props.isLoading !== true && this.props.heroes.length < 5 &&
-                    <Link to ='/UltimateRPG/CreateCharacter'><button>Create new character</button></Link>
+                    <Link to ='/UltimateRPG/CreateCharacter'><button>Create new Hero</button></Link>
                 }
                 
             </div>
