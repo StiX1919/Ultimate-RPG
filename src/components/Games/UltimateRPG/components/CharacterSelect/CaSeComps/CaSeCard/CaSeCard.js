@@ -5,13 +5,19 @@ import {connect} from 'react-redux'
 
 
 import './CaSeCard.css'
+
 const Card = styled.div`
-    text-decoration: none;
+    background: #F7F9FF;
+    width: 300px;
+    height: 200px;
+
+    display: flex;
+    justify-content: space-between
 `
 
 const Stats = styled.div`
     width: 150px;
-    height: 70px;
+    height: 100px;
 
     background: #F7F9FF;
     display: flex;
@@ -21,7 +27,7 @@ const Stats = styled.div`
 
 const Arrow = styled.div`
     background-color: ${props => props.bColor}
-    height: 15px;
+    height: 20px;
     width: ${props => {
         if(props.maxLength === props.stat){
             return 100
@@ -45,7 +51,7 @@ class CaSeCard extends Component {
         let topNum = Math.max(hero.strength, hero.intelligence, hero.speed, hero.endurance)
         return(
             <Card className='hero_card'>
-                <img className='hero_img' src={hero.picture} alt='hero_pic'/>
+                <img className='hero_img' src={hero.pix_art} alt='hero_pic'/>
                 <div>
                     <h3>{hero.hero_class}</h3>
                     <h2>{hero.hero_name}</h2>

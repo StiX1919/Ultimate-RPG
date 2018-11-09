@@ -164,7 +164,7 @@ class WorldMap extends Component {
                       
                       {spot.x === this.props.mapReducer.heroX && spot.y === this.props.mapReducer.heroY
                         
-                        ? <img style={{height: '50px', width: '50px'}} src='https://s1.piq.land/2015/07/23/wyTJ7WMj9DgDrDoJ3xYODfGq_400x400.png' alt='hello'/>
+                        ? <img style={{height: '50px', width: '50px'}} src={this.props.heroReducer.currentHero.pix_art} alt='hello'/>
                         : null
                       }
                       {this.props.monsterReducer.monsters.map( (mon, i) => {
