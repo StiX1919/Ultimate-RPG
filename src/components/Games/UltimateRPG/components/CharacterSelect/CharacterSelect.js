@@ -11,6 +11,10 @@ import {selectHero} from '../../../../../ducks/reducers/heroReducer'
 
 import './CharacterSelect.css'
 
+const StyledLink = styled(Link)`
+    text-decoration: none
+`
+
 
 class CharacterSelect extends Component {
     constructor(props) {
@@ -28,9 +32,9 @@ class CharacterSelect extends Component {
         let heroCards = (<h2>No heroes yet</h2>)
         if(this.props.heroes[0]) {
             heroCards = this.props.heroes.map((hero, ind) => {
-                return  <Link className='hero-links' to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
+                return  <StyledLink to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
                             <CaSeCard hero={hero} />
-                        </Link>
+                        </StyledLink>
             })
         }
         return(

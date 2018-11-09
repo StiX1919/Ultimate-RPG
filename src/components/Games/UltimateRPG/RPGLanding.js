@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
+
 import './RPGLanding.css';
 import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
@@ -7,6 +9,10 @@ import { getDemoCharacter } from '../../../ducks/reducers/userReducer'
 import { selectHero } from '../../../ducks/reducers/heroReducer'
 
 import CaSeCard from './components/CharacterSelect/CaSeComps/CaSeCard/CaSeCard'
+
+const StyledLink = styled(Link)`
+  text-decoration: none
+`
 class UltimateRPG extends Component {
 
   //build function that checks for user on session. Redirect to character select
@@ -23,9 +29,9 @@ class UltimateRPG extends Component {
     let demoCard = (<h2>Loading Demo Hero</h2>)
     if(this.props.heroes[0]) {
         demoCard = this.props.heroes.map((hero, ind) => {
-            return  <Link key={ind} to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
+            return  <StyledLink key={ind} to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
                         <CaSeCard hero={hero} />
-                    </Link>
+                    </StyledLink>
         })
     }
 
