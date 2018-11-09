@@ -8,7 +8,7 @@ import './CaSeCard.css'
 
 const Stats = styled.div`
     width: 150px;
-    height: 150px;
+    height: 70px;
 
     background: #F7F9FF;
     display: flex;
@@ -18,7 +18,7 @@ const Stats = styled.div`
 
 const Arrow = styled.div`
     background-color: ${props => props.bColor}
-    height: 30px;
+    height: 15px;
     width: ${props => {
         if(props.maxLength === props.stat){
             return 100
@@ -27,8 +27,6 @@ const Arrow = styled.div`
         }
     }}%;
 
-    left: 50%;
-    bottom: calc(50% - ${props => props.stat * 5})
 `
 
 class CaSeCard extends Component {
@@ -46,8 +44,8 @@ class CaSeCard extends Component {
             <div className='hero_card'>
                 <img className='hero_img' src={hero.picture} alt='hero_pic'/>
                 <div>
-                    <h2>{hero.hero_name}</h2>
                     <h3>{hero.hero_class}</h3>
+                    <h2>{hero.hero_name}</h2>
                     <Stats>
                         {/* color coordinate and style stats. red, yellew, green, blue*/}
                         <Arrow bColor='red' stat={hero.strength} maxLength={topNum}>Str: {hero.strength}</Arrow>
