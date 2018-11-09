@@ -5,6 +5,9 @@ import {connect} from 'react-redux'
 
 
 import './CaSeCard.css'
+const Card = styled.div`
+    text-decoration: none;
+`
 
 const Stats = styled.div`
     width: 150px;
@@ -41,7 +44,7 @@ class CaSeCard extends Component {
         const hero = this.props.hero
         let topNum = Math.max(hero.strength, hero.intelligence, hero.speed, hero.endurance)
         return(
-            <div className='hero_card'>
+            <Card className='hero_card'>
                 <img className='hero_img' src={hero.picture} alt='hero_pic'/>
                 <div>
                     <h3>{hero.hero_class}</h3>
@@ -54,7 +57,7 @@ class CaSeCard extends Component {
                         <Arrow bColor='blue' stat={hero.intelligence} maxLength={topNum}>Int: {hero.intelligence}</Arrow>
                     </Stats>
                 </div>
-            </div>
+            </Card>
         )
     }
 }

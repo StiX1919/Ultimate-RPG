@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import styled from 'styled-components'
 
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
@@ -9,6 +10,7 @@ import {getUser, getHeroes} from '../../../../../ducks/reducers/userReducer'
 import {selectHero} from '../../../../../ducks/reducers/heroReducer'
 
 import './CharacterSelect.css'
+
 
 class CharacterSelect extends Component {
     constructor(props) {
@@ -26,7 +28,7 @@ class CharacterSelect extends Component {
         let heroCards = (<h2>No heroes yet</h2>)
         if(this.props.heroes[0]) {
             heroCards = this.props.heroes.map((hero, ind) => {
-                return  <Link to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
+                return  <Link className='hero-links' to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
                             <CaSeCard hero={hero} />
                         </Link>
             })
