@@ -16,7 +16,7 @@ const Stats = styled.div`
     background: #F7F9FF;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 `
 
 const Arrow = styled.div`

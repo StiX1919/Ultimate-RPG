@@ -11,7 +11,8 @@ import { selectHero } from '../../../ducks/reducers/heroReducer'
 import CaSeCard from './components/CharacterSelect/CaSeComps/CaSeCard/CaSeCard'
 
 const StyledLink = styled(Link)`
-  text-decoration: none
+  text-decoration: none;
+  color: black;
 `
 class UltimateRPG extends Component {
 
