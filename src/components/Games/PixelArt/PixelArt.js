@@ -49,6 +49,8 @@ class PixelArt extends Component {
 
     this.updatePreviewImage = this.updatePreviewImage.bind(this)
     this.selectPixType = this.selectPixType.bind(this)
+
+    this.mouseEnter = this.mouseEnter.bind(this)
   }
 
   componentDidMount(){
@@ -185,6 +187,10 @@ class PixelArt extends Component {
       default: return null
     }
   }
+
+  mouseEnter(e){
+    console.log(e.buttons)
+  }
   
   render() {
     console.log(this.state)
@@ -216,7 +222,9 @@ class PixelArt extends Component {
                                   opacity={this.state.opacity}
                                   allArr={arr}
                                   chooseColor={this.choosePixColor}
-                                  border={this.state.border}/>
+                                  border={this.state.border}
+                                  mouseEnter={this.mouseEnter}
+                                  />
                           )
                       })}
                   </div>
