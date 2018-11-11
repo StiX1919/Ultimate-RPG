@@ -19,7 +19,7 @@ class PixelArt extends Component {
       opacity: 1,
       height: 20,
       width: 20,
-      pixSize: 20,
+      pixSize: 15,
 
       pixelArr: [],
       newHeight: 20,
@@ -155,8 +155,8 @@ class PixelArt extends Component {
   }
 
   handlePixSize(value){
-    if(Number(value) > 20){
-      this.setState({pixSize: 20})
+    if(Number(value) > 15){
+      this.setState({pixSize: 15})
     } else
     this.setState({pixSize: Number(value)})
   }
