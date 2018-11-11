@@ -59,6 +59,10 @@ class PixelArt extends Component {
     this.props.getPixWeapons()
   }
 
+  userLogin() {
+    window.location.href= `http://localhost:3001/api/login/${'PixelArt'}`
+  }
+
   async updatePreviewImage(){
     var node = document.getElementById('canvas');
     let image = ''
@@ -250,14 +254,17 @@ class PixelArt extends Component {
         <div>
 
           <div className='submit-section'>
-              <h1>Submit your art for a chance to have it put in the game!</h1>
+              <h1>Login to create art for your personal heroes!</h1>
+              <button onClick={this.userLogin}>Login</button>
 
+              <h2>Submit your art for a chance to have it put in the game!</h2>
               <h3>Categories</h3>
                 <button onClick={() => this.selectPixType('weapons')}>Weapons</button>
                 <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
 
               <h5>Select what you want to submit for</h5>
               <select onChange={(e) => this.setState({artName: e.target.value})}>
+                <option default value='Custom'>Custom</option>
                 {this.state.pixelArt.map((target, i) => {
                   return (
                     <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>

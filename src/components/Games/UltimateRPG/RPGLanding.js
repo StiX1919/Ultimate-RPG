@@ -19,7 +19,7 @@ class UltimateRPG extends Component {
   //build function that checks for user on session. Redirect to character select
 
   userLogin() {
-    window.location.href= 'http://localhost:3001/api/login'
+    window.location.href= `http://localhost:3001/api/login/${'UltimateRPG'}`
   }
   componentDidMount(){
     this.props.getDemoCharacter()

@@ -92,11 +92,10 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj)
 })
 
-app.get('/api/login', passport.authenticate('auth0', {
-        successRedirect: 'http://localhost:3000/UltimateRPG/CharacterSelect', 
-        failureRedirect: `http://localhost:3001/login`
-    }
-))
+app.get('/api/login/:spot', passport.authenticate('auth0'), (req, res, next) => {
+  console.log(req.params)
+  res.redirect(`http://localhost:3000/${req.params.spot}`)
+})
 
 
 app.get('/api/demo', demoHero)
