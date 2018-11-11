@@ -133,14 +133,14 @@ class PixelArt extends Component {
   }
 
   async handleChangeHeight(value){
-    if(Number(value) > 50){
-      await this.setState({newHeight: 50})
+    if(Number(value) > 30){
+      await this.setState({newHeight: 30})
     } else
       await this.setState({ newHeight: Number(value) })
   }
   async handleChangeWidth(value){
-    if(Number(value) > 50){
-      await this.setState({newWidth: 50})
+    if(Number(value) > 30){
+      await this.setState({newWidth: 30})
     } else
       await this.setState({ newWidth: Number(value) })
   }
@@ -239,7 +239,7 @@ class PixelArt extends Component {
             <div className={this.state.palletOpen ? 'pallet-model pallet-opening' : this.state.palletOpen === false ? 'pallet-model pallet-closing' : 'pallet-model'}>
                 <SketchPicker color={this.state.reactColor} onChangeComplete={(e) => this.handleColorChange(e)} />
                 <div className='inpBox'>
-                    <h5>Hit enter to apply changes</h5>
+                    <h5>Hit enter to apply changes. Max 30/30</h5>
                     <h3>Height:</h3><input type='number' value={this.state.newHeight} placeholder={this.state.height} onChange={(e) => this.handleChangeHeight(e.target.value)} onKeyDown={this.updateTable}/>
                     <h3>Width:</h3><input type='number' value={this.state.newWidth} placeholder={this.state.width} onChange={(e) => this.handleChangeWidth(e.target.value)} onKeyDown={this.updateTable}/>
                     <h3>Pixel Size:</h3><input type='number' value={this.state.pixSize} placeholder={20} onChange={(e) => this.handlePixSize(e.target.value)}/>
