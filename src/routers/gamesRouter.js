@@ -19,11 +19,12 @@ import Navbar from '../components/Navbar/Navbar'
 import PixelArt from '../components/Games/PixelArt/PixelArt'
 
 import Landing from '../components/Landing/Landing'
+import SideBar from '../components/Games/UltimateRPG/components/SideBar/SideBar'
 
 import {getUser} from '../ducks/reducers/userReducer'
 
 
-
+import './routerStyle.css'
 
 //work on getting the map update call to work before the transition to a new area today
 class GameRouter extends Component{
@@ -42,33 +43,39 @@ class GameRouter extends Component{
                 <Navbar place={window.location.pathname} user={this.props.userReducer.user}/>
                 <Switch>
                     <Route path='/' exact component={Landing}/>
-                    <Route path='/UltimateRPG' exact render={() =>
-                        this.props.userReducer.user 
-                        ? <Redirect to='/UltimateRPG/CharacterSelect'/>
-                        : <UltimateRPG userID={this.props.userReducer.user}/>
-                    }/>
-                    
                     <Route path='/PixelArt' exact render={() =>
                         <PixelArt userID={this.props.userReducer.user}/>
                     }/>
+                </Switch>
+
+                <Switch>
+                    <Route path='/UltimateRPG' exact render={() =>
+                        this.props.userReducer.user 
+                        ? (
+                            <div className='rpg-page'>
+                                <SideBar />
+                                <CharacterSelect />
+                            </div>
+                        ) : (
+                            <UltimateRPG />
+                        )
+                    }/>
+
                     <Route path='/UltimateRPG/battle/:monsterID' component={AdventureScreen} />
                     <Route path='/UltimateRPG/Map' component={WorldMap} />         
                     <Route path='/UltimateRPG/hero/:heroName' component={HeroHub} /> 
 
                     <Route path='/UltimateRPG/CharacterSelect' render={() => 
                         this.props.userReducer.user !== null
-                       ? <CharacterSelect />
-                       : <Redirect to='/UltimateRPG'/>
+                    ? <CharacterSelect />
+                    : <Redirect to='/UltimateRPG'/>
                     }/>
 
                     <Route path='/UltimateRPG/CreateCharacter' render={() => 
                         this.props.userReducer.user !== null
                         ? <CreateCharacter />
                         : <Redirect to='/UltimateRPG'/>
-                     }/>
-                
-                    
-                    
+                    }/>
                 </Switch>
             </div>
 

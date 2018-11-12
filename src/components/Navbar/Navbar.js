@@ -44,7 +44,7 @@ class Navbar extends Component {
                 </div>
             </div>
             <h1>{spot}</h1>
-            {this.props.userID !== null &&
+            {this.props.user === null &&
               <button onClick={this.userLogin}>Login</button>
             }
         </div>
