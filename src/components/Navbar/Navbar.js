@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 
+import axios from 'axios'
+
 import {Link} from 'react-router-dom'
 import './Navbar.scss'
 class Navbar extends Component {
+  constructor(){
+    super()
 
-  userLogin() {
-    axios.post('/api/login', {spot: this.props.place})
+    this.userLogin = this.userLogin.bind(this)
+  }
+
+  async userLogin() {
+    try {
+      axios.post('/api/redirect', {place: this.props.place})
+    } 
+    finally {
+      window.location.href='http://localhost:3001/api/login'
+
+    }
   }
 
   render() {

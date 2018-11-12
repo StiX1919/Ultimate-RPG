@@ -9,6 +9,8 @@ const massive = require("massive");
 const passport = require('passport');
 const Auth0Strategy = require("passport-auth0");
 
+let returnStr = '/'
+
 
 const port = 3001;
 
@@ -92,9 +94,19 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj)
 })
 
-app.post('/api/login', passport.authenticate('auth0', () => {
+app.get('/api/login', passport.authenticate('auth0', {
+        failureRedirect: `http://localhost:3001/login`
+    }), (req, res) => {
+      res.redirect(`http://localhost:3000${returnStr}`)
+    }
+)
+
+
+app.post('/api/redirect', (req, res, next) => {
   console.log(req.body)
-}))
+  returnStr = req.body.place
+  res.status(200).send(returnStr)
+})
 
 
 app.get('/api/demo', demoHero)
