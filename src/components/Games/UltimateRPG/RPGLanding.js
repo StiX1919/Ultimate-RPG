@@ -33,12 +33,18 @@ class UltimateRPG extends Component {
         })
     }
 
-    console.log(this.props.userID)
+
     return (
       <div className='rpgLanding'>
         <h1 className='RPG-title'>Ultimate RPG</h1>
-        <h2>Demo Character</h2>
-        {demoCard}
+        {this.props.userID 
+          ? <Link to='/UltimateRPG/CharacterSelect'><button>Character Select</button></Link>
+          : <div>
+            <h2>Demo Character</h2>
+            {demoCard}
+          </div>
+        }
+        
         </div>
       );
     }
