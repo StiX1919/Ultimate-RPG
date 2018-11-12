@@ -92,11 +92,9 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj)
 })
 
-app.get('/api/login', passport.authenticate('auth0', {
-        successRedirect: 'http://localhost:3000/', 
-        failureRedirect: `http://localhost:3001/login`
-    }
-))
+app.post('/api/login', passport.authenticate('auth0', () => {
+  console.log(req.body)
+}))
 
 
 app.get('/api/demo', demoHero)

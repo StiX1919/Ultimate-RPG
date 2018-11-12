@@ -5,7 +5,7 @@ import './Navbar.scss'
 class Navbar extends Component {
 
   userLogin() {
-    window.location.href= 'http://localhost:3001/api/login'
+    axios.post('/api/login', {spot: this.props.place})
   }
 
   render() {
