@@ -33,7 +33,7 @@ class Games extends Component {
     if(this.state.hover === 'left'){
         deets = (
             <div className='deets left-deet'>
-                <p>The Ulitmate Role playing game. 
+                <p>The Ultimate Role playing game. 
                     Building off of ideas from the plethora of rpgs i have played myself i plan to incorperate the best 
                     pieces all together in one place where there are no limits on how far you can explore or how strong you can become.</p>
             </div>
@@ -47,8 +47,7 @@ class Games extends Component {
         )
     }
 
-    console.log(this.state)
-
+    console.log('did render')
     return (
 
       <div className='landing-page'>

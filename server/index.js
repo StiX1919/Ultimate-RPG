@@ -92,10 +92,11 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj)
 })
 
-app.get('/api/login/:spot', passport.authenticate('auth0'), (req, res, next) => {
-  console.log(req.params)
-  res.redirect(`http://localhost:3000/${req.params.spot}`)
-})
+app.get('/api/login', passport.authenticate('auth0', {
+        successRedirect: 'http://localhost:3000/', 
+        failureRedirect: `http://localhost:3001/login`
+    }
+))
 
 
 app.get('/api/demo', demoHero)
@@ -121,7 +122,7 @@ app.get('/api/getUser', (req, res, next) => {
   if(req.user) {
     res.status(200).json(req.user.user_id)
   }
-  next()
+  else res.status(500).json('No user')
 })
 
 

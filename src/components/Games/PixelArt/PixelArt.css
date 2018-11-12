@@ -3,7 +3,7 @@
   
   width: 100vw;
   min-width: 1000px;
-  height: 100vh;
+  height: calc(100vh - 80px);
   background: #1C448E
 }
 
@@ -17,7 +17,7 @@
 
 
 .pix-art-title {
-  font-size: 150px;
+  font-size: 100px;
   font-family: 'Alegreya Sans', sans-serif;  
   
 }

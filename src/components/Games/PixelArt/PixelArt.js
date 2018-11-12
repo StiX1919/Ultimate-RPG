@@ -59,9 +59,6 @@ class PixelArt extends Component {
     this.props.getPixWeapons()
   }
 
-  userLogin() {
-    window.location.href= `http://localhost:3001/api/login/${'PixelArt'}`
-  }
 
   async updatePreviewImage(){
     var node = document.getElementById('canvas');
@@ -197,8 +194,6 @@ class PixelArt extends Component {
   }
   
   render() {
-    console.log(this.state)
-
     return (
       <div className='pixPage'>
         <div className="PixelArt">
@@ -255,7 +250,6 @@ class PixelArt extends Component {
 
           <div className='submit-section'>
               <h1>Login to create art for your personal heroes!</h1>
-              <button onClick={this.userLogin}>Login</button>
 
               <h2>Submit your art for a chance to have it put in the game!</h2>
               <h3>Categories</h3>

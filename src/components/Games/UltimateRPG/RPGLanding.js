@@ -18,9 +18,6 @@ class UltimateRPG extends Component {
 
   //build function that checks for user on session. Redirect to character select
 
-  userLogin() {
-    window.location.href= `http://localhost:3001/api/login/${'UltimateRPG'}`
-  }
   componentDidMount(){
     this.props.getDemoCharacter()
   }
@@ -30,29 +27,29 @@ class UltimateRPG extends Component {
     let demoCard = (<h2>Loading Demo Hero</h2>)
     if(this.props.heroes[0]) {
         demoCard = this.props.heroes.map((hero, ind) => {
-            return  <StyledLink key={ind} to={`/UltimateRPG/hero/${hero.hero_id}`} onClick={() => this.props.selectHero(hero)}>
+            return  <StyledLink key={ind} to={`/UltimateRPG/hero/${hero.hero_name}`} onClick={() => this.props.selectHero(hero)}>
                         <CaSeCard hero={hero} />
                     </StyledLink>
         })
     }
 
-
+    console.log(this.props.userID)
     return (
       <div className='rpgLanding'>
         <h1 className='RPG-title'>Ultimate RPG</h1>
-        <button className='rpg-login-button' onClick={() => this.userLogin()} >
-          <h3>Start/Continue your adventure!!</h3>
-          <div className='sword-container'>
-            <img className='left-sword login-sword' src='http://media.pyweek.org/dl/7/xkcd/sword.png' alt='left-login-sword'/>
-            <img className='right-sword login-sword' src='http://media.pyweek.org/dl/7/xkcd/sword.png' alt='right-login-sword'/>
-          </div>
-        </button>
         <h2>Demo Character</h2>
         {demoCard}
-      </div>
-    );
+        </div>
+      );
+    }
   }
-}
+  // <button className='rpg-login-button' onClick={() => this.userLogin()} >
+  //   <h3>Start/Continue your adventure!!</h3>
+  //   <div className='sword-container'>
+  //     <img className='left-sword login-sword' src='http://media.pyweek.org/dl/7/xkcd/sword.png' alt='left-login-sword'/>
+  //     <img className='right-sword login-sword' src='http://media.pyweek.org/dl/7/xkcd/sword.png' alt='right-login-sword'/>
+  //   </div>
+  // </button>
 
 const mapStateToProps = state => ({...state.userReducer, ...state.heroReducer})
 
