@@ -51,31 +51,41 @@ class GameRouter extends Component{
                 <Switch>
                     <Route path='/UltimateRPG' exact render={() =>
                         this.props.userReducer.user 
-                        ? (
-                            <div className='rpg-page'>
-                                <SideBar />
-                                <CharacterSelect />
-                            </div>
-                        ) : (
-                            <UltimateRPG />
-                        )
+                        ? <Redirect to='/UltimateRPG/CharacterSelect'/>
+                        : <UltimateRPG />
+                        
                     }/>
-
-                    <Route path='/UltimateRPG/battle/:monsterID' component={AdventureScreen} />
-                    <Route path='/UltimateRPG/Map' component={WorldMap} />         
-                    <Route path='/UltimateRPG/hero/:heroName' component={HeroHub} /> 
-
                     <Route path='/UltimateRPG/CharacterSelect' render={() => 
                         this.props.userReducer.user !== null
-                    ? <CharacterSelect />
-                    : <Redirect to='/UltimateRPG'/>
+                        ? <CharacterSelect />
+                        : <Redirect to='/UltimateRPG'/>
                     }/>
-
                     <Route path='/UltimateRPG/CreateCharacter' render={() => 
                         this.props.userReducer.user !== null
                         ? <CreateCharacter />
                         : <Redirect to='/UltimateRPG'/>
                     }/>
+                    <Route path='/UltimateRPG/hero' render={() => 
+                        this.props.userReducer.user !== null
+                        ? <div className='rpg-page'>
+                                <SideBar />
+                                <Switch >
+                                    <Route path='/UltimateRPG/hero/:heroName' component={HeroHub}/>
+                                </Switch>
+                            </div>
+
+                        
+                        : <Redirect to='/UltimateRPG'/>
+                        
+                    } />
+                    
+
+                    <Route path='/UltimateRPG/battle/:monsterID' component={AdventureScreen} />
+                    <Route path='/UltimateRPG/Map' component={WorldMap} />         
+
+                    
+
+                    
                 </Switch>
             </div>
 

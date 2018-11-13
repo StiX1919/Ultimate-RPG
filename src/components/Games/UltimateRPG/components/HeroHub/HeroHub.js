@@ -23,8 +23,8 @@ class HeroHub extends Component {
 
   }
   componentDidMount() {
-    this.props.getMonsters(this.props.mapX, this.props.mapY)
-    this.props.getMap(this.props.mapX, this.props.mapY)
+    this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
+    this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
 
     if(!this.props.heroes[0]){
         window.location.href= '/UltimateRPG'
@@ -59,7 +59,7 @@ class HeroHub extends Component {
     );
   }
 }
-// not today!
-const mapStateToProps = state => ({...state.heroReducer, ...state.userReducer, ...state.mapReducer, ...state.monsterReducer})
+
+const mapStateToProps = state => ({heroReducer: state.heroReducer, userReducer: state.userReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer})
 
 export default withRouter(connect(mapStateToProps, { getMap, getMonsters })(HeroHub));

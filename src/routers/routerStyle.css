@@ -1,3 +1,5 @@
 .rpg-page {
-    display: flex
+    display: flex;
+
+    margin-left: 80px;
 }
