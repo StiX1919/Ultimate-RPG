@@ -160,7 +160,7 @@ class WorldMap extends Component {
                 <div className='row'>
                 {row.map((spot, j) => {
                   return (
-                    <div style={{height: '50px', width: '50px', border: 'solid black 1px', backgroundColor: spot.color}}>
+                    <div style={{height: '50px', width: '50px', border: 'solid black 1px', background: spot.color ? spot.color : 'black'}}>
                       
                       {spot.x === this.props.mapReducer.heroX && spot.y === this.props.mapReducer.heroY
                         
@@ -169,7 +169,10 @@ class WorldMap extends Component {
                       }
                       {this.props.monsterReducer.monsters.map( (mon, i) => {
                         if(mon.X === spot.x && mon.Y === spot.y){
-                          return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
+                          if(spot.color){
+                            return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
+                          }
+                          else return <img style={{height: '50px'}} src='https://vignette.wikia.nocookie.net/videogames-fanon/images/6/60/Question_Mark.png/revision/latest?cb=20150225221834'/>
                         }
                       })
                       }
@@ -223,7 +226,7 @@ class WorldMap extends Component {
               return (
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
-                  <Link to={`/UltimateRPG/battle/${monster.index}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
+                  <Link to={`/UltimateRPG/hero/battle/${monster.index}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
                     <button>Fight!!</button>
                   </Link>
                 </div>
