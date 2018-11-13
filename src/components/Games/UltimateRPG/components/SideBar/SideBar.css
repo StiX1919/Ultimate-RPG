@@ -8,3 +8,67 @@
 
     background: #B18FCF
 }
+
+.open {
+    animation: open-sidebar .5s forwards
+}
+.close {
+    animation: close-sidebar .5s forwards
+}
+
+
+@keyframes open-sidebar {
+    from {
+        width: 80px
+    }
+    to {
+        width: 200px
+    }
+}
+
+@keyframes close-sidebar {
+    from {
+        width: 200px
+    }
+    to {
+        width: 80px
+    }
+}
+
+.side-button {
+    background: #F7F9FF;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-open {
+    animation: side-open 1s forwards
+}
+.side-close {
+    animation: side-close 1s forwards
+}
+
+@keyframes side-open{
+    from {
+        transform: rotateY(0deg)
+    }
+    to {
+        transform: rotateY(180deg)
+    }
+}
+@keyframes side-close{
+    from {
+        transform: rotateY(180deg)
+    }
+    to {
+        transform: rotateY(0deg)
+    }
+}

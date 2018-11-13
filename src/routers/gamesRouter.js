@@ -70,7 +70,9 @@ class GameRouter extends Component{
                         ? <div className='rpg-page'>
                                 <SideBar />
                                 <Switch >
+                                    <Route path='/UltimateRPG/hero/Map' component={WorldMap} />
                                     <Route path='/UltimateRPG/hero/:heroName' component={HeroHub}/>
+                                    <Route path='/UltimateRPG/hero/battle/:monsterID' component={AdventureScreen} /> 
                                 </Switch>
                             </div>
 
@@ -80,8 +82,8 @@ class GameRouter extends Component{
                     } />
                     
 
-                    <Route path='/UltimateRPG/battle/:monsterID' component={AdventureScreen} />
-                    <Route path='/UltimateRPG/Map' component={WorldMap} />         
+                    
+                         
 
                     
 

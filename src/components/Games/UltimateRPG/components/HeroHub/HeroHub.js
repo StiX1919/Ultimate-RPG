@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
 
 import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
@@ -9,6 +10,27 @@ import CharacterBox from '../AdventureScreen/AScomponents/CharacterBox/Character
 import { getMap } from '../../../../../ducks/reducers/mapReducer'
 import { getMonsters } from '../../../../../ducks/reducers/monsterReducer'
 
+
+const Arrow = styled.div`
+    background-color: ${props => props.bColor}
+    height: 60px;
+    width: ${props => {
+        if(props.maxLength === props.stat){
+            return 100
+        } else {
+            return 100 * (props.stat / props.maxLength)
+        }
+    }}%;
+`
+const Stats = styled.div`
+    width: 100%;
+    height: 35vh;
+
+    background: #F7F9FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
 
 class HeroHub extends Component {
   constructor(props) {
@@ -26,7 +48,7 @@ class HeroHub extends Component {
     this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
 
-    if(!this.props.heroes[0]){
+    if(!this.props.userReducer.heroes[0]){
         window.location.href= '/UltimateRPG'
     }
     
@@ -45,15 +67,37 @@ class HeroHub extends Component {
   }
 
   render() {
+    console.log('hero stuff', this.props.heroReducer.currentHero)
+    let hero = this.props.heroReducer.currentHero
+    let topNum = Math.max(hero.strength, hero.intelligence, hero.speed, hero.endurance)
 
     return (
-    <div className='page'>
+    <div className='hub-page'>
+        <div className='hub-title'>
+          <h3>{hero.hero_class}</h3>
+          <h1>{hero.hero_name}</h1>
+        </div>
 
-        <CharacterBox />
-        {/*add location here*/}
-        <Link to='/UltimateRPG/Map'>
-          <button onClick={ this.openMap }>Open Map</button>
-        </Link>
+        <div className='hero-hub'>
+            <img className='hero-pix' src={hero.pix_art}/>
+            <div className='stats'>
+                <div className='points'>
+                    <h2>HP: {hero.hero_hp}</h2>
+                    <h3>MP: {hero.hero_mp}</h3>
+                    <h3>SP: {hero.hero_sp}</h3>
+                </div>
+                <Stats>
+                    <Arrow bColor='red' stat={hero.strength} maxLength={topNum}>Str: {hero.strength}</Arrow>
+                    <Arrow bColor='yellow' stat={hero.endurance} maxLength={topNum}>End: {hero.endurance}</Arrow>
+                    <Arrow bColor='green' stat={hero.speed} maxLength={topNum}>Spd: {hero.speed}</Arrow>
+                    <Arrow bColor='blue' stat={hero.intelligence} maxLength={topNum}>Int: {hero.intelligence}</Arrow>
+                </Stats>
+            </div>
+        </div>
+
+        <div className='extra-stats'>
+            <h1>Future stats and stuff go here!!! Maybe current equipment and abilities??</h1>
+        </div>
 
     </div>
     );

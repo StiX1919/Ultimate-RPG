@@ -1,0 +1,43 @@
+.hub-page {
+    height: calc(100vh - 80px);
+    width: calc(100vw - 80px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hero-hub {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hub-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 25%;
+
+}
+
+.hero-pix {
+    height: 35vh;
+}
+
+.extra-stats {
+    display: flex;
+    height: 30%
+}
+
+.stats {
+    width: 40%
+}
+
+.points {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center
+}
