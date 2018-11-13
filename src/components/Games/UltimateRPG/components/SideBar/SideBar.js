@@ -34,10 +34,10 @@ class SideBar extends Component {
             <h3 className={sidebar ? 'side-open' : sidebar === null ? '' : 'side-close'}>{'>'}</h3>
         </div>
         {sidebar &&
-            <div>
+            <div className='sidebar-links'>
                 <Link to='/UltimateRPG/CharacterSelect'><h2>Hero Selection</h2></Link>
                 <Link to={`/UltimateRPG/hero/${hero.hero_name}`}><h2>Hero info</h2></Link>
-                <Link to='/UltimateRPG/hero/Map'><h2>Adventure Map</h2></Link>
+                <Link to='/UltimateRPG/hero/Map' onClick={this.changeBar}><h2>Adventure Map</h2></Link>
             </div>
         }
       </div>
