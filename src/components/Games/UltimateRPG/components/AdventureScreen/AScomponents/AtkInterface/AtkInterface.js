@@ -71,7 +71,7 @@ class AtkInterface extends Component {
         
         }
         {this.props.currentMonster.hp > 0 &&
-            <Link to='/UltimateRPG/Map'>
+            <Link to='/UltimateRPG/hero/Map'>
                 <button>Run!</button>
             </Link>
         }
