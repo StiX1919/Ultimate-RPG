@@ -72,7 +72,7 @@ class CreateCharacter extends Component {
                         <h4>Hero class</h4>
                         <input value={this.state.class} placeholder={'ex: Rogue'} name='class' onChange={e => this.changeHandler(e)}/>
                     </div>
-                    <div>
+                    <div className='stat-selectors'>
                     {this.state.startingStats}
                       {statList}
                     </div>
