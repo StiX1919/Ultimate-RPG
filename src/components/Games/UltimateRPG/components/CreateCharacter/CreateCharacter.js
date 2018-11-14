@@ -5,6 +5,8 @@ import {connect} from 'react-redux'
 
 import './CreateCharacter.css'
 
+import CaSeCard from '../CharacterSelect/CaSeComps/CaSeCard/CaSeCard'
+
 import {createNewHero, chooseStats} from '../../../../../ducks/reducers/CCReducer'
 
 class CreateCharacter extends Component {
@@ -47,8 +49,8 @@ class CreateCharacter extends Component {
     render() {
       let statList = this.props.stats.map((stat, ind )=> {
         return (
-          <div className='statBox'>
-            <h4>{stat.type}</h4>
+          <div className='stat-allocation'>
+            <h4 className='stat-all-name'>{stat.type}</h4>
             {stat.value > 0 &&
               <button onClick={(e) => this.chooseStats('<', ind)}>{'<'}</button>
             }
@@ -62,22 +64,35 @@ class CreateCharacter extends Component {
           </div>
         )
       })
+
+      let demoHero = {
+        strength: this.props.stats[0].value,
+        intelligence: this.props.stats[3].value,
+        speed: this.props.stats[1].value,
+        endurance: this.props.stats[2].value,
+        pix_art: 'none',
+        hero_class: this.state.class,
+        hero_name: this.state.name
+      }
         return (
             <div className='hero_Creation_Component'>
-                <div>
-                    <h1>Create a New Hero</h1>
-                    <div className='hero_Creation_Box'>
-                        <h3>Hero Name</h3>
-                        <input value={this.state.name} placeholder={'ex: Lord Farquad'} name='name' onChange={e => this.changeHandler(e)}/>
-                        <h4>Hero class</h4>
-                        <input value={this.state.class} placeholder={'ex: Rogue'} name='class' onChange={e => this.changeHandler(e)}/>
-                    </div>
-                    <div className='stat-selectors'>
-                    {this.state.startingStats}
-                      {statList}
-                    </div>
+                <h1>Create a New Hero</h1>
+
+                <div className='hero_Creation_Box'>
+                    <h3>Hero Name</h3>
+                    <input value={this.state.name} placeholder={'ex: Lord Farquad'} name='name' onChange={e => this.changeHandler(e)}/>
+                    <h4>Hero class</h4>
+                    <input value={this.state.class} placeholder={'ex: Rogue'} name='class' onChange={e => this.changeHandler(e)}/>
                 </div>
-                <button onClick={() => this.createNewHero()}></button>
+
+                <div className='stat-selectors'>
+                    {this.state.startingStats}
+                    {statList}
+                </div>
+                <div className='example-card'>
+                    <CaSeCard hero={demoHero}/>
+                </div>
+                <button onClick={() => this.createNewHero()}>Create Your Hero</button>
             </div>
         )
     }
