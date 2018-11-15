@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import './WorldMap.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
@@ -8,6 +9,8 @@ import {withRouter} from 'react-router-dom'
 
 import { getMap, updateArea, move, goBack, enterArea, retreat } from '../../../../../ducks/reducers/mapReducer'
 import { setMonster, getMonsters, moveMonsters, matchedMonsters } from '../../../../../ducks/reducers/monsterReducer'
+import { setTimeout } from 'timers';
+
 
 
 class WorldMap extends Component {
@@ -27,7 +30,9 @@ class WorldMap extends Component {
       areaMonsters: [],
       activeSpot: {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
 
-      combatMons: []
+      combatMons: [],
+
+      retreating: false
     }
     // this.move = this.move.bind(this)
     this.locationType = this.locationType.bind(this)
@@ -122,6 +127,11 @@ class WorldMap extends Component {
   }
 
   async retreat(){
+    this.setState({retreating: true}, () => {
+      setTimeout(() => {
+        this.setState({retreating: false})
+      }, 5000)
+    })
     try{
       await this.props.goBack()
       this.props.getMap(this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)
@@ -154,35 +164,41 @@ class WorldMap extends Component {
     return (
       <div className='mapComponent'>
         <div>
-          {this.props.mapReducer.areaMap[0] && 
-            this.props.mapReducer.areaMap.map((row, r) => {
-              return (
-                <div className='row'>
-                {row.map((spot, j) => {
-                  return (
-                    <div style={{height: '50px', width: '50px', border: 'solid black 1px', background: spot.color ? spot.color : 'black'}}>
-                      
-                      {spot.x === this.props.mapReducer.heroX && spot.y === this.props.mapReducer.heroY
+          { this.state.retreating 
+            ? <div className='retreat-container'>
+                <img className='retreat' src={this.props.heroReducer.currentHero.pix_art}/>
+                <div className='ground-container'><div className='retreat-ground'></div></div>
+              </div>
+            : this.props.mapReducer.areaMap[0] && 
+              this.props.mapReducer.areaMap.map((row, r) => {
+                return (
+                  <div className='row'>
+                  {row.map((spot, j) => {
+                    return (
+                      <div style={{height: '50px', width: '50px', border: 'solid black 1px', background: spot.color ? spot.color : 'black'}}>
                         
-                        ? <img style={{height: '50px', width: '50px'}} src={this.props.heroReducer.currentHero.pix_art} alt='hello'/>
-                        : null
-                      }
-                      {this.props.monsterReducer.monsters.map( (mon, i) => {
-                        if(mon.X === spot.x && mon.Y === spot.y){
-                          if(spot.color){
-                            return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
-                          }
-                          else return <img style={{height: '50px'}} src='https://vignette.wikia.nocookie.net/videogames-fanon/images/6/60/Question_Mark.png/revision/latest?cb=20150225221834'/>
+                        {spot.x === this.props.mapReducer.heroX && spot.y === this.props.mapReducer.heroY
+                          
+                          ? <img style={{height: '50px', width: '50px'}} src={this.props.heroReducer.currentHero.pix_art} alt='hello'/>
+                          : null
                         }
-                      })
-                      }
-                    </div>
-                  )
-                })}
+                        {this.props.monsterReducer.monsters.map( (mon, i) => {
+                          if(mon.X === spot.x && mon.Y === spot.y){
+                            if(spot.color){
+                              return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
+                            }
+                            else return <img style={{height: '50px'}} src='https://vignette.wikia.nocookie.net/videogames-fanon/images/6/60/Question_Mark.png/revision/latest?cb=20150225221834'/>
+                          }
+                        })
+                        }
+                      </div>
+                    )
+                  })}
 
-                </div>
-              )
-            })
+                  </div>
+                )
+              })
+            
           }
         </div>
         {area_type !== 'none' 
@@ -218,7 +234,7 @@ class WorldMap extends Component {
             </div>
           ): <div>
             <button onClick={() => this.enterHandler()}>Enter New Land!</button>
-            <button onClick={() => this.props.goBack(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)}>Return to the known.</button>
+            <button onClick={() => this.props.goBack(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)}>Go Back</button>
           </div>
         }
         {/* build this up to leave entered zone and rebuild map from current area. also trigger monster rebuild when switching areas. 
