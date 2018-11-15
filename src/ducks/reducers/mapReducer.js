@@ -104,9 +104,9 @@ export function enterArea(X, Y, spotType){
 
 }
 
-export function goBack(X, Y, oldX, oldY){
+export function goBack(X, Y, oldX, oldY, entered){
     return function(dispatch){
-        if(X !== oldX || Y !== oldY){
+        if(X !== oldX || Y !== oldY && entered === false){
             dispatch(getMap(oldX, oldY))
         }
 

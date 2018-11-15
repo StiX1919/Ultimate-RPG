@@ -5,7 +5,8 @@
     align-items: center;
 
     height: calc(100vh - 80px);
-    width: 100 vw
+    width: 100vw;
+    background: #F7F9FF;
 }
 
 .hero_Creation_Box {

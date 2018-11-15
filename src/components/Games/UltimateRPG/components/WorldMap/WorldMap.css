@@ -1,5 +1,9 @@
 .mapComponent {
-  display: flex
+  display: flex;
+  background: #F7F9FF;
+
+  width: calc(100vw - 80px);
+  height: calc(100vh - 80px)
 }
 
 

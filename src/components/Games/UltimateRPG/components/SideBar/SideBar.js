@@ -29,18 +29,19 @@ class SideBar extends Component {
     let sidebar = this.state.sidebar
 
     return (
-      <div className={sidebar ? 'sidebar open' : 'sidebar close'}>
-        <div className='side-button' onClick={this.changeBar}>
-            <h3 className={sidebar ? 'side-open' : sidebar === null ? '' : 'side-close'}>{'>'}</h3>
-        </div>
-        {sidebar &&
-            <div className='sidebar-links'>
-                <Link to='/UltimateRPG/CharacterSelect'><h2>Hero Selection</h2></Link>
-                <Link to={`/UltimateRPG/hero/${hero.hero_name}`}><h2>Hero info</h2></Link>
-                <Link to='/UltimateRPG/hero/Map' onClick={this.changeBar}><h2>Adventure Map</h2></Link>
+        <div className={sidebar ? 'sidebar open' : 'sidebar close'}>
+            <div className='side-button' onClick={this.changeBar}>
+                <h3 className={sidebar ? 'side-open' : sidebar === null ? '' : 'side-close'}>{'>'}</h3>
             </div>
-        }
-      </div>
+            
+            <div className='sidebar-links'>
+                <Link to='/UltimateRPG/CharacterSelect'><h2>{sidebar ? 'Hero Selection' : 'Hero\'s'}</h2></Link>
+                <Link to={`/UltimateRPG/hero/${hero.hero_name}`}  onClick={ () => { if(sidebar){ this.changeBar() } } }><h2>{sidebar ? 'Hero info' : 'Info'}</h2></Link>
+                <Link to='/UltimateRPG/hero/Map' onClick={ () => { if(sidebar){ this.changeBar() } } }><h2>{sidebar ? 'Adventure Map' : 'Map'}</h2></Link>
+            </div>
+            
+            
+        </div>
     );
   }
 }
