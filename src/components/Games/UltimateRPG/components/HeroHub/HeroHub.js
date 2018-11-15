@@ -67,7 +67,6 @@ class HeroHub extends Component {
   }
 
   render() {
-    console.log('hero stuff', this.props.heroReducer.currentHero)
     let hero = this.props.heroReducer.currentHero
     let topNum = Math.max(hero.strength, hero.intelligence, hero.speed, hero.endurance)
 

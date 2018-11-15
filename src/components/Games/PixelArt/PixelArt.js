@@ -190,7 +190,7 @@ class PixelArt extends Component {
   }
 
   mouseEnter(e){
-    console.log(e.buttons)
+    // console.log(e.buttons)
   }
   
   render() {

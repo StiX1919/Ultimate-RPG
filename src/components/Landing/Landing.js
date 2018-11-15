@@ -47,7 +47,6 @@ class Games extends Component {
         )
     }
 
-    console.log('did render')
     return (
 
       <div className='landing-page'>

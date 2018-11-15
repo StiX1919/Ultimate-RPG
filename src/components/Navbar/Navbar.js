@@ -23,7 +23,6 @@ class Navbar extends Component {
 
   render() {
     let spot = this.props.place.split('/')
-    console.log(spot)
     if(spot[1] === 'UltimateRPG'){
       spot = 'UltimateRPG'
     } else if(spot[1] === 'PixelArt'){

@@ -170,7 +170,6 @@ export default function monsterReducer(state = initialState, action) {
 
     case REMOVE_MON:
       let slicedMons = state.monsters.filter(monster => {
-        console.log(monster.index, action.payload, monster.index === action.payload)
         return monster.index !== +action.payload
           
       });
@@ -192,7 +191,6 @@ export default function monsterReducer(state = initialState, action) {
         let combatMons = state.monsters.filter(mon => {
             return (xArea.includes(mon.X) && yArea.includes(mon.Y))
         })
-        console.log('combat', combatMons)
       return {
           ...state,
           combatMons

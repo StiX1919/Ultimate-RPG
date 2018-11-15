@@ -148,8 +148,9 @@ class WorldMap extends Component {
       this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     })
   }
-
+  
   render() {
+    console.log(this.props.mapReducer.entered, this.props.mapReducer.heroX, 'testing d-pad rendering')
     const {area_name, area_type, x_location, y_location, discovered_by} = this.props.mapReducer.activeSpot
     return (
       <div className='mapComponent'>
@@ -186,17 +187,21 @@ class WorldMap extends Component {
           }
         </div>
         {area_type !== 'none' 
-          ? <div className='directions'>
-            <span className='direction up' onClick={() => this.moveHandler('up')}/>
-            <div className='left-right'>
-              <span className='direction left' onClick={() => this.moveHandler('left')}/>
-              <span className='direction right' onClick={() => this.moveHandler('right')}/>
+          ? (
+            <div className='directions'>
+                {this.props.mapReducer.entered && this.props.mapReducer.heroX < 10 
+                  ? <span className='direction up' onClick={() => this.moveHandler('up')}/>
+                  : !this.props.mapReducer.entered && <span className='direction up' onClick={() => this.moveHandler('up')}/>
+                }
+                <div className='left-right'>
+                    <span className='direction left' onClick={() => this.moveHandler('left')}/>
+                    <span className='direction right' onClick={() => this.moveHandler('right')}/>
+                </div>
+                <span className='direction down' onClick={() => this.moveHandler('down')}/>
             </div>
-            <span className='direction down' onClick={() => this.moveHandler('down')}/>
-          </div>
-          : <div>
+          ): <div>
             <button onClick={() => this.enterHandler()}>Enter New Land!</button>
-            <button onClick={() => this.props.goBack(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY, this.props.mapReducer.entered)}>Return to the known.</button>
+            <button onClick={() => this.props.goBack(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)}>Return to the known.</button>
           </div>
         }
         {/* build this up to leave entered zone and rebuild map from current area. also trigger monster rebuild when switching areas. 

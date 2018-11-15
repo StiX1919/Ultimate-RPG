@@ -103,7 +103,6 @@ app.get('/api/login', passport.authenticate('auth0', {
 
 
 app.post('/api/redirect', (req, res, next) => {
-  console.log(req.body)
   returnStr = req.body.place
   res.status(200).send(returnStr)
 })

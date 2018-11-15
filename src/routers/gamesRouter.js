@@ -36,7 +36,6 @@ class GameRouter extends Component{
     }
         
     render(){
-        console.log(this.props.userReducer)
     
         return (
             <div>
@@ -72,7 +71,7 @@ class GameRouter extends Component{
                                 <Switch >
                                     <Route path='/UltimateRPG/hero/Map' component={WorldMap} />
                                     <Route path='/UltimateRPG/hero/battle/:monsterID' component={AdventureScreen} /> 
-                                    
+
                                     <Route path='/UltimateRPG/hero/:heroName' component={HeroHub}/>
                                 </Switch>
                             </div>
