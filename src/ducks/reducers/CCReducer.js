@@ -9,6 +9,7 @@ const NEW_HERO = "NEW_HERO"
 
 const NEW_STATS = 'NEW_STATS'
 
+const USE_STATS = 'USE_STATS'
 
 //Initial State
 
@@ -18,7 +19,9 @@ const initialState = {
     races: [],
     isLoading: false,
     heroData: null,
-    stats: [{type:'Strength', value: 0}, {type:'Speed', value: 0}, {type:'Endurance', value: 0}, {type:'Intelligence', value: 0},]
+    stats: [{type:'Strength', value: 0}, {type:'Speed', value: 0}, {type:'Endurance', value: 0}, {type:'Intelligence', value: 0},],
+
+    startingStats: 10
     
 }
 
@@ -38,6 +41,12 @@ const initialState = {
 //         payload: axios.get('/api/getRaces')
 //     }
 // }
+export function useStats(stat){
+    return {
+        type: USE_STATS,
+        payload: stat
+    }
+}
 
 export function createNewHero(heroObj) {
     let luck = Math.floor(Math.random() * 10)
@@ -100,7 +109,11 @@ export default function CCReducer(state=initialState, action) {
                 stats: action.payload
             }
         
-        
+        case USE_STATS:
+            return {
+                ...state,
+                startingStats: action.payload
+            }
             
 
         default:

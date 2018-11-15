@@ -101,7 +101,7 @@
   justify-content: flex-end;
 }
 .retreat {
-
+  z-index: 10;
   animation: retreat .3s infinite alternate-reverse;
 }
 
@@ -109,13 +109,16 @@
   width: 100%;
   height: 100px;
 
-  animation: ground 5s forwards;
+  animation: ground 5.5s forwards;
   /* box-shadow: inset 500px 0 0 0 #64A87D; */
-  background: linear-gradient(to bottom right, #64A87D , #F7D288 )
+  background: linear-gradient(to bottom right, #F7D288 70%, #64A87D  );
+  opacity: .5
 
 }
 .ground-container {
-  background: linear-gradient(to bottom right, #F7D288, #64A87D  )
+  width: 100%;
+  height: 100px;
+  background:#64A87D 
 }
 @keyframes retreat {
   from {
@@ -126,9 +129,14 @@
   }
 }
 @keyframes ground {
-  from {
+  0% {
+    background: linear-gradient(to bottom right, #F7D288 70%, #64A87D  );
   }
-  to {
-    opacity: 0
+  50% {
+    opacity: 0;
+  }
+  100% {
+    background: linear-gradient(to bottom right, #64A87D, #F7D288  );
+    opacity: 1
   }
 }

@@ -27,7 +27,7 @@ const Stats = styled.div`
 
 const Arrow = styled.div`
     background-color: ${props => props.bColor}
-    height: 20px;
+    height: 100%
     width: ${props => {
         if(props.stat === 0){
             return 0
@@ -60,10 +60,22 @@ class CaSeCard extends Component {
                     <h2>{hero.hero_name}</h2>
                     <Stats>
                         {/* color coordinate and style stats. red, yellow, green, blue*/}
-                        <Arrow bColor='red' stat={hero.strength} maxLength={topNum}>Str: {hero.strength}</Arrow>
-                        <Arrow bColor='green' stat={hero.speed} maxLength={topNum}>Spd: {hero.speed}</Arrow>
-                        <Arrow bColor='yellow' stat={hero.endurance} maxLength={topNum}>End: {hero.endurance}</Arrow>
-                        <Arrow bColor='blue' stat={hero.intelligence} maxLength={topNum}>Int: {hero.intelligence}</Arrow>
+                        <div className='arrow-container'>
+                            <h3 style={{position: 'absolute'}}>Str: {hero.strength}</h3>
+                            <Arrow bColor='red' stat={hero.strength} maxLength={topNum}></Arrow>
+                        </div>
+                        <div style={{width: '100%', height: '20px'}}>
+                            <h3 style={{position: 'absolute'}}>Spd: {hero.speed}</h3>
+                            <Arrow bColor='green' stat={hero.speed} maxLength={topNum}></Arrow>    
+                        </div>
+                        <div style={{width: '100%', height: '20px'}}>
+                            <h3 style={{position: 'absolute'}}>End: {hero.endurance}</h3>
+                            <Arrow bColor='yellow' stat={hero.endurance} maxLength={topNum}></Arrow>   
+                        </div>
+                        <div style={{width: '100%', height: '20px'}}>
+                            <h3 style={{position: 'absolute'}}>Int: {hero.intelligence}</h3>
+                            <Arrow bColor='blue' stat={hero.intelligence} maxLength={topNum}></Arrow>   
+                        </div>
                     </Stats>
                 </div>
             </Card>

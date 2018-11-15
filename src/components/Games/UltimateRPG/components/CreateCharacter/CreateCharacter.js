@@ -7,7 +7,7 @@ import './CreateCharacter.css'
 
 import CaSeCard from '../CharacterSelect/CaSeComps/CaSeCard/CaSeCard'
 
-import {createNewHero, chooseStats} from '../../../../../ducks/reducers/CCReducer'
+import {createNewHero, chooseStats, useStats} from '../../../../../ducks/reducers/CCReducer'
 
 class CreateCharacter extends Component {
     constructor(props){
@@ -29,12 +29,11 @@ class CreateCharacter extends Component {
     chooseStats(dir, ind){
       let newStats = this.props.stats.slice()
       if(dir === '>'){
-        this.setState({startingStats: this.state.startingStats - 1})
-
+        this.props.useStats(this.props.startingStats - 1)
         newStats[ind].value++
         this.props.chooseStats(newStats)
-      } else if(dir === '<' && this.state.startingStats < 11){
-        this.setState({startingStats: this.state.startingStats + 1})
+      } else if(dir === '<' && this.props.startingStats < 10){
+        this.props.useStats(this.props.startingStats + 1)
 
         newStats[ind].value--
         this.props.chooseStats(newStats)
@@ -49,7 +48,7 @@ class CreateCharacter extends Component {
     render() {
       let statList = this.props.stats.map((stat, ind )=> {
         return (
-          <div className='stat-allocation'>
+          <div key={ind} className='stat-allocation'>
             <h4 className='stat-all-name'>{stat.type}</h4>
             {stat.value > 0 &&
               <button onClick={(e) => this.chooseStats('<', ind)}>{'<'}</button>
@@ -57,7 +56,7 @@ class CreateCharacter extends Component {
 
             <h4>{stat.value}</h4>
 
-            {this.state.startingStats > 0 &&
+            {this.props.startingStats > 0 &&
               <button onClick={(e) => this.chooseStats('>', ind)}>{'>'}</button>
             }
         
@@ -86,7 +85,7 @@ class CreateCharacter extends Component {
                 </div>
 
                 <div className='stat-selectors'>
-                    {this.state.startingStats}
+                    <h2>Stats Left: {this.props.startingStats}</h2>
                     {statList}
                 </div>
                 <div className='example-card'>
@@ -100,4 +99,4 @@ class CreateCharacter extends Component {
 
 const mapStateToProps = state => ({...state.CCReducer, ...state.userReducer})
 
-export default withRouter(connect(mapStateToProps, {createNewHero, chooseStats})(CreateCharacter))
+export default withRouter(connect(mapStateToProps, {createNewHero, chooseStats, useStats})(CreateCharacter))
