@@ -189,15 +189,24 @@ class WorldMap extends Component {
         {area_type !== 'none' 
           ? (
             <div className='directions'>
-                {this.props.mapReducer.entered && this.props.mapReducer.heroX < 10 
+                {this.props.mapReducer.entered && this.props.mapReducer.heroY < 10 
                   ? <span className='direction up' onClick={() => this.moveHandler('up')}/>
                   : !this.props.mapReducer.entered && <span className='direction up' onClick={() => this.moveHandler('up')}/>
                 }
                 <div className='left-right'>
-                    <span className='direction left' onClick={() => this.moveHandler('left')}/>
-                    <span className='direction right' onClick={() => this.moveHandler('right')}/>
+                    {this.props.mapReducer.entered && this.props.mapReducer.heroX > 1 
+                      ? <span className='direction left' onClick={() => this.moveHandler('left')}/>
+                      : !this.props.mapReducer.entered && <span className='direction left' onClick={() => this.moveHandler('left')}/>
+                    }
+                    {this.props.mapReducer.entered && this.props.mapReducer.heroX < 10
+                      ? <span className='direction right' onClick={() => this.moveHandler('right')}/>
+                      : !this.props.mapReducer.entered && <span className='direction right' onClick={() => this.moveHandler('right')}/>
+                    }
                 </div>
-                <span className='direction down' onClick={() => this.moveHandler('down')}/>
+                {this.props.mapReducer.entered && this.props.mapReducer.heroY > 1 
+                  ? <span className='direction down' onClick={() => this.moveHandler('down')}/>
+                  : !this.props.mapReducer.entered && <span className='direction down' onClick={() => this.moveHandler('down')}/>
+                }
             </div>
           ): <div>
             <button onClick={() => this.enterHandler()}>Enter New Land!</button>
