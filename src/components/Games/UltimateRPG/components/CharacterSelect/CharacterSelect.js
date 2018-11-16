@@ -50,7 +50,7 @@ class CharacterSelect extends Component {
                 {this.props.isLoading !== true && this.props.heroes.length < 5 &&
                     <Link to ='/UltimateRPG/CreateCharacter'><button>Create new Hero</button></Link>
                 }
-                
+                <Link to='/'><h4>Back to Games</h4></Link>
             </div>
         )
     }

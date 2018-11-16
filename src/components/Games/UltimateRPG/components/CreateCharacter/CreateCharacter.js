@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import './CreateCharacter.css'
@@ -66,9 +66,9 @@ class CreateCharacter extends Component {
 
       let demoHero = {
         strength: this.props.stats[0].value,
-        intelligence: this.props.stats[3].value,
         speed: this.props.stats[1].value,
         endurance: this.props.stats[2].value,
+        intelligence: this.props.stats[3].value,
         pix_art: 'none',
         hero_class: this.state.class,
         hero_name: this.state.name
@@ -92,6 +92,7 @@ class CreateCharacter extends Component {
                     <CaSeCard hero={demoHero}/>
                 </div>
                 <button onClick={() => this.createNewHero()}>Create Your Hero</button>
+                <Link to='/UltimateRPG/CharacterSelect'><button>Cancel</button></Link>
             </div>
         )
     }

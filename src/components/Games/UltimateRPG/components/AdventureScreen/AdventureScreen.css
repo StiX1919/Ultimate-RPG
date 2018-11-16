@@ -1,3 +1,9 @@
+.as-page {
+  width: calc(100vw - 80px);
+  height: calc(100vh - 80px);
+  background: #7F9FF
+}
+
 .attacks {
     display: flex;
     flex-direction: column;
