@@ -184,6 +184,8 @@ class PixelArt extends Component {
       case 'monsters':
         this.setState({artTable: type, pixelArt: this.props.pixelArt.monsters})
         break;
+      case 'heroes':
+        this.setState({artTable: type, pixelArt: this.props.user.heroes})
 
       default: return null
     }
@@ -194,7 +196,6 @@ class PixelArt extends Component {
   }
   
   render() {
-    console.log(this.props.user.user)
     return (
       <div className='pixPage'>
         <div className="PixelArt">
@@ -256,17 +257,18 @@ class PixelArt extends Component {
                     <h3>Categories</h3>
                     <button onClick={() => this.selectPixType('weapons')}>Weapons</button>
                     <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
+                    <button onClick={() => this.selectPixType('heroes')}>Monsters</button>
 
                     <h5>Select what you want to submit for</h5>
                     <select onChange={(e) => this.setState({artName: e.target.value})}>
                       <option default value='Custom'>Custom</option>
                       {this.state.pixelArt.map((target, i) => {
                         return (
-                          <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>
+                          <option key={target.monster_id || target.equip_id || target.hero_id} value={target.name || target.hero_name}>{target.name || target.hero_name}</option>
                         )
                       })}
                     </select>
-                    
+
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
                     <button onClick={this.updatePreviewImage}>Preview Image</button>
                     <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
