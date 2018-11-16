@@ -264,12 +264,13 @@ class PixelArt extends Component {
 
                     <h5>Select what you want to submit for</h5>
                     <select onChange={(e) => this.setState({artName: e.target.value})}>
-                      <option default value='Custom'>Custom</option>
+                      <option default value=''></option>
                       {this.state.pixelArt.map((target, i) => {
                         return (
                           <option key={target.monster_id || target.equip_id || target.hero_id} value={target.name || target.hero_name}>{target.name || target.hero_name}</option>
                         )
                       })}
+                      <option value='Custom'>Custom</option>
                     </select>
 
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
@@ -290,7 +291,7 @@ class PixelArt extends Component {
           </div>
               
           <Link to='/'><h1>Back to Games</h1></Link>
-          <img className='preview-image' src={this.state.image}/>
+          <img className='preview-image' src={this.state.image }/>
         </div>
 
 
