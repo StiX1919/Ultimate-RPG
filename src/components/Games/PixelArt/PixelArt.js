@@ -194,6 +194,7 @@ class PixelArt extends Component {
   }
   
   render() {
+    console.log(this.props.user.user)
     return (
       <div className='pixPage'>
         <div className="PixelArt">
@@ -249,30 +250,39 @@ class PixelArt extends Component {
         <div>
 
           <div className='submit-section'>
-              <h1>Login to create art for your personal heroes!</h1>
+            {this.props.user.user
+              ? (
+                <div>
+                    <h3>Categories</h3>
+                    <button onClick={() => this.selectPixType('weapons')}>Weapons</button>
+                    <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
 
-              <h2>Submit your art for a chance to have it put in the game!</h2>
-              <h3>Categories</h3>
-                <button onClick={() => this.selectPixType('weapons')}>Weapons</button>
-                <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
-
-              <h5>Select what you want to submit for</h5>
-              <select onChange={(e) => this.setState({artName: e.target.value})}>
-                <option default value='Custom'>Custom</option>
-                {this.state.pixelArt.map((target, i) => {
-                  return (
-                    <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>
-                  )
-                })}
-              </select>
+                    <h5>Select what you want to submit for</h5>
+                    <select onChange={(e) => this.setState({artName: e.target.value})}>
+                      <option default value='Custom'>Custom</option>
+                      {this.state.pixelArt.map((target, i) => {
+                        return (
+                          <option key={target.monster_id || target.equip_id} value={target.name}>{target.name}</option>
+                        )
+                      })}
+                    </select>
+                    
+                    <button onClick={this.toggleBorder}>Toggle Borders</button>
+                    <button onClick={this.updatePreviewImage}>Preview Image</button>
+                    <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
+                </div>
+                )
+              : (
+                <div>
+                    <h1>Login to create art for your personal heroes!</h1>
+                    <h2>Submit your art for a chance to have it put in the game!</h2>
+                </div>
+                )
+            }
+              
+              
             
           </div>
-
-
-
-          <button onClick={this.toggleBorder}>Toggle Borders</button>
-          <button onClick={this.updatePreviewImage}>Preview Image</button>
-          <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
               
           <Link to='/'><h1>Back to Games</h1></Link>
           <img className='preview-image' src={this.state.image}/>
@@ -284,6 +294,6 @@ class PixelArt extends Component {
   }
 }
 
-const mapStateToProps = state => ({pixelArt: state.pixelArt})
+const mapStateToProps = state => ({pixelArt: state.pixelArt, user: state.userReducer})
 
 export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons, submitArt})(PixelArt))
