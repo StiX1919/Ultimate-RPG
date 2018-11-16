@@ -6,6 +6,7 @@ import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import {getPixMons, getPixWeapons, submitArt} from '../../../ducks/reducers/pixelArt'
+import {getHeroes} from '../../../ducks/reducers/userReducer'
 
 import Pixel from './components/Pixel/Pixel'
 import './PixelArt.css';
@@ -57,6 +58,7 @@ class PixelArt extends Component {
     this.modifyPixels()
     this.props.getPixMons()
     this.props.getPixWeapons()
+    this.props.getHeroes()
   }
 
 
@@ -192,10 +194,11 @@ class PixelArt extends Component {
   }
 
   mouseEnter(e){
-    // console.log(e.buttons)
+    
   }
   
   render() {
+    console.log(this.state.pixelArt)
     return (
       <div className='pixPage'>
         <div className="PixelArt">
@@ -257,7 +260,7 @@ class PixelArt extends Component {
                     <h3>Categories</h3>
                     <button onClick={() => this.selectPixType('weapons')}>Weapons</button>
                     <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
-                    <button onClick={() => this.selectPixType('heroes')}>Monsters</button>
+                    <button onClick={() => this.selectPixType('heroes')}>Heroes</button>
 
                     <h5>Select what you want to submit for</h5>
                     <select onChange={(e) => this.setState({artName: e.target.value})}>
@@ -298,4 +301,4 @@ class PixelArt extends Component {
 
 const mapStateToProps = state => ({pixelArt: state.pixelArt, user: state.userReducer})
 
-export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons, submitArt})(PixelArt))
+export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons, submitArt, getHeroes})(PixelArt))
