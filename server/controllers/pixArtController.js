@@ -21,7 +21,7 @@ submitArt = (req, res, next) => {
     // console.log('req.body', req.body)
 
     req.app.get('db').pixel_art.insert({table_name: req.body.table, item_name: req.body.name, img_string: req.body.image}, (err, response) => {
-        console.log(response, 'post response')
+        // shouldnt need to receive anything here
     })
 }
 
