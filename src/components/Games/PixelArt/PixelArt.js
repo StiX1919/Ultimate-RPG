@@ -181,13 +181,13 @@ class PixelArt extends Component {
   selectPixType(type){
     switch(type){
       case 'weapons':
-        this.setState({artTable: type, pixelArt: this.props.pixelArt.weapons})
+        this.setState({artTable: type, artName: '', pixelArt: this.props.pixelArt.weapons})
         break;
       case 'monsters':
-        this.setState({artTable: type, pixelArt: this.props.pixelArt.monsters})
+        this.setState({artTable: type, artName: '', pixelArt: this.props.pixelArt.monsters})
         break;
       case 'heroes':
-        this.setState({artTable: type, pixelArt: this.props.user.heroes})
+        this.setState({artTable: type, artName: '', pixelArt: this.props.user.heroes})
 
       default: return null
     }
@@ -198,7 +198,7 @@ class PixelArt extends Component {
   }
   
   render() {
-    console.log(this.state.pixelArt)
+    
     return (
       <div className='pixPage'>
         <div className="PixelArt">
