@@ -50,6 +50,8 @@ class CharacterBox extends Component {
     render() {
         let hero = this.props.currentHero
 
+        //Showing currently equiped items
+
         // let liveEquipment = 'Loading...'
         // if(this.state.equipment) {
         //     liveEquipment = Object.keys(this.state.equipment).map(item => {
