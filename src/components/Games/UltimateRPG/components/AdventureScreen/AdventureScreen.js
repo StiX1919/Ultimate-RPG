@@ -39,6 +39,9 @@ class AdventureScreen extends Component {
   }
 
   render() {
+    // Start prepping to buy and equip items from shop
+    //May move to new component on sidebar
+    //
     // let inventory = <h3>Empty</h3>
     // if (this.props.currentInventory[0]){
     //     inventory = this.props.currentInventory.map(item => {
