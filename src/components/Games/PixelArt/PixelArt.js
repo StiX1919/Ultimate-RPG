@@ -175,7 +175,11 @@ class PixelArt extends Component {
   }
 
   toggleBorder(){
-    this.setState({border: !this.state.border})
+    this.setState({border: !this.state.border}, () => {
+      if(this.state.image !== '') {
+        this.updatePreviewImage()
+      }
+    })
   }
   
 
@@ -301,6 +305,9 @@ class PixelArt extends Component {
           </div>
               
           <Link to='/'><h1>Back to Games</h1></Link>
+          {this.state.image !== '' && this.state.border === true &&
+            <h3>Make sure to toggle the borders if you dont want to save your image with them</h3>
+          }
           <img className='preview-image' src={this.state.image }/>
         </div>
 
