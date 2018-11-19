@@ -279,10 +279,12 @@ class PixelArt extends Component {
 
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
                     <button onClick={this.updatePreviewImage}>Preview Image</button>
-                    <h3>Preview your image before you Submit to make sure you like the final product!</h3>
-                    {this.state.artTable === 'heroes' && this.state.image
+                    
+                    {this.state.artTable === 'heroes' && this.state.image !== ''
                       ? <button onClick={() => this.props.submitHeroArt(this.state.image, this.state.currentHero.hero_id)}>Change Hero Art</button>
-                      : <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
+                      : this.state.artTable !== 'heroes' && this.state.image !== ''
+                        ? <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
+                        : <button disabled>Preview before you submit</button>
                     }
                 </div>
                 )
