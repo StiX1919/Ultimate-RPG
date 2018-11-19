@@ -33,7 +33,9 @@ class PixelArt extends Component {
 
       pixelArt: [],
       artName: '',
-      artTable: ''
+      artTable: '',
+
+      currentHero: {}
     }
     this.handleColorChange=this.handleColorChange.bind(this)
     this.modifyPixels = this.modifyPixels.bind(this)
@@ -198,6 +200,7 @@ class PixelArt extends Component {
   }
   
   render() {
+    console.log(this.state.currentHero)
     
     return (
       <div className='pixPage'>
@@ -265,7 +268,7 @@ class PixelArt extends Component {
                     <h5>Select what you want to submit for</h5>
                     <select onChange={
                       this.state.artTable === 'heroes' 
-                      ? (e) => console.log(e.key)
+                      ? (e) => this.setState({artName: e.target.value, currentHero: this.state.pixelArt.find((hero) => hero.hero_name === e.target.value)})
                       : (e) => this.setState({artName: e.target.value})
                     }>
                       <option default value=''></option>
@@ -280,7 +283,7 @@ class PixelArt extends Component {
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
                     <button onClick={this.updatePreviewImage}>Preview Image</button>
                     {this.state.artTable === 'heroes'
-                      ? <button onClick={() => this.props.submitHeroArt(this.state.artTable, this.state.artName, this.state.image)}>Change Hero Art</button>
+                      ? <button onClick={() => this.props.submitHeroArt(this.state.image, this.state.currentHero.hero_id)}>Change Hero Art</button>
                       : <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
                     }
                 </div>

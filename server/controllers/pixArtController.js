@@ -25,8 +25,18 @@ submitArt = (req, res, next) => {
     })
 }
 
+submitHeroArt = (req, res, next) => {
+    // console.log('req.body', req.body)
+
+    req.app.get('db').query(`UPDATE heroes SET pix_art = ${req.body.image} WHERE hero_id = ${req.body.hero_id}`).then(response => {
+        res.status(200).send(response)
+    })
+    .catch(err => console.log(err))
+}
+
 module.exports = {
     pixMons,
     pixWeapons,
-    submitArt
+    submitArt,
+    submitHeroArt
 }

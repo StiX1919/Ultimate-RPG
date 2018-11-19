@@ -41,10 +41,10 @@ export function submitArt(table, name, image){
         payload: axios.post('/api/submitArt', {table, name, image})
     }
 }
-export function submitHeroArt(table, name, image){
+export function submitHeroArt(image, hero_id){
     return {
         type: SUBMIT,
-        payload: axios.post('/api/submitArt', {table, name, image})
+        payload: axios.post('/api/submitHeroArt', {image, hero_id})
     }
 }
 

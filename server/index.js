@@ -29,7 +29,7 @@ let shop = []
 
 const {getClasses, getRaces, createNewHero, getHeroes, demoHero, getMap, newPlace, getMonsters} = require('./controllers/mainController.js')
 
-const {pixMons, pixWeapons, submitArt} = require('./controllers/pixArtController')
+const {pixMons, pixWeapons, submitArt, submitHeroArt} = require('./controllers/pixArtController')
 
 // SAVED FOR BUILD
 // app.use(express.static(`${__dirname}/public/build`));
@@ -151,6 +151,7 @@ app.get('/api/pixMons', pixMons)
 app.get('/api/pixWeapons', pixWeapons)
 
 app.post('/api/submitArt', submitArt)
+app.post('/api/submitHeroArt', submitHeroArt)
 
 //LISTENING
 app.listen(port, () => {
