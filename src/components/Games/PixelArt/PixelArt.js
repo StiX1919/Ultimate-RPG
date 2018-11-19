@@ -5,7 +5,7 @@ import {SketchPicker} from 'react-color'
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import {getPixMons, getPixWeapons, submitArt} from '../../../ducks/reducers/pixelArt'
+import {getPixMons, getPixWeapons, submitArt, submitHeroArt} from '../../../ducks/reducers/pixelArt'
 import {getHeroes} from '../../../ducks/reducers/userReducer'
 
 import Pixel from './components/Pixel/Pixel'
@@ -263,7 +263,11 @@ class PixelArt extends Component {
                     <button onClick={() => this.selectPixType('heroes')}>Heroes</button>
 
                     <h5>Select what you want to submit for</h5>
-                    <select onChange={(e) => this.setState({artName: e.target.value})}>
+                    <select onChange={
+                      this.state.artTable === 'heroes' 
+                      ? (e) => console.log(e.key)
+                      : (e) => this.setState({artName: e.target.value})
+                    }>
                       <option default value=''></option>
                       {this.state.pixelArt.map((target, i) => {
                         return (
@@ -276,7 +280,7 @@ class PixelArt extends Component {
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
                     <button onClick={this.updatePreviewImage}>Preview Image</button>
                     {this.state.artTable === 'heroes'
-                      ? <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Change Hero Art</button>
+                      ? <button onClick={() => this.props.submitHeroArt(this.state.artTable, this.state.artName, this.state.image)}>Change Hero Art</button>
                       : <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
                     }
                 </div>
@@ -305,4 +309,4 @@ class PixelArt extends Component {
 
 const mapStateToProps = state => ({pixelArt: state.pixelArt, user: state.userReducer})
 
-export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons, submitArt, getHeroes})(PixelArt))
+export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons, submitArt, getHeroes, submitHeroArt})(PixelArt))

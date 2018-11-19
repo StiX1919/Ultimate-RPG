@@ -41,6 +41,12 @@ export function submitArt(table, name, image){
         payload: axios.post('/api/submitArt', {table, name, image})
     }
 }
+export function submitHeroArt(table, name, image){
+    return {
+        type: SUBMIT,
+        payload: axios.post('/api/submitArt', {table, name, image})
+    }
+}
 
 
 //Reducer
