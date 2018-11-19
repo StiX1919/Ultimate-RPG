@@ -53,8 +53,6 @@ class PixelArt extends Component {
     this.updatePreviewImage = this.updatePreviewImage.bind(this)
     this.selectPixType = this.selectPixType.bind(this)
 
-    this.submitArt = this.submitArt.bind(this)
-    this.submitHeroArt = this.submitHeroArt.bind(this)
   }
 
   componentDidMount(){
@@ -196,23 +194,8 @@ class PixelArt extends Component {
     }
   }
 
-  async submitArt() {
-    try {
-      this.updatePreviewImage()
-    }
-    finally {
-      this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)
-    }
-  }
-  async submitHeroArt(){
-    try {
-      this.updatePreviewImage()
-    }
-    finally {
-      this.props.submitHeroArt(this.state.image, this.state.currentHero.hero_id)
-    }
-  }
 
+  
   render() {
     console.log(this.state.currentHero)
     
@@ -298,8 +281,8 @@ class PixelArt extends Component {
                     <button onClick={this.updatePreviewImage}>Preview Image</button>
                     {/* fix submit button so that it generates the image before submitting*/}
                     {this.state.artTable === 'heroes'
-                      ? <button onClick={() => this.submitHeroArt()}>Change Hero Art</button>
-                      : <button onClick={() => this.submitArt()}>Submit PixArt</button>
+                      ? <button onClick={() => this.props.submitHeroArt(this.state.image, this.state.currentHero.hero_id)}>Change Hero Art</button>
+                      : <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
                     }
                 </div>
                 )
