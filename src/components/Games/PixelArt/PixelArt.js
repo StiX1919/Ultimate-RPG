@@ -282,6 +282,7 @@ class PixelArt extends Component {
 
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
                     <button onClick={this.updatePreviewImage}>Preview Image</button>
+                    {/* fix submit button so that it generates the image before submitting*/}
                     {this.state.artTable === 'heroes'
                       ? <button onClick={() => this.props.submitHeroArt(this.state.image, this.state.currentHero.hero_id)}>Change Hero Art</button>
                       : <button onClick={() => this.props.submitArt(this.state.artTable, this.state.artName, this.state.image)}>Submit PixArt</button>
