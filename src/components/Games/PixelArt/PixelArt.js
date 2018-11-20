@@ -303,7 +303,7 @@ class PixelArt extends Component {
               
             
           </div>
-              
+            <h3>You submit what is previewed so make sure its updated below before you submit</h3>
           <Link to='/'><h1>Back to Games</h1></Link>
           {this.state.image !== '' && this.state.border === true &&
             <h3>Make sure to toggle the borders if you dont want to save your image with them</h3>
