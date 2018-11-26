@@ -187,7 +187,7 @@ class WorldMap extends Component {
                             if(spot.color){
                               return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
                             }
-                            else return <img style={{height: '50px'}} src='https://vignette.wikia.nocookie.net/videogames-fanon/images/6/60/Question_Mark.png/revision/latest?cb=20150225221834'/>
+                            else return <img style={{height: '50px'}} src='https://vignette.wikia.nocookie.net/videogames-fanon/images/6/60/Question_Mark.png/revision/latest?cb=20150225221834' alt='mystery monster'/>
                           }
                         })
                         }

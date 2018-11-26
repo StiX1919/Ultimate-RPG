@@ -25,11 +25,11 @@ class Games extends Component {
 
   render() {
     let deets;
-    let navLinks = this.state.links.map(link => {
-        return (
-            <Link to={`/${link}`}><div className='see-more-button'>Play now!</div></Link>
-        )
-    })
+    // let navLinks = this.state.links.map(link => {
+    //     return (
+    //         <Link to={`/${link}`}><div className='see-more-button'>Play now!</div></Link>
+    //     )
+    // })
     if(this.state.hover === 'left'){
         deets = (
             <div className='deets left-deet'>
@@ -52,9 +52,7 @@ class Games extends Component {
       <div className='landing-page'>
         {/*Left side of screen */}
         <div className='page-split'>
-            <div className={this.state.hover === 'left' ? 'page-left hovered' : this.state.hover === 'none' ? 'page-left' : 'page-left not-hovered'} 
-                onMouseEnter={() => this.mouseHover('left')} 
-                onMouseLeave={() => this.mouseHover('right')}>
+            <div className={this.state.hover === 'left' ? 'page-left hovered' : this.state.hover === 'none' ? 'page-left' : 'page-left not-hovered'}>
                 
 
                 <h1 className='title-left'>Ferret</h1>
@@ -76,9 +74,7 @@ class Games extends Component {
 
 
             {/*Right side of screen */}
-            <div className={this.state.hover === 'right' ? 'page-right hovered' : this.state.hover === 'none' ? 'page-right' : 'page-right not-hovered'}
-                onMouseEnter={() => this.mouseHover('right')}
-                onMouseLeave={() => this.mouseHover('right')}>
+            <div className={this.state.hover === 'right' ? 'page-right hovered' : this.state.hover === 'none' ? 'page-right' : 'page-right not-hovered'}>
                 
                 <h1 className='title-right'>Playground</h1>
 

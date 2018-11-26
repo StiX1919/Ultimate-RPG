@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 
-import axios from 'axios'
-
 import {Link, withRouter} from 'react-router-dom'
 import './SideBar.css'
 class SideBar extends Component {

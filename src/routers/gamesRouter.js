@@ -3,8 +3,6 @@ import React, {Component} from 'react'
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import axios from 'axios'
-
 //RPG links
 import UltimateRPG from '../components/Games/UltimateRPG/RPGLanding'
 import CreateCharacter from '../components/Games/UltimateRPG/components/CreateCharacter/CreateCharacter'
@@ -28,9 +26,6 @@ import './routerStyle.css'
 
 //work on getting the map update call to work before the transition to a new area today
 class GameRouter extends Component{
-    constructor(){
-        super()
-    }
     componentDidMount(){
         this.props.getUser()
     }

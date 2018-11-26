@@ -193,7 +193,10 @@ class PixelArt extends Component {
         break;
       case 'heroes':
         this.setState({artTable: type, artName: '', pixelArt: this.props.user.heroes})
-
+        break;
+      case 'custom':
+        this.setState({artTable: type, artName: '', pixelArt: []})
+        break;
       default: return null
     }
   }
@@ -201,7 +204,6 @@ class PixelArt extends Component {
 
   
   render() {
-    console.log(this.state.currentHero)
     
     return (
       <div className='pixPage'>
@@ -265,6 +267,7 @@ class PixelArt extends Component {
                     <button onClick={() => this.selectPixType('weapons')}>Weapons</button>
                     <button onClick={() => this.selectPixType('monsters')}>Monsters</button>
                     <button onClick={() => this.selectPixType('heroes')}>Heroes</button>
+                    <button onClick={() => this.selectPixType('custom')}>Custom</button>
 
                     <h5>Select what you want to submit for</h5>
                     <select onChange={
@@ -308,7 +311,7 @@ class PixelArt extends Component {
           {this.state.image !== '' && this.state.border === true &&
             <h3>Make sure to toggle the borders if you dont want to save your image with them</h3>
           }
-          <img className='preview-image' src={this.state.image }/>
+          <img className='preview-image' src={ this.state.image } alt='preview'/>
         </div>
 
 

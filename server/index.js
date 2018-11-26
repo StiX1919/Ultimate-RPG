@@ -19,13 +19,6 @@ const app = express();
 let place = '/'
 
 let shop = []
-// [{name: 'Knife', pwr: 1, spd: 1, def: 0, price: 10, type: 'weapon', abilityTypes: ['slashing', 'stabbing', 'knives']}, 
-//             {name: 'Sword', pwr: 1, spd: 0, def: 1, price: 12, type: 'weapon', dmgType: ['slashing', 'swords']},
-//             {name: 'Axe', pwr: 2, spd: 0, def: 0, price: 14, type: 'weapon', dmgType: ['slashing', 'axes']}, 
-//             {name: 'Helmet', pwr: 1, spd: 0, def: 1, price: 12, type: 'head'}, 
-//             {name: 'Leather Armor', pwr: 1, spd: 0, def: 1, price: 12, type: 'chest'}, 
-//             {name: 'Bracelet', pwr: 1, spd: 0, def: 1, price: 12, type: 'arms'}, 
-//             {name: 'High heels', pwr: 1, spd: 0, def: 1, price: 12, type: 'legs'}]
 
 const {getClasses, getRaces, createNewHero, getHeroes, demoHero, getMap, newPlace, getMonsters} = require('./controllers/mainController.js')
 
@@ -131,7 +124,7 @@ app.get('/api/getUser', (req, res, next) => {
   if(req.user) {
     res.status(200).json(req.user.user_id)
   }
-  else res.status(500).json('No user')
+  else res.sendStatus(500)
 })
 
 

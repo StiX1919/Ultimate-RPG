@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 
-import {withRouter, Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import './HeroHub.css';
-
-import CharacterBox from '../AdventureScreen/AScomponents/CharacterBox/CharacterBox'
 
 import { getMap } from '../../../../../ducks/reducers/mapReducer'
 import { getMonsters } from '../../../../../ducks/reducers/monsterReducer'
@@ -80,7 +78,7 @@ class HeroHub extends Component {
         </div>
 
         <div className='hero-hub'>
-            <img className='hero-pix' src={hero.pix_art}/>
+            <img className='hero-pix' src={hero.pix_art} alt='hero-pic'/>
             <div className='stats'>
                 <div className='points'>
                     <h2>HP: {hero.hero_hp}</h2>

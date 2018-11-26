@@ -337,7 +337,7 @@ export default function mapReducer(state=initialState, action) {
 
 
         case MOVE:
-            let {mod, type, letter, area, oldArea, entered, mapX, mapY} = action.payload
+            let {mod, type, letter, area, oldArea, entered} = action.payload
             let otherLet = ''
             let otherData = 0
             let otherArea = 1
