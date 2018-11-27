@@ -9,13 +9,7 @@ import {equipGear} from '../../../../../../../../../ducks/reducers/heroReducer'
 
 
 class Inventory extends Component {
-    constructor(){
-        super()
-        this.state = {
-        }
 
-
-    }     
     async equiping(item, equip){
         try {
             await this.props.equipGear(item, equip)
