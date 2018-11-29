@@ -45,12 +45,11 @@ class Games extends Component {
     return (
 
       <div className='landing-page'>
-        {/*Left side of screen */}
+        <h1 className={this.state.hover === 'right' ? 'title title-right' : this.state.hover === 'none' ? 'title' : 'title title-left'}>Ferret Playground</h1>
         <div className='page-split'>
+            {/*Left side of screen */}
             <div className={this.state.hover === 'left' ? 'page-left hovered' : this.state.hover === 'none' ? 'page-left' : 'page-left not-hovered'}>
                 
-
-                <h1 className='title-left'>Ferret</h1>
 
                 <img className={this.state.hover === 'left' ? 'intro-pic img-grow' : this.state.hover === 'none' ? 'intro-pic-left' : 'intro-pic img-shrink'} 
                     src='https://opengameart.org/sites/default/files/Goblin_idle.gif' 
@@ -71,7 +70,6 @@ class Games extends Component {
             {/*Right side of screen */}
             <div className={this.state.hover === 'right' ? 'page-right hovered' : this.state.hover === 'none' ? 'page-right' : 'page-right not-hovered'}>
                 
-                <h1 className='title-right'>Playground</h1>
 
                 <img className={this.state.hover !== 'left' ? 'intro-pic img-grow' : this.state.hover === 'none' ? 'intro-pic-right' : 'intro-pic img-shrink'} 
                     src='http://4.bp.blogspot.com/-dWmMQeiUEgk/URocXZymRCI/AAAAAAAAEUU/HUI2wJytggc/s640/ironman_pixelart2_grid.png' 
