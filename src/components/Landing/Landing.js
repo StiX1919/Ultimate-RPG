@@ -25,11 +25,6 @@ class Games extends Component {
 
   render() {
     let deets;
-    // let navLinks = this.state.links.map(link => {
-    //     return (
-    //         <Link to={`/${link}`}><div className='see-more-button'>Play now!</div></Link>
-    //     )
-    // })
     if(this.state.hover === 'left'){
         deets = (
             <div className='deets left-deet'>
