@@ -19,12 +19,12 @@ $darkpurp: #B18FCF;
 
     justify-content: flex-start;
     width: 100%;
-    font-size: 10vw;
+    font-size: 8vw;
     overflow: hidden;
     color: #F7F9FF;
     text-shadow: 3px 0px 2px #2d2d2d82;
     z-index: 10;
-    // margin: 0
+    margin-left: 6%
 }
 .title-right {
     animation: titleRight 1s forwards
@@ -35,18 +35,18 @@ $darkpurp: #B18FCF;
 
 @keyframes titleLeft {
     from {
-        margin-left: 0
+        margin-left: 6%
     }
     to {
-        margin-left: 40%
+        margin-left: 46%
     }
 }
 @keyframes titleRight {
     from {
-        margin-left: 40%
+        margin-left: 46%
     }
     to {
-        margin-left: 0
+        margin-left: 6%
     }
 }
 
@@ -112,9 +112,11 @@ $darkpurp: #B18FCF;
 
 .intro-pic-left{
     height: 300px;
+    margin-top: 10vh
 }
 .intro-pic-right{
     height: 400px;
+    margin-top: 10vh
 }
 
 .img-grow {
@@ -125,18 +127,22 @@ $darkpurp: #B18FCF;
 }
 @keyframes imgGrow{
     from {
-        height: 300px
+        height: 300px;
+        margin-top: 10vh
     }
     to {
-        height: 400px
+        height: 400px;
+        margin-top: 10vh
     }
 }
 @keyframes imgShrink{
     from {
-        height: 400px
+        height: 400px;
+        margin-top: 10vh
     }
     to {
-        height: 300px
+        height: 300px;
+        margin-top: 10vh
     }
 }
 
@@ -175,7 +181,9 @@ $darkpurp: #B18FCF;
     border: solid #000000 10px;
     border-radius: 40px;
 
-    cursor: pointer
+    cursor: pointer;
+
+    margin-bottom: 20px;
 }
 .left-play {
     left: 100px;
