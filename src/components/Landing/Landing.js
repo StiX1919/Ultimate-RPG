@@ -6,7 +6,6 @@ class Games extends Component {
     constructor(){
         super()
         this.state = {
-            links: ['UltimateRPG', 'PixelArt'],
             hover: 'none',
             changed: false
         }
@@ -44,48 +43,49 @@ class Games extends Component {
 
     return (
 
-      <div className='landing-page'>
-        <h1 className={this.state.hover === 'right' ? 'title title-right' : this.state.hover === 'none' ? 'title' : 'title title-left'}>Ferret Playground</h1>
-        <div className='page-split'>
-            {/*Left side of screen */}
-            <div className={this.state.hover === 'left' ? 'page-left hovered' : this.state.hover === 'none' ? 'page-left' : 'page-left not-hovered'}>
-                
-
-                <img className={this.state.hover === 'left' ? 'intro-pic img-grow' : this.state.hover === 'none' ? 'intro-pic-left' : 'intro-pic img-shrink'} 
-                    src='https://opengameart.org/sites/default/files/Goblin_idle.gif' 
-                    alt='mon-img'/>
-                {this.state.hover === 'left' &&
-                    deets
-                }
+        <div className='landing-page'>
+            <h1 className={this.state.hover === 'right' ? 'title title-right' : this.state.hover === 'none' ? 'title' : 'title title-left'}>Ferret Playground</h1>
+            <div className='page-split'>
+                {/*Left side of screen */}
+                <div className={this.state.hover === 'left' ? 'page-left hovered' : this.state.hover === 'none' ? 'page-left' : 'page-left not-hovered'}>
                     
-                <h1>Ultimate RPG</h1>
 
-                {this.state.hover !== 'left' 
-                   ? <div className='see-more-button left-play' onClick={() => this.mouseHover('left')}>See More</div>
-                   : <Link className='see-more-button left-play' to={`/UltimateRPG`}>Play now!</Link>
-                }
-            </div>
+                    <img className={this.state.hover === 'left' ? 'intro-pic img-grow' : this.state.hover === 'none' ? 'intro-pic-left' : 'intro-pic img-shrink'} 
+                        src='https://opengameart.org/sites/default/files/Goblin_idle.gif' 
+                        alt='mon-img'/>
+                    {this.state.hover === 'left' &&
+                        deets
+                    }
+                        
+                    <h1>Ultimate RPG</h1>
+
+                    {this.state.hover !== 'left' 
+                    ? <div className='see-more-button left-play' onClick={() => this.mouseHover('left')}>See More</div>
+                    : <Link className='see-more-button left-play' to={`/UltimateRPG`}>Play now!</Link>
+                    }
+                </div>
 
 
-            {/*Right side of screen */}
-            <div className={this.state.hover === 'right' ? 'page-right hovered' : this.state.hover === 'none' ? 'page-right' : 'page-right not-hovered'}>
+                {/*Right side of screen */}
+                <div className={this.state.hover === 'right' ? 'page-right hovered' : this.state.hover === 'none' ? 'page-right' : 'page-right not-hovered'}>
+                    
+
+                    <img className={this.state.hover !== 'left' ? 'intro-pic img-grow' : this.state.hover === 'none' ? 'intro-pic-right' : 'intro-pic img-shrink'} 
+                        src='http://4.bp.blogspot.com/-dWmMQeiUEgk/URocXZymRCI/AAAAAAAAEUU/HUI2wJytggc/s640/ironman_pixelart2_grid.png' 
+                        alt='pix-img'/>
+                    {this.state.hover !== 'left' &&
+                        deets
+                    }
+
+                    <h1>Pixel Art</h1>
+
+                    {this.state.hover === 'left' 
+                        ? <div className='see-more-button right-play' onClick={() => this.mouseHover('right')}>See More</div>
+                        : <Link to={`/PixelArt`} className='see-more-button right-play'>Play now!</Link>
+                    }
+                </div>
                 
-
-                <img className={this.state.hover !== 'left' ? 'intro-pic img-grow' : this.state.hover === 'none' ? 'intro-pic-right' : 'intro-pic img-shrink'} 
-                    src='http://4.bp.blogspot.com/-dWmMQeiUEgk/URocXZymRCI/AAAAAAAAEUU/HUI2wJytggc/s640/ironman_pixelart2_grid.png' 
-                    alt='pix-img'/>
-                {this.state.hover !== 'left' &&
-                    deets
-                }
-
-                <h1>Pixel Art</h1>
-
-                {this.state.hover === 'left' 
-                    ? <div className='see-more-button right-play' onClick={() => this.mouseHover('right')}>See More</div>
-                    : <Link to={`/PixelArt`} className='see-more-button right-play'>Play now!</Link>
-                }
             </div>
-        </div>
         
       </div>
     );

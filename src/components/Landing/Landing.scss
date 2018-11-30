@@ -112,11 +112,11 @@ $darkpurp: #B18FCF;
 
 .intro-pic-left{
     height: 300px;
-    margin-top: 10vh
+    margin-top: 15vh
 }
 .intro-pic-right{
     height: 400px;
-    margin-top: 10vh
+    margin-top: 15vh
 }
 
 .img-grow {
@@ -128,21 +128,21 @@ $darkpurp: #B18FCF;
 @keyframes imgGrow{
     from {
         height: 300px;
-        margin-top: 10vh
+        margin-top: 15vh
     }
     to {
         height: 400px;
-        margin-top: 10vh
+        margin-top: 15vh
     }
 }
 @keyframes imgShrink{
     from {
         height: 400px;
-        margin-top: 10vh
+        margin-top: 15vh
     }
     to {
         height: 300px;
-        margin-top: 10vh
+        margin-top: 15vh
     }
 }
 
