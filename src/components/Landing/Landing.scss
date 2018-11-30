@@ -4,7 +4,7 @@ $darkpurp: #B18FCF;
 
 .landing-page {
     width: 100vw;
-    height: calc(100vh - 80px);
+    height: 100vh;
     position: relative;
 
     overflow: hidden;
@@ -24,7 +24,7 @@ $darkpurp: #B18FCF;
     color: #F7F9FF;
     text-shadow: 3px 0px 2px #2d2d2d82;
     z-index: 10;
-    margin-left: 6%
+    margin-left: 6%;
 }
 .title-right {
     animation: titleRight 1s forwards

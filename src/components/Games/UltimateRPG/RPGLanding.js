@@ -11,10 +11,6 @@ class UltimateRPG extends Component {
 
   //build function that checks for user on session. Redirect to character select
 
-  componentDidMount(){
-    this.props.getDemoCharacter()
-  }
-
   render() {
 
 

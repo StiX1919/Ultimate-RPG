@@ -31,10 +31,11 @@ class GameRouter extends Component{
     }
         
     render(){
-    
         return (
             <div>
-                <Navbar place={window.location.pathname} user={this.props.userReducer.user}/>
+                {window.location.pathname !== '/' &&
+                    <Navbar place={window.location.pathname} user={this.props.userReducer.user}/>
+                }
                 <Switch>
                     <Route path='/' exact component={Landing}/>
                     <Route path='/PixelArt' exact render={() =>
