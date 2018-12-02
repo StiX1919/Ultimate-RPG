@@ -84,12 +84,13 @@ class Games extends Component {
                         : <Link to={`/PixelArt`} className='see-more-button right-play'>Play now!</Link>
                     }
                 </div>
-                
+
             </div>
         
       </div>
     );
   }
 }
+//rethink how the layout is laid out
 
 export default Games;
