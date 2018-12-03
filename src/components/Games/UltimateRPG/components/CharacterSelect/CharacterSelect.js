@@ -27,6 +27,7 @@ class CharacterSelect extends Component {
         this.props.getUser()
         this.props.getHeroes()
       }
+      //add check for unique generated item, generate modal if there is none for name and birth date entree
 
     render() {
         let heroCards = (<h2>No heroes yet</h2>)
