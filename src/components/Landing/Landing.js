@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import axios from 'axios'
 import {Link} from 'react-router-dom'
 import './Landing.scss'
 class Games extends Component {
@@ -10,6 +11,7 @@ class Games extends Component {
             changed: false
         }
         this.mouseHover = this.mouseHover.bind(this)
+        this.userLogin = this.userLogin.bind(this)
     }
     
     mouseHover(side){
@@ -21,6 +23,16 @@ class Games extends Component {
             })
         }
     }
+
+    async userLogin() {
+        try {
+          axios.post('/api/redirect', {place: '/UltimateRPG/CharacterSelect'})
+        } 
+        finally {
+          window.location.href='http://localhost:3001/api/login'
+    
+        }
+      }
 
   render() {
     let deets;
@@ -61,7 +73,7 @@ class Games extends Component {
 
                     {this.state.hover !== 'left' 
                     ? <div className='see-more-button left-play' onClick={() => this.mouseHover('left')}>See More</div>
-                    : <Link className='see-more-button left-play' to={`/UltimateRPG`}>Play now!</Link>
+                    : <button className='see-more-button left-play' onClick={this.userLogin}>Login to play!</button>
                     }
                 </div>
 
