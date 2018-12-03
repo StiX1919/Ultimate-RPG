@@ -104,6 +104,6 @@ class Games extends Component {
   }
 }
 //rethink how the layout is laid out
-//Write down ideas for battle system stepts to take
+//Write down ideas for battle system steps to take
 
 export default Games;
