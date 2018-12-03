@@ -19,6 +19,8 @@ const GET_WEAPON_EXP = 'GET_WEAPON_EXP'
 
 const GET_DUNGEONS = 'GET_DUNGEONS'
 
+const HURT = "HURT"
+
 //Initial State
 
 const initialState = {
@@ -49,6 +51,12 @@ export function getDungeons(id){
     return {
         type: GET_DUNGEONS,
         payload: axios.get(`/api/getDungeons?heroID=${id}`)
+    }
+}
+export function hurt(newHero){
+    return {
+        type: HURT,
+        payload: newHero
     }
 }
 
@@ -236,6 +244,13 @@ export default function heroReducer(state=initialState, action) {
                 nextLevel: action.payload.newNextLevel,
                 level: action.payload.newLevel,
                 bonusStats: action.payload.newBonusStats
+            }
+
+        case HURT:
+            console.log('hurt', action.payload)
+            return {
+                ...state,
+                currentHero: action.payload
             }
 
         default:
