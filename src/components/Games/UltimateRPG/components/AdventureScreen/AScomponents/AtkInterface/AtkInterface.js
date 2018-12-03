@@ -97,18 +97,24 @@ class AtkInterface extends Component {
         }
 
         <div className='damage-dealt'>
-            {this.state.attacking ?
-                <h1>{this.state.damageDone}</h1>
-                :
-                null
-            
-            }
-            {this.state.monAttacking ?
-                <h1 style={{color: 'red'}}>{this.state.monDamage}</h1>
-                :
-                null
-            
-            }
+            <div>
+                <h2>Hero damage</h2>
+                {this.state.attacking ?
+                    <h1>{this.state.damageDone}</h1>
+                    :
+                    null
+                
+                }
+            </div>
+            <div>
+                <h2>Monster Damage</h2>
+                {this.state.monAttacking ?
+                    <h1 style={{color: 'red'}}>{this.state.monDamage}</h1>
+                    :
+                    null
+                
+                }
+            </div>
         </div>
         {this.props.currentMonster.hp > 0 &&
             <Link to='/UltimateRPG/hero/Map'>
