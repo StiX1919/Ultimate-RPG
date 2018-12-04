@@ -103,7 +103,7 @@ export default function userReducer(state=initialState, action) {
                 ...state,
                 isLoading: true
             }
-        case GET_CHARM + 'FULFILLED':
+        case GET_CHARM + '_FULFILLED':
             console.log(action.payload.data)
             if(!action.payload.data[0]){
                 return {
@@ -115,7 +115,7 @@ export default function userReducer(state=initialState, action) {
             return {
                 ...state, 
                 isLoading: false,
-                heroCharm: action.payload.data[0]
+                userCharm: action.payload.data[0]
             }
         default:
             return state
