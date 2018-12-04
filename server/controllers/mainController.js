@@ -115,6 +115,12 @@ let mappedMonsters = [],
     }
 
 
+    getUserCharm = (req, res) => {
+        req.app.get('db').query(`select * from unique_charm where user_id = ${req.user.user_id}`).then( response => {
+            res.status(200).send(response)
+        })
+    }
+
 
 module.exports = {
     getClasses,
@@ -124,5 +130,6 @@ module.exports = {
     demoHero,
     getMap,
     newPlace,
-    getMonsters
+    getMonsters,
+    getUserCharm
 }

@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 
 import CaSeCard from './CaSeComps/CaSeCard/CaSeCard'
 
-import {getUser, getHeroes} from '../../../../../ducks/reducers/userReducer'
+import {getUser, getHeroes, getCharm} from '../../../../../ducks/reducers/userReducer'
 import {selectHero} from '../../../../../ducks/reducers/heroReducer'
 
 import './CharacterSelect.css'
@@ -26,11 +26,13 @@ class CharacterSelect extends Component {
     componentDidMount() {
         this.props.getUser()
         this.props.getHeroes()
+        this.props.getCharm()
       }
       //add check for unique generated item, generate modal if there is none for name and birth date entree
 
     render() {
         let heroCards = (<h2>No heroes yet</h2>)
+        
         if(this.props.heroes[0]) {
             heroCards = this.props.heroes.map((hero, ind) => {
                 return  <StyledLink to={`/UltimateRPG/hero/${hero.hero_name}`} onClick={() => this.props.selectHero(hero)}>
@@ -44,7 +46,9 @@ class CharacterSelect extends Component {
                     ?   <h1 className='choose-char-title'>Choose Character</h1>
                     :   <h1 className='choose-char-title'>Create A Hero</h1>
                 }
-                
+                {this.props.needsCharm &&
+                    <button>Create Your Charm</button>
+                }
                 <div className='hero-card-holder'>
                     {heroCards}
                 </div>
@@ -58,4 +62,4 @@ class CharacterSelect extends Component {
 }
 const mapStateToProps = state => ({...state.reducer, ...state.userReducer, ...state.heroReducer})
 
-export default withRouter(connect(mapStateToProps, {getUser, getHeroes, selectHero})(CharacterSelect));
+export default withRouter(connect(mapStateToProps, {getUser, getHeroes, selectHero, getCharm})(CharacterSelect));

@@ -9,6 +9,8 @@ const GET_HEROES = 'GET_HEROES'
 
 const DEMO_HERO = 'DEMO_HERO'
 
+const GET_CHARM = 'GET_CHARM'
+
 
 
 //Initial State
@@ -17,7 +19,10 @@ const initialState = {
     testNum: 0,
     isLoading: false,
     user: null,
-    heroes: []
+    heroes: [],
+
+    userCharm: null,
+    needsCharm: false
     
 }
 
@@ -44,7 +49,12 @@ export function getDemoCharacter(){
     }
 }
 
-
+export function getCharm(){
+    return {
+        type: GET_CHARM,
+        payload: axios.get('/api/getCharm')
+    }
+}
 
 
 //Reducer
@@ -85,6 +95,27 @@ export default function userReducer(state=initialState, action) {
                 ...state,
                 isLoading: false,
                 heroes: action.payload.data
+            }
+
+
+        case GET_CHARM + '_PENDING':
+            return {
+                ...state,
+                isLoading: true
+            }
+        case GET_CHARM + 'FULFILLED':
+            console.log(action.payload.data)
+            if(!action.payload.data[0]){
+                return {
+                    ...state,
+                    isLoading: false,
+                    needsCharm: true
+                }
+            }  else
+            return {
+                ...state, 
+                isLoading: false,
+                heroCharm: action.payload.data[0]
             }
         default:
             return state
