@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
@@ -11,22 +12,25 @@ import {selectHero} from '../../../../../ducks/reducers/heroReducer'
 
 import './CharacterSelect.css'
 
-const StyledLink = styled(Link)`
-    text-decoration: none
-`
+
 
 
 class CharacterSelect extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            dead: 1
         }
     }
     componentDidMount() {
         this.props.getUser()
         this.props.getHeroes()
         this.props.getCharm()
+
+        axios.get('/api/checkTheDead').then(response => {
+            this.setState({dead: response.data})
+        })
+
       }
       //add check for unique generated item, generate modal if there is none for name and birth date entree
 
@@ -63,3 +67,7 @@ class CharacterSelect extends Component {
 const mapStateToProps = state => ({...state.reducer, ...state.userReducer, ...state.heroReducer})
 
 export default withRouter(connect(mapStateToProps, {getUser, getHeroes, selectHero, getCharm})(CharacterSelect));
+
+const StyledLink = styled(Link)`
+text-decoration: none
+`

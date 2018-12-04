@@ -6,4 +6,4 @@
 
 select * from heroes h
 left join hero_stats s on h.hero_id = s.hero_id 
-where h.user_id = $1
+where h.user_id = $1 and h.hero_status = 'alive'
