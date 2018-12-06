@@ -113,36 +113,40 @@ let mappedMonsters = [],
         Math.abs(X)
         Math.abs(Y)
         let mapMons = []
+        console.log('before if')
         if(!monsters[0]){
             req.app.get('db').getAllMonsters().then( response => {
                 monsters = response.slice()
                 for(let i = 0; i < 10; i++){
-                    let newMon = monsters[Math.floor(Math.random() * monsters.length)]
-                    newMon.str = (newMon.str + (newMon.str * X)) * Y
-                    newMon.spd = (newMon.spd + (newMon.spd * X)) * Y
-                    newMon.def = (newMon.def + (newMon.def * X)) * Y
+                    let newMon = {...monsters[Math.floor(Math.random() * monsters.length)]}
+                    let str = (newMon.str + (newMon.str * X)) * Y,
+                        spd = (newMon.spd + (newMon.spd * X)) * Y,
+                        def = (newMon.def + (newMon.def * X)) * Y
     
-                    newMon.hp = (newMon.str + newMon.def) * 2
+                    let hp = (str + def) * 2
+                    let finalMon = Object.assign(newMon, {str, spd, def, hp})
     
-                    mapMons.push(newMon)
+                    mapMons.push(finalMon)
                 }
                 mappedMonsters = mapMons
                 res.status(200).send(mappedMonsters)
             })
         }
-        else 
+        else {
             for(let i = 0; i < 10; i++){
-                let newMon = monsters[Math.floor(Math.random() * monsters.length)]
-                newMon.str = (newMon.str + (newMon.str * X)) * Y
-                newMon.spd = (newMon.spd + (newMon.spd * X)) * Y
-                newMon.def = (newMon.def + (newMon.def * X)) * Y
+                let newMon = {...monsters[Math.floor(Math.random() * monsters.length)]}
+                let str = (newMon.str + (newMon.str * X)) * Y,
+                    spd = (newMon.spd + (newMon.spd * X)) * Y,
+                    def = (newMon.def + (newMon.def * X)) * Y
 
-                newMon.hp = (newMon.str + newMon.def) * 2
+                let hp = (str + def) * 2
+                let finalMon = Object.assign(newMon, {str, spd, def, hp})
 
-                mapMons.push(newMon)
+                mapMons.push(finalMon)
             }
             mappedMonsters = mapMons
             res.status(200).send(mappedMonsters)
+        }
     }
 
 
