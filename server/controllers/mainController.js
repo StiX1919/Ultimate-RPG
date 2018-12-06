@@ -103,15 +103,46 @@ let mappedMonsters = [],
     },
 
     getMonsters = (req, res) => {
-        req.app.get('db').getAllMonsters().then( response => {
-            let mapMons = []
-            monsters = response
+        let {X, Y} = req.params
+        if(X === 0){
+            X = 1
+        }
+        if(Y === 0){
+            Y = 1
+        }
+        Math.abs(X)
+        Math.abs(Y)
+        let mapMons = []
+        if(!monsters[0]){
+            req.app.get('db').getAllMonsters().then( response => {
+                monsters = response.slice()
+                for(let i = 0; i < 10; i++){
+                    let newMon = monsters[Math.floor(Math.random() * monsters.length)]
+                    newMon.str = (newMon.str + (newMon.str * X)) * Y
+                    newMon.spd = (newMon.spd + (newMon.spd * X)) * Y
+                    newMon.def = (newMon.def + (newMon.def * X)) * Y
+    
+                    newMon.hp = (newMon.str + newMon.def) * 2
+    
+                    mapMons.push(newMon)
+                }
+                mappedMonsters = mapMons
+                res.status(200).send(mappedMonsters)
+            })
+        }
+        else 
             for(let i = 0; i < 10; i++){
-                mapMons.push(response[Math.floor(Math.random() * response.length)])
+                let newMon = monsters[Math.floor(Math.random() * monsters.length)]
+                newMon.str = (newMon.str + (newMon.str * X)) * Y
+                newMon.spd = (newMon.spd + (newMon.spd * X)) * Y
+                newMon.def = (newMon.def + (newMon.def * X)) * Y
+
+                newMon.hp = (newMon.str + newMon.def) * 2
+
+                mapMons.push(newMon)
             }
             mappedMonsters = mapMons
             res.status(200).send(mappedMonsters)
-        })
     }
 
 

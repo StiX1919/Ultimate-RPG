@@ -48,17 +48,18 @@ export function attack(newMon) {
 }
 
 export function getMonsters(X, Y) {
+  console.log(X, Y, 'just checking')
   return {
     type: GET_MONSTERS,
-    payload: axios.get('/api/getMonsters').then(response => {
+    payload: axios.get(`/api/getMonsters/${X}/${Y}`).then(response => {
       let index = 0
       const areaMonsters = response.data.map(monster => {
-        let randomX = Math.floor(Math.random() * (X * 10)) + 1;
-        let randomY = Math.floor(Math.random() * (Y * 10)) + 1;
+        let randomX = (Math.floor(Math.random() * -10 ) + 1) + (X * 10);
+        let randomY = (Math.floor(Math.random() * -10 ) + 1) + (Y * 10);
         index += 1
-
         return { index, X: randomX, Y: randomY, monsterInfo: { ...monster } };
       });
+      console.log(areaMonsters, 'in action creator')
       return areaMonsters;
     })
   };
@@ -156,6 +157,7 @@ export default function monsterReducer(state = initialState, action) {
       };
 
     case GET_MONSTERS + '_FULFILLED':
+    console.log(action.payload, 'in reducer')
       return {
         ...state,
         isLoading: false,

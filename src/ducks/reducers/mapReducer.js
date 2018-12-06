@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { getMonsters } from './monsterReducer'
+
 
 //Action Constants
 
@@ -51,63 +53,66 @@ export function retreat(){
 }
 
 export function enterArea(X, Y, spotType){
-    let numArr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-    let locations = []
-    
-    function colorGen(place) {
-        switch(place){
-            case 'Town': 
-                return '#808080';
-            case 'Plains': 
-                return '#90ee90';
-            case 'Forest': 
-                return '#006400';
-            case 'Ocean':
-                return '#00008b'
-            case 'River':
-                return '#add8e6'
-            case 'Mountains':
-                return '#803605'
-            case 'Desert':
-                return '#f2a23a'
-            default: return 'white'
-        }
-    }
+    return function(dispatch)   {
 
-
-    let areaMap = numArr.map( col => {
-        let newRow = numArr.map( row => {
-            locations.push({
-                x_location: row,
-                y_location: col,
-                area_type: spotType,
-                area_name: 'none',
-                discovered_by: 'none',
-                color: colorGen(spotType)
-            })
-            return {
-                x: row,
-                y: col,
-                type: spotType,
-                name: 'none',
-                discovered_by: 'none',
-                color: colorGen(spotType)
+        let numArr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        let locations = []
+        
+        function colorGen(place) {
+            switch(place){
+                case 'Town': 
+                    return '#808080';
+                case 'Plains': 
+                    return '#90ee90';
+                case 'Forest': 
+                    return '#006400';
+                case 'Ocean':
+                    return '#00008b'
+                case 'River':
+                    return '#add8e6'
+                case 'Mountains':
+                    return '#803605'
+                case 'Desert':
+                    return '#f2a23a'
+                default: return 'white'
             }
-        }).reverse()
-        return newRow
-    })
+        }
 
-    return {
-        type: ENTER_AREA,
-        payload: {areaMap, locations, entered: true, X, Y}
+
+        let areaMap = numArr.map( col => {
+            let newRow = numArr.map( row => {
+                locations.push({
+                    x_location: row,
+                    y_location: col,
+                    area_type: spotType,
+                    area_name: 'none',
+                    discovered_by: 'none',
+                    color: colorGen(spotType)
+                })
+                return {
+                    x: row,
+                    y: col,
+                    type: spotType,
+                    name: 'none',
+                    discovered_by: 'none',
+                    color: colorGen(spotType)
+                }
+            }).reverse()
+            return newRow
+        })
+        dispatch(getMonsters(1, 1))
+        dispatch({
+            type: ENTER_AREA,
+            payload: {areaMap, locations, entered: true, X, Y}
+        })
     }
-
 }
 
 export function goBack(X, Y, oldX, oldY){
     return function(dispatch){
         if(X !== oldX || Y !== oldY){
-            dispatch(getMap(oldX, oldY))
+            dispatch(getMap(oldX, oldY), getMonsters(oldX, oldY))
+            
         }
 
         dispatch({
@@ -164,6 +169,7 @@ export function move(direction, state){
                     if(state.entered === false){
                         area = ++state.mapX
                         dispatch(getMap(state.mapX, state.mapY))
+                        dispatch(getMonsters(state.mapX, state.mapY))
                     }
                 } else area = state.mapX
                 break;
@@ -174,6 +180,7 @@ export function move(direction, state){
                     if(state.entered === false){
                         area = --state.mapX
                         dispatch(getMap(state.mapX, state.mapY))
+                        dispatch(getMonsters(state.mapX, state.mapY))
                     }
                 } else area = state.mapX
                 break;

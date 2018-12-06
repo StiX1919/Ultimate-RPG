@@ -138,7 +138,7 @@ app.post('/api/newHero', createNewHero)
 app.get('/api/getMap/:X/:Y', getMap)
 app.post('/api/newPlace', newPlace)
 
-app.get('/api/getMonsters', getMonsters)
+app.get('/api/getMonsters/:X/:Y', getMonsters)
 
 app.get('/api/pixMons', pixMons)
 app.get('/api/pixWeapons', pixWeapons)
