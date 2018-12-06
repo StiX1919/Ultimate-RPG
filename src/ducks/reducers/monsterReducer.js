@@ -31,10 +31,10 @@ export function setMonster(mon) {
   };
 }
 
-export function getMonster() {
+export function getMonster(X, Y) {
   return {
     type: GET_MONSTER,
-    payload: axios.get('/api/getMonster').then(response => {
+    payload: axios.get(`/api/getMonster/${X}/${Y}`).then(response => {
       return response.data;
     })
   };
@@ -138,9 +138,7 @@ export default function monsterReducer(state = initialState, action) {
     case GET_MONSTER + '_FULFILLED':
       return Object.assign({}, state, {
         isLoading: false,
-        currentMonster: action.payload,
-        monsterHP: action.payload.HP,
-        monsterStatus: 'alive'
+        monsters: [...state.monsters, action.payload]
       });
 
     case ATTACKING:

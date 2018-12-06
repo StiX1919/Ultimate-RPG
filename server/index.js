@@ -20,7 +20,7 @@ let place = '/'
 
 let shop = []
 
-const {getClasses, getRaces, createNewHero, getHeroes, demoHero, getMap, newPlace, getMonsters, getUserCharm} = require('./controllers/mainController.js')
+const {getClasses, getRaces, createNewHero, getHeroes, demoHero, getMap, newPlace, getMonsters, getUserCharm, getMonster} = require('./controllers/mainController.js')
 
 const {pixMons, pixWeapons, submitArt, submitHeroArt} = require('./controllers/pixArtController')
 
@@ -138,6 +138,7 @@ app.post('/api/newHero', createNewHero)
 app.get('/api/getMap/:X/:Y', getMap)
 app.post('/api/newPlace', newPlace)
 
+app.get('/api/getMonster/:X/:Y', getMonster)
 app.get('/api/getMonsters/:X/:Y', getMonsters)
 
 app.get('/api/pixMons', pixMons)

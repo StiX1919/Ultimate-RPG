@@ -8,7 +8,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
 import { getMap, updateArea, move, goBack, enterArea, retreat } from '../../../../../ducks/reducers/mapReducer'
-import { setMonster, getMonsters, moveMonsters, matchedMonsters } from '../../../../../ducks/reducers/monsterReducer'
+import { setMonster, getMonsters, moveMonsters, matchedMonsters, getMonster } from '../../../../../ducks/reducers/monsterReducer'
 import { setTimeout } from 'timers';
 
 
@@ -32,7 +32,10 @@ class WorldMap extends Component {
 
       combatMons: [],
 
-      retreating: false
+      retreating: false,
+
+
+      moveCounter: 0
     }
     // this.move = this.move.bind(this)
     this.locationType = this.locationType.bind(this)
@@ -105,6 +108,15 @@ class WorldMap extends Component {
 
 
   async moveHandler(direction){
+    if(this.props.monsterReducer.monsters.length < 10 && !this.props.mapReducer.entered){
+      console.log(this.state.moveCounter)
+      if(this.state.moveCounter > 9 && this.state.moveCounter % 10 === 0){
+        this.props.getMonster(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
+      }
+      this.setState({moveCounter: this.state.moveCounter++})
+    }
+
+
     try{
       await this.props.move(direction, this.props.mapReducer)
       this.props.moveMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.monsterReducer.monsters, this.props.mapReducer.entered)
@@ -280,4 +292,4 @@ class WorldMap extends Component {
 
 const mapStateToProps = state => ({heroReducer: state.heroReducer, mapReducer: state.mapReducer, monsterReducer: state.monsterReducer, heroes: state.userReducer.heroes})
 
-export default withRouter(connect(mapStateToProps, { getMap, updateArea, setMonster, move, goBack, enterArea, retreat, getMonsters, moveMonsters, matchedMonsters })(WorldMap));
+export default withRouter(connect(mapStateToProps, { getMap, updateArea, setMonster, move, goBack, enterArea, retreat, getMonsters, getMonster, moveMonsters, matchedMonsters })(WorldMap));

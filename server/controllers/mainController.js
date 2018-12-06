@@ -147,7 +147,30 @@ let mappedMonsters = [],
             mappedMonsters = mapMons
             res.status(200).send(mappedMonsters)
         }
-    }
+    },
+
+    getMonster = (req, res) => {
+        let {X, Y} = req.params
+        if(X === 0){
+            X = 1
+        }
+        if(Y === 0){
+            Y = 1
+        }
+        Math.abs(X)
+        Math.abs(Y)
+
+
+        let newMon = {...monsters[Math.floor(Math.random() * monsters.length)]}
+        let str = (newMon.str + (newMon.str * X)) * Y,
+            spd = (newMon.spd + (newMon.spd * X)) * Y,
+            def = (newMon.def + (newMon.def * X)) * Y
+
+        let hp = (str + def) * 2
+        let finalMon = Object.assign(newMon, {str, spd, def, hp})
+
+        res.status(200).send(finalMon)
+    },
 
 
     getUserCharm = (req, res) => {
@@ -166,5 +189,6 @@ module.exports = {
     getMap,
     newPlace,
     getMonsters,
+    getMonster,
     getUserCharm
 }
