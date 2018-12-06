@@ -109,11 +109,11 @@ class WorldMap extends Component {
 
   async moveHandler(direction){
     if(this.props.monsterReducer.monsters.length < 10 && !this.props.mapReducer.entered){
+      this.setState({moveCounter: ++this.state.moveCounter})
       console.log(this.state.moveCounter)
       if(this.state.moveCounter > 9 && this.state.moveCounter % 10 === 0){
         this.props.getMonster(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
       }
-      this.setState({moveCounter: this.state.moveCounter++})
     }
 
 

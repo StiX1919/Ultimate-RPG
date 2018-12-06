@@ -20,7 +20,8 @@ const initialState = {
   currentMonster: null,
   monsters: [],
 
-  combatMons: []
+  combatMons: [],
+  newMonIndex: 9
 };
 
 //Action Creators
@@ -35,7 +36,9 @@ export function getMonster(X, Y) {
   return {
     type: GET_MONSTER,
     payload: axios.get(`/api/getMonster/${X}/${Y}`).then(response => {
-      return response.data;
+      let randomX = (Math.floor(Math.random() * -10 ) + 1) + (X * 10);
+      let randomY = (Math.floor(Math.random() * -10 ) + 1) + (Y * 10);
+      return { X: randomX, Y: randomY, monsterInfo: { ...response.data } }
     })
   };
 }
@@ -136,9 +139,13 @@ export default function monsterReducer(state = initialState, action) {
         isLoading: true
       });
     case GET_MONSTER + '_FULFILLED':
+
+      let index = state.newMonIndex + 1
+      
       return Object.assign({}, state, {
         isLoading: false,
-        monsters: [...state.monsters, action.payload]
+        monsters: [...state.monsters, {...action.payload, index}],
+        newMonIndex: index
       });
 
     case ATTACKING:
