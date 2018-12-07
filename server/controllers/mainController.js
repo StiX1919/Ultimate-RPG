@@ -110,8 +110,8 @@ let mappedMonsters = [],
         if(Y === 0){
             Y = 1
         }
-        Math.abs(X)
-        Math.abs(Y)
+        let big = Math.max(X, Y)
+        let small = Math.min(X, Y)
         let mapMons = []
         console.log('before if')
         if(!monsters[0]){
@@ -129,12 +129,13 @@ let mappedMonsters = [],
                         newMon.def = 1
                     }
 
-                    let str = (newMon.str + (newMon.str * X)) * Y,
-                        spd = (newMon.spd + (newMon.spd * X)) * Y,
-                        def = (newMon.def + (newMon.def * X)) * Y
+                    let str = (newMon.str + (newMon.str * big)) * small,
+                        spd = (newMon.spd + (newMon.spd * big)) * small,
+                        def = (newMon.def + (newMon.def * big)) * small,
+                        level = (1 + big) * small
     
                     let hp = (str + def) * 2
-                    let finalMon = Object.assign(newMon, {str, spd, def, hp})
+                    let finalMon = Object.assign(newMon, { level, str, spd, def, hp})
     
                     mapMons.push(finalMon)
                 }
@@ -145,12 +146,23 @@ let mappedMonsters = [],
         else {
             for(let i = 0; i < 10; i++){
                 let newMon = {...monsters[Math.floor(Math.random() * monsters.length)]}
-                let str = (newMon.str + (newMon.str * X)) * Y,
-                    spd = (newMon.spd + (newMon.spd * X)) * Y,
-                    def = (newMon.def + (newMon.def * X)) * Y
+                if(newMon.str === 0){
+                    newMon.str = 1
+                }
+                if(newMon.spd === 0){
+                    newMon.spd = 1
+                }
+                if(newMon.def === 0){
+                    newMon.def = 1
+                }
+
+                let str = (newMon.str + (newMon.str * big)) * small,
+                    spd = (newMon.spd + (newMon.spd * big)) * small,
+                    def = (newMon.def + (newMon.def * big)) * small,
+                    level = (1 + big) * small
 
                 let hp = (str + def) * 2
-                let finalMon = Object.assign(newMon, {str, spd, def, hp})
+                let finalMon = Object.assign(newMon, { level, str, spd, def, hp})
 
                 mapMons.push(finalMon)
             }
@@ -167,17 +179,28 @@ let mappedMonsters = [],
         if(Y === 0){
             Y = 1
         }
-        Math.abs(X)
-        Math.abs(Y)
+        
+        let big = Math.max(X, Y)
+        let small = Math.min(X, Y)
 
 
         let newMon = {...monsters[Math.floor(Math.random() * monsters.length)]}
-        let str = (newMon.str + (newMon.str * X)) * Y,
-            spd = (newMon.spd + (newMon.spd * X)) * Y,
-            def = (newMon.def + (newMon.def * X)) * Y
+        if(newMon.str === 0){
+            newMon.str = 1
+        }
+        if(newMon.spd === 0){
+            newMon.spd = 1
+        }
+        if(newMon.def === 0){
+            newMon.def = 1
+        }
+        let str = (newMon.str + (newMon.str * big)) * small,
+            spd = (newMon.spd + (newMon.spd * big)) * small,
+            def = (newMon.def + (newMon.def * big)) * small,
+            level = (1 + big) * small
 
         let hp = (str + def) * 2
-        let finalMon = Object.assign(newMon, {str, spd, def, hp})
+        let finalMon = Object.assign(newMon, {level, str, spd, def, hp})
 
         res.status(200).send(finalMon)
     },

@@ -68,7 +68,11 @@ class AdventureScreen extends Component {
 
 
         
-          {this.props.currentMonster && this.props.currentMonster.hp > 0 && <MonsterBox />}
+          {this.props.currentMonster && this.props.currentMonster.hp > 0
+            ? <MonsterBox />
+            : null
+            //rewards box will go here when a monster is defeated
+          }
           
        
         

@@ -37,19 +37,21 @@ class AtkInterface extends Component {
   action(hero, monster){
     this.attack(hero, monster)
     setTimeout(() => {
-        let damage = monster.str - hero.endurance
-        let newHP = hero.hero_hp - damage
-        if(damage < 0){
-            damage = 0
+        if(this.props.currentMonster.hp > 0){
+            let damage = monster.str - hero.endurance
+            let newHP = hero.hero_hp - damage
+            if(damage < 0){
+                damage = 0
+            }
+            if(newHP >= hero.hero_hp){
+                newHP = hero.hero_hp
+            }
+    
+            let newHero = Object.assign({}, hero, {hero_hp: newHP})
+            this.setState({monDamage: damage})
+            this.showMonDamage()
+            this.props.hurt(newHero)
         }
-        if(newHP >= hero.hero_hp){
-            newHP = hero.hero_hp
-        }
-
-        let newHero = Object.assign({}, hero, {hero_hp: newHP})
-        this.setState({monDamage: damage})
-        this.showMonDamage()
-        this.props.hurt(newHero)
     }, 500)
   }
 
