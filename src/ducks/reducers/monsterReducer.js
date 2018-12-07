@@ -12,6 +12,8 @@ const REMOVE_MON = 'REMOVE_MON';
 const MOVE_MON = 'MOVE_MON';
 const MATCHED_MON = 'MATCHED_MON'
 
+const GET_REWARDS = 'GET_REWARDS'
+
 //Initial State
 
 const initialState = {
@@ -21,7 +23,13 @@ const initialState = {
   monsters: [],
 
   combatMons: [],
-  newMonIndex: 9
+  newMonIndex: 9,
+
+  rewards: {
+    gold: 0,
+    items: [],
+    exp: 0
+  }
 };
 
 //Action Creators
@@ -130,6 +138,20 @@ export function matchedMonsters(X, Y){
     }
 }
 
+
+export function getRewards(monster, X, Y){
+  let gold = (monster.gold + X + Y) * monster.level,
+    items = [],
+    exp = monster.exp_value * monster.level
+
+
+
+  return {
+    type: GET_REWARDS,
+    payload: {gold, items, exp}
+  }
+}
+
 //Reducer
 
 export default function monsterReducer(state = initialState, action) {
@@ -201,6 +223,19 @@ export default function monsterReducer(state = initialState, action) {
       return {
           ...state,
           combatMons
+      }
+
+    case GET_REWARDS:
+      let {gold, items, exp} = action.payload
+
+      return {
+        ...state,
+        rewards: {
+          ...state.rewards,
+          gold,
+          items,
+          exp
+        }
       }
 
     default:

@@ -33,6 +33,7 @@ class CharacterSelect extends Component {
 
       }
       //add check for unique generated item, generate modal if there is none for name and birth date entree
+      //thinking about switching to single active character per account
 
     render() {
         let heroCards = (<h2>No heroes yet</h2>)
