@@ -9,7 +9,8 @@ class RewardsBox extends Component {
     render() {
         return (
             <div className='mainBox'>
-                <h2>Potion</h2>
+                <h1>Rewards:</h1>
+                <h4>Potion</h4>
                 <h4>5 gold</h4>
                 <h4>15 exp</h4>
             </div>
