@@ -119,6 +119,16 @@ let mappedMonsters = [],
                 monsters = response.slice()
                 for(let i = 0; i < 10; i++){
                     let newMon = {...monsters[Math.floor(Math.random() * monsters.length)]}
+                    if(newMon.str === 0){
+                        newMon.str = 1
+                    }
+                    if(newMon.spd === 0){
+                        newMon.spd = 1
+                    }
+                    if(newMon.def === 0){
+                        newMon.def = 1
+                    }
+
                     let str = (newMon.str + (newMon.str * X)) * Y,
                         spd = (newMon.spd + (newMon.spd * X)) * Y,
                         def = (newMon.def + (newMon.def * X)) * Y
