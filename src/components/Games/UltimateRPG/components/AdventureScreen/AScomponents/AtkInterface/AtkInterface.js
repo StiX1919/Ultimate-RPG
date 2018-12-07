@@ -90,43 +90,53 @@ class AtkInterface extends Component {
 
   render() {
 
-
-    return (
-    <div className='attacks'>
-        {this.state.attacking
-            ? <button disabled >Attack!</button>
-            : <button onClick={() => this.action(this.props.currentHero, this.props.currentMonster)}>Attack!</button>
-        }
-
-        <div className='damage-dealt'>
-            <div>
-                <h2>Hero damage</h2>
-                {this.state.attacking ?
-                    <h1>{this.state.damageDone}</h1>
-                    :
-                    null
-                
-                }
+    if(this.props.currentMonster.hp > 0){
+        return (
+        <div className='attacks'>
+            {this.state.attacking
+                ? <button disabled >Attack!</button>
+                : <button onClick={() => this.action(this.props.currentHero, this.props.currentMonster)}>Attack!</button>
+            }
+    
+            <div className='damage-dealt'>
+                <div>
+                    <h2>Hero damage</h2>
+                    {this.state.attacking ?
+                        <h1>{this.state.damageDone}</h1>
+                        :
+                        null
+                    
+                    }
+                </div>
+                <div>
+                    <h2>Monster Damage</h2>
+                    {this.state.monAttacking ?
+                        <h1 style={{color: 'red'}}>{this.state.monDamage}</h1>
+                        :
+                        null
+                    
+                    }
+                </div>
             </div>
-            <div>
-                <h2>Monster Damage</h2>
-                {this.state.monAttacking ?
-                    <h1 style={{color: 'red'}}>{this.state.monDamage}</h1>
-                    :
-                    null
-                
-                }
-            </div>
+            {this.props.currentMonster.hp > 0 &&
+                <Link to='/UltimateRPG/hero/Map'>
+                    <button>Run!</button>
+                </Link>
+            }
+            
+            
         </div>
-        {this.props.currentMonster.hp > 0 &&
-            <Link to='/UltimateRPG/hero/Map'>
-                <button>Run!</button>
-            </Link>
-        }
-        
-        
-    </div>
-    );
+        );
+
+    } else {
+        return (
+            <div className='attacks'>
+                <Link to='/UltimateRPG/hero/Map'>
+                    <button>Return to Map</button>
+                </Link>
+            </div>
+        )
+    }
   }
 }
 // not today!
