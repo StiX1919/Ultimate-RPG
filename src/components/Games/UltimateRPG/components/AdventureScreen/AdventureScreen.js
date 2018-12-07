@@ -8,6 +8,7 @@ import './AdventureScreen.css';
 
 import CharacterBox from './AScomponents/CharacterBox/CharacterBox'
 import MonsterBox from './AScomponents/MonsterBox/MonsterBox'
+import RewardsBox from './AScomponents/RewardsBox/RewardsBox'
 // import Shop from './AScomponents/Shop/Shop'
 import AtkInterface from './AScomponents/AtkInterface/AtkInterface'
 
@@ -70,7 +71,7 @@ class AdventureScreen extends Component {
         
           {this.props.currentMonster && this.props.currentMonster.hp > 0
             ? <MonsterBox />
-            : null
+            : <RewardsBox />
             //rewards box will go here when a monster is defeated
           }
           
