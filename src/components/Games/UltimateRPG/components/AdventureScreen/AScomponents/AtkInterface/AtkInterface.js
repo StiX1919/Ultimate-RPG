@@ -89,8 +89,6 @@ class AtkInterface extends Component {
 
 
   render() {
-
-    if(this.props.currentMonster.hp > 0){
         return (
         <div className='attacks'>
             {this.state.attacking
@@ -127,16 +125,6 @@ class AtkInterface extends Component {
             
         </div>
         );
-
-    } else {
-        return (
-            <div className='attacks'>
-                <Link to='/UltimateRPG/hero/Map'>
-                    <button>Return to Map</button>
-                </Link>
-            </div>
-        )
-    }
   }
 }
 // not today!

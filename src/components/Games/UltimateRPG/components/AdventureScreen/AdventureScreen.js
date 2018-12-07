@@ -59,18 +59,21 @@ class AdventureScreen extends Component {
       <div className="battle_interface">
 
         <CharacterBox getNewMon={this.props.getMonster}/>
-        <AtkInterface />
         
-          {this.props.currentMonster && this.props.currentMonster.hp <= 0 &&
-            <Link to='/UltimateRPG/hero/Map' onClick={() => this.props.removeMonster(this.props.match.params.monsterID)}>
-              <button>Back to Map</button>
-            </Link>
+        
+          {this.props.currentMonster && this.props.currentMonster.hp <= 0 
+            
+            ? <Link to='/UltimateRPG/hero/Map' onClick={() => this.props.removeMonster(this.props.match.params.monsterID)}>
+                <button>Back to Map</button>
+              </Link>
+            : <AtkInterface />
           }
 
 
         
           {this.props.currentMonster && this.props.currentMonster.hp > 0
             ? <MonsterBox />
+
             : <RewardsBox />
             //rewards box will go here when a monster is defeated
           }
