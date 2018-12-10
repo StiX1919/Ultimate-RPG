@@ -281,7 +281,10 @@ class PixelArt extends Component {
                           <option key={target.monster_id || target.equip_id || target.hero_id} value={target.name || target.hero_name}>{target.name || target.hero_name}</option>
                         )
                       })}
-                      <option value='Custom'>Custom</option>
+                      {this.state.artTable === 'heroes' 
+                        ? null
+                        : <option value='Custom'>Custom</option>
+                      }
                     </select>
 
                     <button onClick={this.toggleBorder}>Toggle Borders</button>
