@@ -59,7 +59,6 @@ export function attack(newMon) {
 }
 
 export function getMonsters(X, Y) {
-  console.log(X, Y, 'just checking')
   return {
     type: GET_MONSTERS,
     payload: axios.get(`/api/getMonsters/${X}/${Y}`).then(response => {

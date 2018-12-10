@@ -38,8 +38,7 @@ class AtkInterface extends Component {
         this.attack(hero, monster)
     
         setTimeout(() => {
-            console.log(this.props.currentMonster.hp, this.state.damageDone)
-            if(this.props.currentMonster.hp - this.state.damageDone > 0){
+            if(monster.hp - this.state.damageDone > 0){
                 let damage = monster.str - hero.endurance
                 let newHP = hero.hero_hp - damage
                 if(damage < 0){
@@ -50,6 +49,7 @@ class AtkInterface extends Component {
                 }
         
                 let newHero = Object.assign({}, hero, {hero_hp: newHP})
+                
                 this.setState({monDamage: damage})
                 this.showMonDamage()
                 this.props.hurt(newHero)
@@ -83,8 +83,9 @@ class AtkInterface extends Component {
         newHP = monster.hp
     }
     //^^^Checking to make sure that damage done doesn't add to monster health.
-    
     let newMon = Object.assign({}, monster, {hp: newHP})
+    
+    console.log(newMon.hp, 'first')
     this.setState({damageDone: damage})
     this.showDamageDone()
     this.props.attack(newMon)
