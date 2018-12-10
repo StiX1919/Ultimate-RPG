@@ -35,7 +35,7 @@ let mappedMonsters = [],
         ])
         .then(response => {
             let HP = (stats[0].value + stats[2].value)*2
-            let SP = (stats[1].value + stats[3].value)
+            let SP = (stats[1].value + stats[2].value)
             let MP = stats[3].value + luck
             dbInstance.createHeroStats([
                 response[0].hero_id,
