@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 import {attack} from '../../../../../../../ducks/reducers/monsterReducer'
 
-import {hurt} from '../../../../../../../ducks/reducers/heroReducer'
+import {hurt, addRewards} from '../../../../../../../ducks/reducers/heroReducer'
 
 import './AtkInterface.css'
 
@@ -35,24 +35,29 @@ class AtkInterface extends Component {
   }
 
   action(hero, monster){
-    this.attack(hero, monster)
-    setTimeout(() => {
-        if(this.props.currentMonster.hp > 0){
-            let damage = monster.str - hero.endurance
-            let newHP = hero.hero_hp - damage
-            if(damage < 0){
-                damage = 0
-            }
-            if(newHP >= hero.hero_hp){
-                newHP = hero.hero_hp
-            }
+        this.attack(hero, monster)
     
-            let newHero = Object.assign({}, hero, {hero_hp: newHP})
-            this.setState({monDamage: damage})
-            this.showMonDamage()
-            this.props.hurt(newHero)
-        }
-    }, 500)
+        setTimeout(() => {
+            console.log(this.props.currentMonster.hp, this.state.damageDone)
+            if(this.props.currentMonster.hp - this.state.damageDone > 0){
+                let damage = monster.str - hero.endurance
+                let newHP = hero.hero_hp - damage
+                if(damage < 0){
+                    damage = 0
+                }
+                if(newHP >= hero.hero_hp){
+                    newHP = hero.hero_hp
+                }
+        
+                let newHero = Object.assign({}, hero, {hero_hp: newHP})
+                this.setState({monDamage: damage})
+                this.showMonDamage()
+                this.props.hurt(newHero)
+            } else {
+                this.props.addRewards(this.props.rewards)
+            }
+        }, 500)
+    
   }
 
   attack(hero, monster){
@@ -130,4 +135,4 @@ class AtkInterface extends Component {
 // not today!
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, {attack, hurt})(AtkInterface));
+export default withRouter(connect(mapStateToProps, {attack, hurt, addRewards})(AtkInterface));

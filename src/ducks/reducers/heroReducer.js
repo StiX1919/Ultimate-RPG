@@ -20,6 +20,7 @@ const GET_WEAPON_EXP = 'GET_WEAPON_EXP'
 const GET_DUNGEONS = 'GET_DUNGEONS'
 
 const HURT = "HURT"
+const ADD_REWARDS = 'ADD_REWARDS'
 
 //Initial State
 
@@ -173,6 +174,13 @@ export function statModifier(hero, direction, statType) {
     
 }
 
+export function addRewards(rewards) {
+    return {
+        type: ADD_REWARDS,
+        payload: rewards
+    }
+}
+
 
 
 //Reducer
@@ -251,6 +259,13 @@ export default function heroReducer(state=initialState, action) {
             return {
                 ...state,
                 currentHero: action.payload
+            }
+
+        case ADD_REWARDS:
+            console.log(state.currentHero.gold + action.payload.gold)
+            return {
+                ...state,
+                currentHero: {...state.currentHero, gold: state.currentHero.gold + action.payload.gold, hero_exp: state.currentHero.hero_exp + action.payload.exp}
             }
 
         default:
