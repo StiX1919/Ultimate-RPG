@@ -87,8 +87,8 @@ class CharacterBox extends Component {
                             {hero.hero_exp >= this.props.nextLevel &&
                                 <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.currentHero)}>Level Up</button>
                             }
-                            <h4>EXP: {hero.hero_exp}/{this.props.nextLevel}</h4>
-                            <h4>Gold: {hero.gold}</h4>
+                            <h4>EXP: {hero.hero_exp + this.props.rewards.exp}/{this.props.nextLevel}</h4>
+                            <h4>Gold: {hero.gold + this.props.rewards.gold}</h4>
                             
                         </div>
                         

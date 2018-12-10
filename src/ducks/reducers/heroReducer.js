@@ -175,9 +175,15 @@ export function statModifier(hero, direction, statType) {
 }
 
 export function addRewards(rewards) {
-    return {
-        type: ADD_REWARDS,
-        payload: rewards
+    return function(dispatch){
+        dispatch({
+            type: ADD_REWARDS,
+            payload: rewards
+        })
+        dispatch({
+            type: 'GET_REWARDS',
+            payload: {gold: 0, items: [], exp: 0}
+        })
     }
 }
 

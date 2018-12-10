@@ -13,6 +13,7 @@ import RewardsBox from './AScomponents/RewardsBox/RewardsBox'
 import AtkInterface from './AScomponents/AtkInterface/AtkInterface'
 
 import {getMonster, removeMonster} from '../../../../../ducks/reducers/monsterReducer'
+import {addRewards} from '../../../../../ducks/reducers/heroReducer'
 
 class AdventureScreen extends Component {
   constructor(props) {
@@ -63,7 +64,10 @@ class AdventureScreen extends Component {
         
           {this.props.currentMonster && this.props.currentMonster.hp <= 0 
             
-            ? <Link to='/UltimateRPG/hero/Map' onClick={() => this.props.removeMonster(this.props.match.params.monsterID)}>
+            ? <Link to='/UltimateRPG/hero/Map' onClick={() => {
+              this.props.removeMonster(this.props.match.params.monsterID)
+              this.props.addRewards(this.props.rewards)
+            }}>
                 <button>Back to Map</button>
               </Link>
             : <AtkInterface />
@@ -100,4 +104,4 @@ class AdventureScreen extends Component {
 // not today!
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, { getMonster, removeMonster })(AdventureScreen));
+export default withRouter(connect(mapStateToProps, { getMonster, removeMonster, addRewards })(AdventureScreen));

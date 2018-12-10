@@ -53,8 +53,6 @@ class AtkInterface extends Component {
                 this.setState({monDamage: damage})
                 this.showMonDamage()
                 this.props.hurt(newHero)
-            } else {
-                this.props.addRewards(this.props.rewards)
             }
         }, 500)
     
