@@ -57,7 +57,7 @@ export function getCharm(){
 }
 
 
-//Reducer
+//User reducer
 
 export default function userReducer(state=initialState, action) {
     switch(action.type) {
