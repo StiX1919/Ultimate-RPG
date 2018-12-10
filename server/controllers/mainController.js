@@ -184,7 +184,9 @@ let mappedMonsters = [],
         let small = Math.min(X, Y)
 
 
-        let newMon = monsters[Math.floor(Math.random() * monsters.length)]
+        let grabMon = monsters[Math.floor(Math.random() * monsters.length)]
+        console.log(grabMon)
+        let newMon = Object.assign({}, grabMon)
         if(newMon.str === 0){
             newMon.str = 1
         }
