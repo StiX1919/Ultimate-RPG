@@ -37,7 +37,7 @@ class GameRouter extends Component{
                     <Navbar place={window.location.pathname} user={this.props.userReducer.user}/>
                 }
                 <Switch>
-                    <Route path='/' exact component={Landing}/>
+                    <Route path='/' exact render={() => <Landing user={this.props.userReducer.user}/>}/>
                     <Route path='/PixelArt' exact render={() =>
                         <PixelArt userID={this.props.userReducer.user}/>
                     }/>

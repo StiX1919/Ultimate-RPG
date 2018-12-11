@@ -73,7 +73,9 @@ class Games extends Component {
 
                     {this.state.hover !== 'left' 
                     ? <div className='see-more-button left-play' onClick={() => this.mouseHover('left')}>See More</div>
-                    : <button className='see-more-button left-play' onClick={this.userLogin}>Login to play!</button>
+                    : this.props.user 
+                        ? <Link to={`/UltimateRPG`} className='see-more-button right-play'>Play now!</Link>
+                        : <button className='see-more-button left-play' onClick={this.userLogin}>Login to play!</button>
                     }
                 </div>
 
