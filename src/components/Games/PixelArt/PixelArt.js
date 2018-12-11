@@ -121,8 +121,8 @@ class PixelArt extends Component {
           }
         }
         else 
-          for(let c = 0; c < this.state.width; c++){
-            for(let r = 0; r < this.state.height; r++){
+          for(let r = 0; r < this.state.width; r++){
+            for(let c = 0; c < this.state.height; c++){
               pixelArr.push({cInd: c, rInd: r, color: '#FFFFFF', opacity: 1})
             }
           }
@@ -132,8 +132,6 @@ class PixelArt extends Component {
 
   handleColorChange(e){
     this.setState({reactColor: e.rgb, color: e.hex, opacity: e.rgb.a})
-
-    // grab transparancy. at e.rgb.a. is 1 or less
   }
 
   async handleChangeHeight(value){
