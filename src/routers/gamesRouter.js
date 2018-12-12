@@ -6,7 +6,6 @@ import {connect} from 'react-redux'
 //RPG links
 import UltimateRPG from '../components/Games/UltimateRPG/RPGLanding'
 import CreateCharacter from '../components/Games/UltimateRPG/components/CreateCharacter/CreateCharacter'
-import CharacterSelect from '../components/Games/UltimateRPG/components/CharacterSelect/CharacterSelect'
 import WorldMap from '../components/Games/UltimateRPG/components/WorldMap/WorldMap'
 import AdventureScreen from '../components/Games/UltimateRPG/components/AdventureScreen/AdventureScreen'
 // import AdventureScreen from '../components/Games/UltimateRPG/components/AdventureScreen/AdventureScreen'
@@ -46,14 +45,9 @@ class GameRouter extends Component{
                 <Switch>
                     <Route path='/UltimateRPG' exact render={() =>
                         this.props.userReducer.user 
-                        ? <Redirect to='/UltimateRPG/CharacterSelect'/>
+                        ? <Redirect to='/UltimateRPG/CreateCharacter'/>
                         : <UltimateRPG />
                         
-                    }/>
-                    <Route path='/UltimateRPG/CharacterSelect' render={() => 
-                        this.props.userReducer.user !== null
-                        ? <CharacterSelect />
-                        : <Redirect to='/UltimateRPG'/>
                     }/>
                     <Route path='/UltimateRPG/CreateCharacter' render={() => 
                         this.props.userReducer.user !== null

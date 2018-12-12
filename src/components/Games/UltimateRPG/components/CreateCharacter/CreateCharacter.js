@@ -5,9 +5,11 @@ import {connect} from 'react-redux'
 
 import './CreateCharacter.css'
 
-import CaSeCard from '../CharacterSelect/CaSeComps/CaSeCard/CaSeCard'
+import CaSeCard from './CaSeComps/CaSeCard/CaSeCard'
 
 import {createNewHero, chooseStats, useStats} from '../../../../../ducks/reducers/CCReducer'
+
+import { getHero } from '../../../../../ducks/reducers/heroReducer'
 
 class CreateCharacter extends Component {
     constructor(props){
@@ -20,7 +22,16 @@ class CreateCharacter extends Component {
         this.changeHandler = this.changeHandler.bind(this)
     }
     componentDidMount() {
+      if(this.props.currentHero === null){
+        this.props.getHero()
+      } else {
+
+        console.log('heroo im heerro')
+        window.location.href=`/UltimateRPG/hero/${this.props.currentHero.hero_name}`
+      }
+
     }
+
 
     changeHandler(input) {
         this.setState({[input.target.name]: input.target.value})
@@ -42,10 +53,11 @@ class CreateCharacter extends Component {
 
     createNewHero() {
       this.props.createNewHero({name: this.state.name, heroClass: this.state.class})
-      window.location.href='/UltimateRPG/CharacterSelect'
+      window.location.href='/UltimateRPG/CreateCharacter'
     }
 
     render() {
+      console.log(this.props)
       let statList = this.props.stats.map((stat, ind )=> {
         return (
           <div key={ind} className='stat-allocation'>
@@ -92,12 +104,12 @@ class CreateCharacter extends Component {
                     <CaSeCard hero={demoHero}/>
                 </div>
                 <button onClick={() => this.createNewHero()}>Create Your Hero</button>
-                <Link to='/UltimateRPG/CharacterSelect'><button>Cancel</button></Link>
+                <Link to='/'><button>Cancel</button></Link>
             </div>
         )
     }
 }
 
-const mapStateToProps = state => ({...state.CCReducer, ...state.userReducer})
+const mapStateToProps = state => ({...state.CCReducer, ...state.userReducer, ...state.heroReducer})
 
-export default withRouter(connect(mapStateToProps, {createNewHero, chooseStats, useStats})(CreateCharacter))
+export default withRouter(connect(mapStateToProps, {createNewHero, chooseStats, useStats, getHero})(CreateCharacter))

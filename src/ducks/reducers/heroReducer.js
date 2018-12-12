@@ -22,6 +22,8 @@ const GET_DUNGEONS = 'GET_DUNGEONS'
 const HURT = "HURT"
 const ADD_REWARDS = 'ADD_REWARDS'
 
+const GET_HERO = 'GET_HERO'
+
 //Initial State
 
 const initialState = {
@@ -47,6 +49,15 @@ const initialState = {
 
 
 //Action Creators
+export function getHero(){
+    return {
+        type: GET_HERO,
+        payload: axios.get('/api/getHero')
+    }
+}
+
+
+
 //grabs discovered dungeons on load
 export function getDungeons(id){
     return {
@@ -272,6 +283,19 @@ export default function heroReducer(state=initialState, action) {
             return {
                 ...state,
                 currentHero: {...state.currentHero, gold: state.currentHero.gold + action.payload.gold, hero_exp: state.currentHero.hero_exp + action.payload.exp}
+            }
+
+        case GET_HERO + '_PENDING':
+            return {
+                ...state,
+                isLoading: true
+            }
+        case GET_HERO + '_FULFILLED':
+            console.log(action.payload)
+            return {
+                ...state,
+                isLoading: false,
+                currentHero: action.payload.data[0]
             }
 
         default:

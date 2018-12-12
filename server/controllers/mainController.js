@@ -72,8 +72,9 @@ let mappedMonsters = [],
 
     },
 
-    getHeroes = (req, res) => {
-        req.app.get('db').getHeroes(req.session.passport.user.user_id).then(response => {
+    getHero = (req, res) => {
+        req.app.get('db').getHero(req.session.passport.user.user_id).then(response => {
+            console.log(response)
             res.status(200).json(response)
         }).catch(err => console.log(err))
     },
@@ -219,7 +220,7 @@ module.exports = {
     getClasses,
     getRaces,
     createNewHero,
-    getHeroes,
+    getHero,
     demoHero,
     getMap,
     newPlace,

@@ -33,7 +33,6 @@ class SideBar extends Component {
             </div>
             
             <div className='sidebar-links'>
-                <Link to='/UltimateRPG/CharacterSelect'><h2>{sidebar ? 'Hero Selection' : 'Hero\'s'}</h2></Link>
                 <Link to={`/UltimateRPG/hero/${hero.hero_name}`}  onClick={ () => { if(sidebar){ this.changeBar() } } }><h2>{sidebar ? 'Hero info' : 'Info'}</h2></Link>
                 <Link to='/UltimateRPG/hero/Map' onClick={ () => { if(sidebar){ this.changeBar() } } }><h2>{sidebar ? 'Adventure Map' : 'Map'}</h2></Link>
             </div>

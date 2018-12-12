@@ -26,7 +26,7 @@ class Games extends Component {
 
     async userLogin() {
         try {
-          axios.post('/api/redirect', {place: '/UltimateRPG/CharacterSelect'})
+          axios.post('/api/redirect', {place: '/UltimateRPG/CreateCharacter'})
         } 
         finally {
           window.location.href='http://localhost:3001/api/login'
