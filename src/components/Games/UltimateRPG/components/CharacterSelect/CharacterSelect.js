@@ -13,7 +13,9 @@ import {selectHero} from '../../../../../ducks/reducers/heroReducer'
 import './CharacterSelect.css'
 
 
-
+// may need to drop this component and route directly to character info screen.
+// change so that each player only has one live hero at a time.
+// if there's no live here in the database it redirects to character creation page
 
 class CharacterSelect extends Component {
     constructor(props) {
