@@ -22,16 +22,8 @@ class CreateCharacter extends Component {
         this.changeHandler = this.changeHandler.bind(this)
     }
     componentDidMount() {
-      if(this.props.currentHero === null){
-        this.props.getHero()
-      } else {
-
-        console.log('heroo im heerro')
-        window.location.href=`/UltimateRPG/hero/${this.props.currentHero.hero_name}`
-      }
-
+      this.props.getHero()
     }
-
 
     changeHandler(input) {
         this.setState({[input.target.name]: input.target.value})

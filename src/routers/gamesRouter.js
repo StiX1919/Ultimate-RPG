@@ -19,6 +19,7 @@ import Landing from '../components/Landing/Landing'
 import SideBar from '../components/Games/UltimateRPG/components/SideBar/SideBar'
 
 import {getUser} from '../ducks/reducers/userReducer'
+import {getHero} from '../ducks/reducers/heroReducer'
 
 
 import './routerStyle.css'
@@ -52,7 +53,9 @@ class GameRouter extends Component{
                     <Route path='/UltimateRPG/CreateCharacter' render={() => 
                         this.props.userReducer.user !== null
                         ? <CreateCharacter />
-                        : <Redirect to='/UltimateRPG'/>
+                        : this.props.heroReducer.currentHero !== null
+                            ? <Redirect to={`/UltimateRPG/hero/${this.props.heroReducer.currentHero.hero_name}`}/>
+                            : <Redirect to='/UltimateRPG'/>
                     }/>
                     <Route path='/UltimateRPG/hero' render={() => 
                         this.props.userReducer.user !== null
@@ -86,4 +89,4 @@ class GameRouter extends Component{
 }
 const mapStateToProps = state => (state)
     
-export default withRouter(connect(mapStateToProps, {getUser})(GameRouter))
+export default withRouter(connect(mapStateToProps, {getUser, getHero})(GameRouter))
