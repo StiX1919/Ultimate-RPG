@@ -61,12 +61,13 @@ class AtkInterface extends Component {
   attack(hero, monster){
     let luckFactor = hero.luck/2,
     crit = false,
-    critNum = Math.floor(Math.random() * 100);
+    critNum = Math.floor(Math.random() * 100) + 1;
 
     if(critNum <= luckFactor){
         crit = true
     }
-    let bonus = Math.floor((critNum / (50 - luckFactor)))
+    console.log('attack stats', luckFactor, critNum, 50 - luckFactor, critNum / (50 - luckFactor + 1))
+    let bonus = Math.floor((critNum / (50 - luckFactor + 1)))
     //^^^^^^prep for luck modification to attack damage
 
     let damage = hero.strength + bonus - monster.def
