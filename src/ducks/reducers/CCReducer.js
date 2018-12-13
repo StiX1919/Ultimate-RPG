@@ -49,15 +49,15 @@ export function useStats(stat){
 }
 
 export function createNewHero(heroObj) {
-    let luck = Math.floor(Math.random() * 10)
+    let luck = Math.floor(Math.random() * 10) + 1
     if(luck === process.env.REACT_APP_STAGE_1_LUCK){
-        luck = Math.floor(Math.random() * 25)
+        luck = Math.floor(Math.random() * 25) + 1
     }
     if(luck === process.env.REACT_APP_STAGE_2_LUCK){
-        luck = Math.floor(Math.random() * 50)
+        luck = Math.floor(Math.random() * 50) + 1
     }
     if(luck === process.env.REACT_APP_STAGE_3_LUCK){
-        luck = Math.floor(Math.random() * 100)
+        luck = Math.floor(Math.random() * 100) + 1
     }
     let newObj = {...heroObj, stats: initialState.stats}
     return {
