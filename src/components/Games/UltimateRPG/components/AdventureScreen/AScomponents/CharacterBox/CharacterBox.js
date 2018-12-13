@@ -24,24 +24,12 @@ class CharacterBox extends Component {
             invOpen: false
         }
 
-        this.setHero = this.setHero.bind(this)
     }
     componentDidMount() {
-        if(this.props.heroes[0]){
-            this.setHero()
-        } else
-        window.location.href= '/UltimateRPG'
-    }
-
-    async setHero(hero, direction, statType) {
-        try {
-            // await this.props.statModifier(hero, direction, statType)
-            await this.setState({hero: this.props.currentHero, equipment: this.props.currentEquipment})
-        } catch(err) {
-            console.log(err)
-        }
+        this.setState({hero: this.props.currentHero, equipment: this.props.currentEquipment})
         
     }
+
     openInventory() {
         this.setState({invOpen: !this.state.invOpen})
     }
@@ -50,7 +38,7 @@ class CharacterBox extends Component {
     render() {
         let hero = this.props.currentHero
 
-        //Showing currently equiped items
+        //Showing currently equipped items
 
         // let liveEquipment = 'Loading...'
         // if(this.state.equipment) {

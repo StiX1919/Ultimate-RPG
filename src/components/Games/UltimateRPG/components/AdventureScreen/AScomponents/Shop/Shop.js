@@ -19,10 +19,6 @@ class Shop extends Component {
     componentDidMount() {
         this.props.getShop()
     }
-
-    
-      
-
     render() {
         let shopItems = <h3>Loading...</h3>
 
