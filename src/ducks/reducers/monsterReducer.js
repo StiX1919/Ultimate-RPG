@@ -69,7 +69,6 @@ export function getMonsters(X, Y) {
         index += 1
         return { index, X: randomX, Y: randomY, monsterInfo: { ...monster } };
       });
-      console.log(areaMonsters, 'in action creator')
       return areaMonsters;
     })
   };
@@ -183,7 +182,6 @@ export default function monsterReducer(state = initialState, action) {
       };
 
     case GET_MONSTERS + '_FULFILLED':
-    console.log(action.payload, 'in reducer')
       return {
         ...state,
         isLoading: false,

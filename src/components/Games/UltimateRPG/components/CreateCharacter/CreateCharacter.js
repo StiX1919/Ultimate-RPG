@@ -49,7 +49,6 @@ class CreateCharacter extends Component {
     }
 
     render() {
-      console.log(this.props)
       let statList = this.props.stats.map((stat, ind )=> {
         return (
           <div key={ind} className='stat-allocation'>

@@ -274,14 +274,12 @@ export default function heroReducer(state=initialState, action) {
             }
 
         case HURT:
-            console.log('hurt', action.payload)
             return {
                 ...state,
                 currentHero: action.payload
             }
 
         case ADD_REWARDS:
-            console.log(state.currentHero.gold + action.payload.gold)
             return {
                 ...state,
                 currentHero: {...state.currentHero, gold: state.currentHero.gold + action.payload.gold, hero_exp: state.currentHero.hero_exp + action.payload.exp}
@@ -293,7 +291,6 @@ export default function heroReducer(state=initialState, action) {
                 isLoading: true
             }
         case GET_HERO + '_FULFILLED':
-            console.log(action.payload)
             return {
                 ...state,
                 isLoading: false,
