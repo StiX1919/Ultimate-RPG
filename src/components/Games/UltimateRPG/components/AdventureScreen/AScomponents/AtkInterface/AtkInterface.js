@@ -66,10 +66,17 @@ class AtkInterface extends Component {
     if(critNum <= luckFactor){
         crit = true
     }
-    console.log('attack stats', luckFactor, critNum, 50 - luckFactor, critNum / (50 - luckFactor + 1))
-    let bonus = Math.floor((critNum / (50 - luckFactor + 1)))
-    //^^^^^^prep for luck modification to attack damage
 
+    let bonus = 0
+    let heroLuck = hero.luck
+    while(heroLuck > critNum){
+        bonus += 1
+        heroLuck -= 10
+    }
+
+    
+    //^^^^^^prep for luck modification to attack damage
+    
     let damage = hero.strength + bonus - monster.def
     if(damage < 0){
         damage = 0
@@ -78,6 +85,8 @@ class AtkInterface extends Component {
         damage *= 2
     }
     //^^^^determining actual damage done
+    
+    console.log(heroLuck, critNum, bonus, damage)
 
     let newHP = monster.hp - damage
     if(newHP >= monster.hp){
