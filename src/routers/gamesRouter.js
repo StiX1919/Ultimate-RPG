@@ -31,6 +31,7 @@ class GameRouter extends Component{
     }
         
     render(){
+        console.log(this.props.userReducer.user)
         return (
             <div>
                 {window.location.pathname !== '/' &&
@@ -51,12 +52,15 @@ class GameRouter extends Component{
                         
                     }/>
                     <Route path='/UltimateRPG/CreateCharacter' render={() => 
-                        this.props.userReducer.user !== null
-                        ? <CreateCharacter />
-                        : this.props.heroReducer.currentHero !== null
+                        this.props.userReducer.isLoading || this.props.heroReducer.isLoading
+                        ? <h1>Loading...</h1>
+                        : this.props.heroReducer.currentHero
                             ? <Redirect to={`/UltimateRPG/hero/${this.props.heroReducer.currentHero.hero_name}`}/>
-                            : <Redirect to='/UltimateRPG'/>
+                            : this.props.userReducer.user !== null
+                                ? <CreateCharacter />
+                                : <Redirect to='/UltimateRPG' />
                     }/>
+
                     <Route path='/UltimateRPG/hero' render={() => 
                         this.props.userReducer.user !== null
                         ? <div className='rpg-page'>
@@ -68,19 +72,9 @@ class GameRouter extends Component{
                                     <Route path='/UltimateRPG/hero/:heroName' component={HeroHub}/>
                                 </Switch>
                             </div>
-
-                        
                         : <Redirect to='/UltimateRPG'/>
                         
                     } />
-                    
-
-                    
-                         
-
-                    
-
-                    
                 </Switch>
             </div>
 

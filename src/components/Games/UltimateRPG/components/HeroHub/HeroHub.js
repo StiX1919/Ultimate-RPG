@@ -47,11 +47,6 @@ class HeroHub extends Component {
     if(!this.props.mapReducer.areaMap[0]){
         this.props.getMap(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     }
-
-    if(!this.props.userReducer.heroes[0]){
-        window.location.href= '/UltimateRPG'
-    }
-    
   }
 
   openShop() {

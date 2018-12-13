@@ -49,9 +49,6 @@ class WorldMap extends Component {
     this.discoverHandler = this.discoverHandler.bind(this)
   }
   componentDidMount(){
-    if(!this.props.heroes[0]){
-      window.location.href= '/UltimateRPG'
-    } 
     this.props.matchedMonsters(this.props.mapReducer.heroX, this.props.mapReducer.heroY)
       
   }

@@ -43,7 +43,9 @@ const initialState = {
     gold: 10,
     bonusStats: 0,
     abilities: [],
-    dungeons: []
+    dungeons: [],
+
+    isLoading: false
 
 }
 
