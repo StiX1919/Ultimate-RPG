@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import {connect} from 'react-redux'
 import './StatBox.css';
 
+import { addStat } from '../../../../../../../../../ducks/reducers/heroReducer'
+
 const Arrow = styled.div`
     background-color: ${props => props.bColor}
     height: 30px;
@@ -50,7 +52,7 @@ class StatBox extends Component {
                     <div className='stat-button'>
                         <h2>Strength:</h2>
                         {hero.extra_stats > 0 
-                            ? <button >{'+'}</button>
+                            ? <button onClick={() => this.props.addStat(Object.assign({}, hero, {strength: ++hero.strength, extra_stats: --hero.extra_stats}))}>{'+'}</button>
                             : <button disabled>{'+'}</button>
                         }
                     </div>
@@ -62,7 +64,7 @@ class StatBox extends Component {
                     <div className='stat-button'>
                         <h2>Speed:</h2>
                         {hero.extra_stats > 0 
-                            ? <button>{'+'}</button>
+                            ? <button onClick={() => this.props.addStat(Object.assign({}, hero, {speed: ++hero.speed, extra_stats: --hero.extra_stats}))}>{'+'}</button>
                             : <button disabled>{'+'}</button>
                         }
                     </div>
@@ -74,7 +76,7 @@ class StatBox extends Component {
                     <div className='stat-button'>
                         <h2>Endurance:</h2>
                         {hero.extra_stats > 0 
-                            ? <button>{'+'}</button>
+                            ? <button onClick={() => this.props.addStat(Object.assign({}, hero, {strength: ++hero.endurance, extra_stats: --hero.extra_stats}))}>{'+'}</button>
                             : <button disabled>{'+'}</button>
                         }
                     </div>
@@ -86,7 +88,7 @@ class StatBox extends Component {
                     <div  className='stat-button'>
                         <h2>Intelligence:</h2>
                         {hero.extra_stats > 0 
-                            ? <button>{'+'}</button>
+                            ? <button onClick={() => this.props.addStat(Object.assign({}, hero, {strength: ++hero.intelligence, extra_stats: --hero.extra_stats}))}>{'+'}</button>
                             : <button disabled>{'+'}</button>
                         }
                     </div>
@@ -100,4 +102,4 @@ class StatBox extends Component {
 }   
 const mapStateToProps = state => ({...state.heroReducer})
 
-export default connect(mapStateToProps, {})(StatBox);
+export default connect(mapStateToProps, {addStat})(StatBox);

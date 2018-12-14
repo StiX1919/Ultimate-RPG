@@ -6,6 +6,7 @@ import axios from "axios";
 const SELECT_HERO = "SELECT_HERO"
 
 const STAT_MODIFIER = "STAT_MODIFIER"
+const ADD_STAT = 'ADD_STAT'
 
 const GET_SHOP = 'GET_SHOP'
 const PURCHASE_ITEM = "PURCHASE_ITEM"
@@ -99,19 +100,19 @@ export function getWeaponExp(weapon, abilities) {
 
 
 //resets exp and adds to level
-export function levelUp(exp, level, nextLevel, hero){
+export function levelUp(nextLevel, hero){
     
-    let newLevel = level += 1
-    let newExp = exp - nextLevel
-    let newNextLevel = newLevel * 100
-    let newBonusStats = hero.extra_stats += 1
+    let hero_level = hero.hero_level += 1
+    let hero_exp = hero.hero_exp - nextLevel
+    let newNextLevel = hero_level * 100
+    let extra_stats = hero.extra_stats += 1
 
-    let newHero = Object.assign({}, hero, {extra_stats: newBonusStats})
+    let newHero = Object.assign({}, hero, {hero_level, extra_stats, hero_exp})
 
     return {
         type: LEVEL_UP,
         payload: {
-            newLevel, newExp, newNextLevel, newHero, newBonusStats
+            newNextLevel, newHero
         }
     }
 }
@@ -164,26 +165,16 @@ export function purchaseItem(item, oldInv, cost, oldGold) {
     }
 }
 
-export function statModifier(hero, direction, statType) {
-    let modHero = hero
-    if(direction === '+') {
-        if(statType === 'str') {
-            modHero.hero_str++
-            modHero.extra_stats--
-        }
-        if(statType === 'def') {
-            modHero.hero_def ++
-            modHero.extra_stats--
-        }
-        if(statType === 'spd') {
-            modHero.hero_spd++
-            modHero.extra_stats--
-        }
+export function addStat(newHero) {
+    let finalHero = {
+        ...newHero, 
+        hero_hp: (newHero.strength + newHero.endurance) * 2,
+        hero_mp: (newHero.intelligence + newHero.luck),
+        hero_sp: (newHero.speed + newHero.endurance) 
     }
-
     return {
-        type: STAT_MODIFIER,
-        payload: modHero
+        type: ADD_STAT,
+        payload: finalHero
     }
     
 }
@@ -217,16 +208,11 @@ export default function heroReducer(state=initialState, action) {
                 bonusStats: action.payload.hero.extra_stats,
                 nextLevel: action.payload.nextLevel
             }
-        case STAT_MODIFIER + '_PENDING':
+        case ADD_STAT:
             return {
                 ...state,
-                isLoading: true
-            }
-        case STAT_MODIFIER + '_FULFILLED':
-            return {
-                ...state,
-                isLoading: false,
-                currentHero: action.payload
+                currentHero: action.payload,
+                maxHP: action.payload.hero_hp
             }
 
         case GET_SHOP + "_PENDING":
@@ -268,10 +254,7 @@ export default function heroReducer(state=initialState, action) {
             return {
                 ...state,
                 currentHero: action.payload.newHero,
-                exp: action.payload.newExp,
-                nextLevel: action.payload.newNextLevel,
-                level: action.payload.newLevel,
-                bonusStats: action.payload.newBonusStats
+                nextLevel: state.nextLevel + action.payload.newNextLevel,
             }
 
         case HURT:

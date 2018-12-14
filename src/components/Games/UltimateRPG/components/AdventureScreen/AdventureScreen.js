@@ -90,7 +90,6 @@ class AdventureScreen extends Component {
             : !this.props.currentMonster
             ? <h1>another hello</h1>
             : <RewardsBox />
-            //rewards box will go here when a monster is defeated
           }
           
        
