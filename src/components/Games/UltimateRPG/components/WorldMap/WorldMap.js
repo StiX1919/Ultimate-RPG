@@ -32,10 +32,7 @@ class WorldMap extends Component {
 
       combatMons: [],
 
-      retreating: false,
-
-
-      moveCounter: 0
+      retreating: false
     }
     // this.move = this.move.bind(this)
     this.locationType = this.locationType.bind(this)
@@ -107,12 +104,11 @@ class WorldMap extends Component {
   async moveHandler(direction){
     if(this.props.monsterReducer.monsters.length < 10 && !this.props.mapReducer.entered){
       this.setState({moveCounter: ++this.state.moveCounter})
-      console.log(this.state.moveCounter)
-      if(this.state.moveCounter > 9 && this.state.moveCounter % 10 === 0){
+      console.log(this.props.mapReducer.moveCounter)
+      if(this.props.mapReducer.moveCounter > 9 && this.props.mapReducer.moveCounter % 10 === 0){
         this.props.getMonster(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
       }
     }
-
 
     try{
       await this.props.move(direction, this.props.mapReducer)

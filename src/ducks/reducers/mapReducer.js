@@ -39,7 +39,9 @@ const initialState = {
     
     activeSpot: {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
     entered: false,
-    isLoading: false
+    isLoading: false,
+
+    moveCounter: 0
 }
 
 
@@ -389,7 +391,8 @@ export default function mapReducer(state=initialState, action) {
                 [`map${letter}`]: area,
                 [`mapPrev${letter}`]: oldArea,
                 [`mapPrev${otherLet}`]: otherArea,
-                activeSpot
+                activeSpot,
+                moveCounter: ++state.moveCounter
             }
 
         case GO_BACK:
