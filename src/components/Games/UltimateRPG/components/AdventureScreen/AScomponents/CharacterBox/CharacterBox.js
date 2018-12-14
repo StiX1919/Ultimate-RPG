@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
 // import axios from 'axios'
 
 import {withRouter} from 'react-router-dom'
@@ -13,6 +14,28 @@ import {statModifier, beatMonster, levelUp, getWeaponExp, selectHero} from '../.
 import { getDemoCharacter } from '../../../../../../../ducks/reducers/userReducer'
 
 import {attack} from '../../../../../../../ducks/reducers/monsterReducer'
+
+
+const Arrow = styled.div`
+background-color: ${props => props.bColor}
+height: 60px;
+width: ${props => {
+    if(props.maxLength === props.stat){
+        return 100
+    } else {
+        return 100 * (props.stat / props.maxLength)
+    }
+}}%;
+`
+const Stats = styled.div`
+width: 100%;
+height: 35vh;
+
+background: #F7F9FF;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+`
 
 
 class CharacterBox extends Component {
@@ -37,6 +60,8 @@ class CharacterBox extends Component {
 
     render() {
         let hero = this.props.currentHero
+
+        let topNum = Math.max(hero.strength, hero.intelligence, hero.speed, hero.endurance)
 
         //Showing currently equipped items
 
@@ -81,10 +106,16 @@ class CharacterBox extends Component {
                         </div>
                         
                         <h3>Extra Stats: {hero ? hero.extra_stats : 0}</h3>
+                        <Stats>
+                            <Arrow bColor='red' stat={hero.strength} maxLength={topNum}>Str: {hero.strength}</Arrow>
+                            <Arrow bColor='green' stat={hero.speed} maxLength={topNum}>Spd: {hero.speed}</Arrow>
+                            <Arrow bColor='yellow' stat={hero.endurance} maxLength={topNum}>End: {hero.endurance}</Arrow>
+                            <Arrow bColor='blue' stat={hero.intelligence} maxLength={topNum}>Int: {hero.intelligence}</Arrow>
+                        </Stats>
 
                         <StatBox statType='Strength' statModifier={this.setHero} currStat={hero.strength} statsLeft={hero ? hero.extra_stats : 0}/>
-                        <StatBox statType='Endurance' statModifier={this.setHero} currStat={hero.endurance} statsLeft={hero ? hero.extra_stats : 0}/>
                         <StatBox statType='Speed' statModifier={this.setHero} currStat={hero.speed} statsLeft={hero ? hero.extra_stats : 0}/>
+                        <StatBox statType='Endurance' statModifier={this.setHero} currStat={hero.endurance} statsLeft={hero ? hero.extra_stats : 0}/>
                         <StatBox statType='Intelligence' statModifier={this.setHero} currStat={hero.intelligence} statsLeft={hero ? hero.extra_stats : 0}/>
                     </div>
                 : null}

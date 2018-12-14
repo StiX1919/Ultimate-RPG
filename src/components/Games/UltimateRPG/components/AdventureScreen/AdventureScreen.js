@@ -12,8 +12,9 @@ import RewardsBox from './AScomponents/RewardsBox/RewardsBox'
 // import Shop from './AScomponents/Shop/Shop'
 import AtkInterface from './AScomponents/AtkInterface/AtkInterface'
 
-import {getMonster, removeMonster} from '../../../../../ducks/reducers/monsterReducer'
+import {getMonster, getMonsters, removeMonster} from '../../../../../ducks/reducers/monsterReducer'
 import {addRewards} from '../../../../../ducks/reducers/heroReducer'
+import {getMap} from '../../../../../ducks/reducers/mapReducer'
 
 class AdventureScreen extends Component {
   constructor(props) {
@@ -26,6 +27,12 @@ class AdventureScreen extends Component {
     }
     this.openShop = this.openShop.bind(this)
 
+  }
+  componentDidMount() {
+    this.props.getMonsters(this.props.mapX, this.props.mapY)
+    if(!this.props.areaMap[0]){
+        this.props.getMap(this.props.mapX, this.props.mapY)
+    }
   }
 
   openShop() {
@@ -70,6 +77,8 @@ class AdventureScreen extends Component {
             }}>
                 <button>Back to Map</button>
               </Link>
+            :  !this.props.currentMonster
+            ? <h1>Hello</h1>
             : <AtkInterface />
           }
 
@@ -78,6 +87,8 @@ class AdventureScreen extends Component {
           {this.props.currentMonster && this.props.currentMonster.hp > 0
             ? <MonsterBox />
 
+            : !this.props.currentMonster
+            ? <h1>another hello</h1>
             : <RewardsBox />
             //rewards box will go here when a monster is defeated
           }
@@ -102,6 +113,6 @@ class AdventureScreen extends Component {
   }
 }
 // not today!
-const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer})
+const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer, ...state.mapReducer})
 
-export default withRouter(connect(mapStateToProps, { getMonster, removeMonster, addRewards })(AdventureScreen));
+export default withRouter(connect(mapStateToProps, { getMonster, getMap, getMonsters, removeMonster, addRewards })(AdventureScreen));

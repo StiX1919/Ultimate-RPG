@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import './StatBox.css';
 
+
 class StatBox extends Component {
     constructor(){
         super()
