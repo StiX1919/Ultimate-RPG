@@ -8,6 +8,7 @@ import {attack} from '../../../../../../../ducks/reducers/monsterReducer'
 import {hurt, addRewards} from '../../../../../../../ducks/reducers/heroReducer'
 
 import './AtkInterface.css'
+import { setTimeout } from 'timers';
 
 
 class AtkInterface extends Component {
@@ -19,53 +20,19 @@ class AtkInterface extends Component {
         attacking: false,
         monAttacking: false,
         heroSpeed: 0,
-        monsterSpeed: 0
+        monsterSpeed: 0,
+
+        combo: 0,
+        dodged: false
     }
     this.heroAttack = this.heroAttack.bind(this)
     this.monsterAttack = this.monsterAttack.bind(this)
 
-    this.showDamageDone = this.showDamageDone.bind(this)
-    this.showMonDamage = this.showMonDamage.bind(this)
-
-    this.action = this.action.bind(this)
   }
   componentDidMount(){
     this.setState({heroSpeed: this.props.currentHero.speed, monsterSpeed: this.props.currentMonster.spd})
   }
 
-
-  showDamageDone(){
-    this.setState({attacking: true})
-    setTimeout(() => this.setState({attacking: false}), 800)
-  }
-  showMonDamage(){
-    this.setState({monAttacking: true})
-    setTimeout(() => this.setState({monAttacking: false}), 800)
-  }
-
-  action(hero, monster){
-        this.heroAttack(hero, monster)
-    
-        setTimeout(() => {
-            if(monster.hp - this.state.damageDone > 0){
-                let damage = monster.str - hero.endurance
-                let newHP = hero.hero_hp - damage
-                if(damage < 0){
-                    damage = 0
-                }
-                if(newHP >= hero.hero_hp){
-                    newHP = hero.hero_hp
-                }
-        
-                let newHero = Object.assign({}, hero, {hero_hp: newHP})
-                
-                this.setState({monDamage: damage})
-                this.showMonDamage()
-                this.props.hurt(newHero)
-            }
-        }, 500)
-    
-  }
 
   heroAttack(hero, monster){
     let luckFactor = hero.luck/2,
@@ -105,36 +72,53 @@ class AtkInterface extends Component {
     let newMon = Object.assign({}, monster, {hp: newHP})
     
     console.log(newMon.hp, 'first')
-    this.setState({damageDone: damage, monsterSpeed: (monster.spd + this.state.monsterSpeed)})
-    this.showDamageDone()
+    this.setState({attacking: true, damageDone: damage, monsterSpeed: (monster.spd + this.state.monsterSpeed)}, () => {
+        setTimeout(() => this.setState({attacking: false}), 500)
+    })
     this.props.attack(newMon)
   }
 
   monsterAttack(hero, monster){
-    let damage = monster.str - hero.endurance
-    let newHP = hero.hero_hp - damage
-    if(damage < 0){
-        damage = 0
-    }
-    if(newHP >= hero.hero_hp){
-        newHP = hero.hero_hp
-    }
-
-    let newHero = Object.assign({}, hero, {hero_hp: newHP})
+        let dodgeNum = Math.floor(Math.random()*100) + 1
+        let dodged = false
+        if(hero.luck > dodgeNum){
+            dodged = true
+        }
+        let damage = monster.str - hero.endurance
+        if(dodged === true){
+            damage = damage - hero.speed
+        }
+        let newHP = hero.hero_hp - damage
+        if(damage < 0){
+            damage = 0
+        }
+        if(newHP >= hero.hero_hp){
+            newHP = hero.hero_hp
+        }
     
-    this.setState({monDamage: damage, heroSpeed: (hero.speed + this.state.heroSpeed)})
-    this.showMonDamage()
-    this.props.hurt(newHero)
+        let newHero = Object.assign({}, hero, {hero_hp: newHP})
+        
+        this.setState({dodged, combo: this.state.combo + 1, monAttacking: true, monDamage: damage, heroSpeed: (hero.speed + this.state.heroSpeed)}, () => {
+            setTimeout(() => this.setState({
+                monAttacking: false,
+                dodged: false,
+                combo: this.state.heroSpeed >= this.state.monsterSpeed ? 0 : this.state.combo
+            }), 500)
+        })
+        this.props.hurt(newHero)
+
   }
 
 
   render() {
       console.log(this.state)
+
+      let count = 0
         return (
             <div className='attacks'>
                 {this.state.heroSpeed >= this.state.monsterSpeed
-                    ? <button onClick={this.monsterAttack(this.props.currentHero, this.props.currentMonster)}>Attacked!</button>
-                    : <button onClick={() => this.heroAttack(this.props.currentHero, this.props.currentMonster)}>Attack</button>
+                    ? <button onClick={() => this.heroAttack(this.props.currentHero, this.props.currentMonster)}>Attack</button>
+                    : this.state.monAttacking === false && this.state.attacking === false && <button onClick={this.monsterAttack(this.props.currentHero, this.props.currentMonster)}>Attacked!</button>
                 }
         
                 <div className='damage-dealt'>
@@ -146,11 +130,20 @@ class AtkInterface extends Component {
                             null
                         
                         }
+                        {this.state.dodged 
+                            ? <h2>DODGED!!!</h2>
+                            : null
+                        }
                     </div>
                     <div>
                         <h2>Monster Damage</h2>
                         {this.state.monAttacking ?
-                            <h1 style={{color: 'red'}}>{this.state.monDamage}</h1>
+                            <div>
+                                <h1 style={{color: 'red'}}>{this.state.monDamage}</h1>
+                                {this.state.combo > 1 &&
+                                    <h3>{this.state.combo} hit combo!</h3>
+                                }
+                            </div>
                             :
                             null
                         

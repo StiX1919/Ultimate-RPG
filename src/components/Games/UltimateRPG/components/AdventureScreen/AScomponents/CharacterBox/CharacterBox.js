@@ -20,7 +20,6 @@ const Arrow = styled.div`
 background-color: ${props => props.bColor}
 height: 30px;
 width: ${props => {
-    console.log('in styled components', props.maxLength, props.stat)
     if(props.maxLength === props.stat){
         return 100
     } else {
