@@ -43,6 +43,8 @@ const initialState = {
     level: 1,
     gold: 10,
     maxHP: 0 ,
+    maxMP: 0,
+    maxSP: 0,
     bonusStats: 0,
     abilities: [],
     dungeons: [],
@@ -212,7 +214,9 @@ export default function heroReducer(state=initialState, action) {
             return {
                 ...state,
                 currentHero: action.payload,
-                maxHP: action.payload.hero_hp
+                maxHP: action.payload.hero_hp,
+                maxMP: action.payload.hero_mp,
+                maxSP: action.payload.hero_sp
             }
 
         case GET_SHOP + "_PENDING":
@@ -279,7 +283,9 @@ export default function heroReducer(state=initialState, action) {
                 ...state,
                 isLoading: false,
                 currentHero: action.payload.data[0],
-                maxHP: action.payload.data[0].hero_hp
+                maxHP: action.payload.data[0].hero_hp,
+                maxMP: action.payload.data[0].hero_mp,
+                maxSP: action.payload.data[0].hero_sp
             }
 
         default:

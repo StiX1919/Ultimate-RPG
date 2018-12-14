@@ -101,9 +101,21 @@ class CharacterBox extends Component {
                             <h3>{hero.hero_class}: {hero.hero_name}</h3>
                             <h3>Level: {hero.hero_level}</h3>
                             <div style={{display: 'flex'}}>
-                                <h3>HP:  </h3>
+                                <h3 style={{width: '20%'}}>HP:  </h3>
                                 <div style={{backgroundColor: 'red', width: '100%'}}>
                                     <Arrow bColor='green' stat={hero.hero_hp} maxLength={this.props.maxHP}>{`${hero.hero_hp}/${this.props.maxHP}`}</Arrow>
+                                </div>
+                            </div>
+                                <div style={{display: 'flex'}}>
+                                <h5 style={{width: '20%'}}>SP:  </h5>
+                                <div style={{backgroundColor: 'red', width: '100%'}}>
+                                    <Arrow bColor='orange' stat={hero.hero_sp} maxLength={this.props.maxSP}>{`${hero.hero_sp}/${this.props.maxSP}`}</Arrow>
+                                </div>
+                            </div>
+                                <div style={{display: 'flex'}}>
+                                <h5 style={{width: '20%'}}>MP:  </h5>
+                                <div style={{backgroundColor: 'red', width: '100%'}}>
+                                    <Arrow bColor='blue' stat={hero.hero_mp} maxLength={this.props.maxMP}>{`${hero.hero_mp}/${this.props.maxMP}`}</Arrow>
                                 </div>
                             </div>
                 
