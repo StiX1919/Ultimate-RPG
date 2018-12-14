@@ -41,6 +41,7 @@ const initialState = {
     nextLevel: 100,
     level: 1,
     gold: 10,
+    maxHP: 0 ,
     bonusStats: 0,
     abilities: [],
     dungeons: [],
@@ -294,7 +295,8 @@ export default function heroReducer(state=initialState, action) {
             return {
                 ...state,
                 isLoading: false,
-                currentHero: action.payload.data[0]
+                currentHero: action.payload.data[0],
+                maxHP: action.payload.data[0].hero_hp
             }
 
         default:

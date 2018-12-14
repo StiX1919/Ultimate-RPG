@@ -18,8 +18,9 @@ import {attack} from '../../../../../../../ducks/reducers/monsterReducer'
 
 const Arrow = styled.div`
 background-color: ${props => props.bColor}
-height: 60px;
+height: 30px;
 width: ${props => {
+    console.log('in styled components', props.maxLength, props.stat)
     if(props.maxLength === props.stat){
         return 100
     } else {
@@ -28,12 +29,12 @@ width: ${props => {
 }}%;
 `
 const Stats = styled.div`
-width: 100%;
-height: 35vh;
+width: 50%;
+/* height: 20vh; */
 
 background: #F7F9FF;
 display: flex;
-flex-direction: column;
+/* flex-direction: column; */
 justify-content: space-between;
 `
 
@@ -62,6 +63,7 @@ class CharacterBox extends Component {
         let hero = this.props.currentHero
 
         let topNum = Math.max(hero.strength, hero.intelligence, hero.speed, hero.endurance)
+        
 
         //Showing currently equipped items
 
@@ -93,30 +95,26 @@ class CharacterBox extends Component {
                 {hero ? 
                     <div>
                         <div>
-                            <h3>{hero ? hero.hero_name : 'nameless'}</h3>
-                            <h4>Level: {hero.hero_level}</h4>
-                            <h3>HP: {hero.hero_hp}</h3>
+                            <h3>{hero.hero_class}: {hero.hero_name}</h3>
+                            <h3>Level: {hero.hero_level}</h3>
+                            <div style={{display: 'flex'}}>
+                                <h3>HP:  </h3>
+                                <div style={{backgroundColor: 'red', width: '100%'}}>
+                                    <Arrow bColor='green' stat={hero.hero_hp} maxLength={this.props.maxHP}>{`${hero.hero_hp}/${this.props.maxHP}`}</Arrow>
+                                </div>
+                            </div>
                 
                             {hero.hero_exp >= this.props.nextLevel &&
                                 <button onClick={() => this.props.levelUp(this.props.exp, this.props.level, this.props.nextLevel, this.props.currentHero)}>Level Up</button>
                             }
                             <h4>EXP: {hero.hero_exp + this.props.rewards.exp}/{this.props.nextLevel}</h4>
-                            <h4>Gold: {hero.gold + this.props.rewards.gold}</h4>
                             
                         </div>
-                        
+                            
                         <h3>Extra Stats: {hero ? hero.extra_stats : 0}</h3>
-                        <Stats>
-                            <Arrow bColor='red' stat={hero.strength} maxLength={topNum}>Str: {hero.strength}</Arrow>
-                            <Arrow bColor='green' stat={hero.speed} maxLength={topNum}>Spd: {hero.speed}</Arrow>
-                            <Arrow bColor='yellow' stat={hero.endurance} maxLength={topNum}>End: {hero.endurance}</Arrow>
-                            <Arrow bColor='blue' stat={hero.intelligence} maxLength={topNum}>Int: {hero.intelligence}</Arrow>
-                        </Stats>
-
-                        <StatBox statType='Strength' statModifier={this.setHero} currStat={hero.strength} statsLeft={hero ? hero.extra_stats : 0}/>
-                        <StatBox statType='Speed' statModifier={this.setHero} currStat={hero.speed} statsLeft={hero ? hero.extra_stats : 0}/>
-                        <StatBox statType='Endurance' statModifier={this.setHero} currStat={hero.endurance} statsLeft={hero ? hero.extra_stats : 0}/>
-                        <StatBox statType='Intelligence' statModifier={this.setHero} currStat={hero.intelligence} statsLeft={hero ? hero.extra_stats : 0}/>
+                        <StatBox hero={hero} />
+                            
+                        <h4>Gold: {hero.gold + this.props.rewards.gold}</h4>
                     </div>
                 : null}
                 
