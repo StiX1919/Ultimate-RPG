@@ -6,18 +6,13 @@ import {Link} from 'react-router-dom'
 import './AdventureScreen.css';
 
 
-import CharacterBox from './AScomponents/CharacterBox/CharacterBox'
 import MonsterBox from './AScomponents/MonsterBox/MonsterBox'
 import RewardsBox from './AScomponents/RewardsBox/RewardsBox'
 // import Shop from './AScomponents/Shop/Shop'
-import AtkInterface from './AScomponents/AtkInterface/AtkInterface'
 import WorldMap from '../WorldMap/WorldMap'
 
-import {getMonster, getMonsters, removeMonster} from '../../../../../ducks/reducers/monsterReducer'
-import {addRewards} from '../../../../../ducks/reducers/heroReducer'
-import {getMap} from '../../../../../ducks/reducers/mapReducer'
 
-class AdventureScreen extends Component {
+class RightSide extends Component {
   constructor(props) {
     super()
     this.state = {
@@ -68,12 +63,16 @@ class AdventureScreen extends Component {
     //     {console.log(this.props.currentHero, 'top hero pors')}
 
     return (
-    <div className='as-page'>
-      <div className="battle_interface">
+    <div className='right-side'>
+          {this.props.mapOpen 
+            ? <WorldMap />
+            : this.props.currentMonster && this.props.currentMonster.hp > 0
+              ? <MonsterBox />
 
-        <CharacterBox getNewMon={this.props.getMonster}/>
-        
-        
+              : !this.props.currentMonster
+                ? null
+                : <RewardsBox />
+          }
           {this.props.currentMonster && this.props.currentMonster.hp <= 0 
             
             ? <Link to='/UltimateRPG/hero/Map' onClick={() => {
@@ -90,29 +89,7 @@ class AdventureScreen extends Component {
             )
             : <AtkInterface />
           }
-          {this.state.mapOpen 
-            ? <WorldMap />
-            : this.props.currentMonster && this.props.currentMonster.hp > 0
-              ? <MonsterBox />
-
-              : !this.props.currentMonster
-                ? null
-                : <RewardsBox />
-          }
-        
-      </div>
-      <div className='skills'>
-        
-        
-        {this.state.skills === true &&
-          <div>
-            <button onClick={this.openSkillView}>Skills</button>
-            {this.state.skillArr.map(skill => [
-              <h4>{skill.name}: Lv:{skill.level} {skill.exp}/{skill.level * 100}</h4>
-            ])}
-          </div>
-        }
-      </div>
+      
     </div>
     );
   }
@@ -120,4 +97,4 @@ class AdventureScreen extends Component {
 // not today!
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer, ...state.mapReducer})
 
-export default withRouter(connect(mapStateToProps, { getMonster, getMap, getMonsters, removeMonster, addRewards })(AdventureScreen));
+export default withRouter(connect(mapStateToProps, {})(RightSide));
