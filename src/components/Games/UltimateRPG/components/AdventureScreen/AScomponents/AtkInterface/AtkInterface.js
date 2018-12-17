@@ -30,7 +30,7 @@ class AtkInterface extends Component {
 
   }
   componentDidMount(){
-    this.setState({heroSpeed: this.props.currentHero.speed, monsterSpeed: this.props.currentMonster.spd})
+    this.setState({heroSpeed: this.props.currentHero.speed, monsterSpeed: this.props.currentMonster.monsterInfo.spd})
   }
 
 
@@ -69,7 +69,7 @@ class AtkInterface extends Component {
         newHP = monster.hp
     }
     //^^^Checking to make sure that damage done doesn't add to monster health.
-    let newMon = Object.assign({}, monster, {hp: newHP})
+    let newMon = {...this.props.currentMonster, monsterInfo: {...this.props.currentMonster.monsterInfo, hp: newHP}}
     
     console.log(newMon.hp, 'first')
     this.setState({attacking: true, damageDone: damage, monsterSpeed: (monster.spd + this.state.monsterSpeed)}, () => {
@@ -117,8 +117,8 @@ class AtkInterface extends Component {
         return (
             <div className='attacks'>
                 {this.state.heroSpeed >= this.state.monsterSpeed
-                    ? <button onClick={() => this.heroAttack(this.props.currentHero, this.props.currentMonster)}>Attack</button>
-                    : this.state.monAttacking === false && this.state.attacking === false && <button onClick={this.monsterAttack(this.props.currentHero, this.props.currentMonster)}>Attacked!</button>
+                    ? <button onClick={() => this.heroAttack(this.props.currentHero, this.props.currentMonster.monsterInfo)}>Attack</button>
+                    : this.state.monAttacking === false && this.state.attacking === false && <button onClick={this.monsterAttack(this.props.currentHero, this.props.currentMonster.monsterInfo)}>Attacked!</button>
                 }
         
                 <div className='damage-dealt'>

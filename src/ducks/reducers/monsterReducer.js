@@ -189,14 +189,16 @@ export default function monsterReducer(state = initialState, action) {
       };
 
     case SET_MONSTER:
+      console.log(action.payload, 'reducer monster')
       return {
         ...state,
         currentMonster: action.payload
       };
 
     case REMOVE_MON:
+      console.log(action.payload, state.monsters)
       let slicedMons = state.monsters.filter(monster => {
-        return monster.index !== +action.payload
+        return monster.index !== action.payload
           
       });
 

@@ -8,7 +8,7 @@ import './RewardsBox.css';
 class RewardsBox extends Component {
 
     componentDidMount(){
-        this.props.getRewards(this.props.currentMonster, this.props.mapX, this.props.mapY)
+        this.props.getRewards(this.props.currentMonster.monsterInfo, this.props.mapX, this.props.mapY)
     }
 
     render() {

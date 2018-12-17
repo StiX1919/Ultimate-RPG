@@ -67,6 +67,7 @@ class AdventureScreen extends Component {
     //     })}
     //     {console.log(this.props.currentHero, 'top hero pors')}
 
+    console.log(this.props.currentMonster)
     return (
     <div className='as-page'>
       <div className="battle_interface">
@@ -74,10 +75,10 @@ class AdventureScreen extends Component {
         <CharacterBox getNewMon={this.props.getMonster}/>
         
         
-          {this.props.currentMonster && this.props.currentMonster.hp <= 0 
+          {this.props.currentMonster && this.props.currentMonster.monsterInfo.hp <= 0 
             
             ? <button onClick={() => {
-              this.props.removeMonster(this.props.match.params.monsterID)
+              this.props.removeMonster(this.props.currentMonster.index)
               this.props.addRewards(this.props.rewards)
               this.openMap()
             }}>Back to Map</button>
@@ -92,7 +93,7 @@ class AdventureScreen extends Component {
           }
           {this.state.mapOpen 
             ? <WorldMap openMap={this.openMap}/>
-            : this.props.currentMonster && this.props.currentMonster.hp > 0
+            : this.props.currentMonster && this.props.currentMonster.monsterInfo.hp > 0
               ? <MonsterBox />
 
               : !this.props.currentMonster

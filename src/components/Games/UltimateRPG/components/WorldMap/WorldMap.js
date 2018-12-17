@@ -270,7 +270,7 @@ class WorldMap extends Component {
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
                     <button onClick={() => {
-                      this.props.setMonster(monster.monsterInfo)
+                      this.props.setMonster(monster)
                       this.props.openMap()
                     }}>Fight!!</button>
                 </div>
