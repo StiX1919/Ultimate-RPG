@@ -61,7 +61,7 @@ class RightSide extends Component {
     //             </div>
     //     })}
     //     {console.log(this.props.currentHero, 'top hero pors')}
-
+    // figure out better conditions for render
     return (
     <div className='right-side'>
           {this.props.mapOpen 
