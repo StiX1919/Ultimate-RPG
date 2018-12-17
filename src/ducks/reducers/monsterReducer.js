@@ -202,7 +202,8 @@ export default function monsterReducer(state = initialState, action) {
 
       return {
         ...state,
-        monsters: slicedMons
+        monsters: slicedMons,
+        currentMonster: null
       };
 
     case MOVE_MON:

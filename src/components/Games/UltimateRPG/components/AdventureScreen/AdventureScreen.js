@@ -76,12 +76,12 @@ class AdventureScreen extends Component {
         
           {this.props.currentMonster && this.props.currentMonster.hp <= 0 
             
-            ? <Link to='/UltimateRPG/hero/Map' onClick={() => {
+            ? <button onClick={() => {
               this.props.removeMonster(this.props.match.params.monsterID)
               this.props.addRewards(this.props.rewards)
-            }}>
-                <button>Back to Map</button>
-              </Link>
+              this.openMap()
+            }}>Back to Map</button>
+              
             :  !this.props.currentMonster
             ? (
               <div>
@@ -91,7 +91,7 @@ class AdventureScreen extends Component {
             : <AtkInterface />
           }
           {this.state.mapOpen 
-            ? <WorldMap />
+            ? <WorldMap openMap={this.openMap}/>
             : this.props.currentMonster && this.props.currentMonster.hp > 0
               ? <MonsterBox />
 

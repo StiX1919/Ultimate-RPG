@@ -270,7 +270,7 @@ class WorldMap extends Component {
                 <div className='monster'>
                   <h3>{monster.monsterInfo.name}</h3>
                   <Link to={`/UltimateRPG/hero/battle/${monster.index}`} onClick={() => this.props.setMonster(monster.monsterInfo)}>
-                    <button>Fight!!</button>
+                    <button onClick={this.props.openMap}>Fight!!</button>
                   </Link>
                 </div>
               )
