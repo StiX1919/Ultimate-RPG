@@ -85,7 +85,7 @@ class AdventureScreen extends Component {
             :  !this.props.currentMonster
             ? (
               <div>
-                <button onClick={this.openMap}>Open Map</button>
+                <button onClick={this.openMap}>{this.state.mapOpen ? 'Close ' : 'Open '}Map</button>
               </div>
             )
             : <AtkInterface />
@@ -117,7 +117,7 @@ class AdventureScreen extends Component {
     );
   }
 }
-// not today!
+// gotta fix remove monster function. no longer recieving data from params
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer, ...state.mapReducer})
 
 export default withRouter(connect(mapStateToProps, { getMonster, getMap, getMonsters, removeMonster, addRewards })(AdventureScreen));
