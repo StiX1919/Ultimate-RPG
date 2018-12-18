@@ -132,7 +132,7 @@ class CharacterBox extends Component {
                     </div>
                 : null}
                 
-                
+                <button onClick={this.props.openMap}><img className='map-button' src='https://www.clipartmax.com/png/middle/171-1715126_earth-globe-clipart-17-earth-map-cartoon.png' alt='map'/></button>
             </div>
         )
     }

@@ -72,7 +72,7 @@ class AdventureScreen extends Component {
     <div className='as-page'>
       <div className="battle_interface">
 
-        <CharacterBox getNewMon={this.props.getMonster}/>
+        <CharacterBox openMap={this.openMap}/>
         
         
           {this.props.currentMonster && this.props.currentMonster.monsterInfo.hp <= 0 
@@ -84,11 +84,7 @@ class AdventureScreen extends Component {
             }}>Back to Map</button>
               
             :  !this.props.currentMonster
-            ? (
-              <div>
-                <button onClick={this.openMap}>{this.state.mapOpen ? 'Close ' : 'Open '}Map</button>
-              </div>
-            )
+            ? null
             : <AtkInterface />
           }
           {this.state.mapOpen 
