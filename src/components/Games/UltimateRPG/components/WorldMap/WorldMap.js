@@ -168,101 +168,44 @@ class WorldMap extends Component {
     const {area_name, area_type, x_location, y_location, discovered_by} = this.props.mapReducer.activeSpot
     return (
       <div className='mapComponent'>
-        <div>
-          { this.state.retreating 
-            ? <div className='retreat-container'>
-                <img className='retreat' src={this.props.heroReducer.currentHero.pix_art}/>
-                <div className='ground-container'><div className='retreat-ground'></div></div>
-              </div>
-            : this.props.mapReducer.areaMap[0] && 
-              this.props.mapReducer.areaMap.map((row, r) => {
-                return (
-                  <div className='row'>
-                  {row.map((spot, j) => {
-                    return (
-                      <div style={{height: '50px', width: '50px', border: 'solid black 1px', background: spot.color ? spot.color : 'black'}}>
-                        
-                        {spot.x === this.props.mapReducer.heroX && spot.y === this.props.mapReducer.heroY
-                          
-                          ? <img style={{height: '50px', width: '50px'}} src={this.props.heroReducer.currentHero.pix_art} alt='hello'/>
-                          : null
-                        }
-                        {this.props.monsterReducer.monsters.map( (mon, i) => {
-                          if(mon.X === spot.x && mon.Y === spot.y){
-                            if(spot.color){
-                              return <img key={i} style={{height: '50px', width: '50px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
-                            }
-                            else return <img style={{height: '50px'}} src='https://vignette.wikia.nocookie.net/videogames-fanon/images/6/60/Question_Mark.png/revision/latest?cb=20150225221834' alt='mystery monster'/>
-                          }
-                        })
-                        }
-                      </div>
-                    )
-                  })}
-
-                  </div>
-                )
-              })
-            
-          }
-        </div>
-        {area_type !== 'none' 
-          ? (
-            <div className='directions'>
-                <div className='up-container'>
-                    {this.props.mapReducer.entered && this.props.mapReducer.heroY < 10 
-                      ? <span className='direction up' onClick={() => this.moveHandler('up')}/>
-                      : !this.props.mapReducer.entered && <span className='direction up' onClick={() => this.moveHandler('up')}/>
-                    }
-                </div>
-                <div className='left-right'>
-                    <div className='left-container'>
-                        {this.props.mapReducer.entered && this.props.mapReducer.heroX > 1 
-                          ? <span className='direction left' onClick={() => this.moveHandler('left')}/>
-                          : !this.props.mapReducer.entered && <span className='direction left' onClick={() => this.moveHandler('left')}/>
-                        }
-                    </div>
-                    <div className='center-divider'></div>
-                    <div className='right-container'>
-                        {this.props.mapReducer.entered && this.props.mapReducer.heroX < 10
-                          ? <span className='direction right' onClick={() => this.moveHandler('right')}/>
-                          : !this.props.mapReducer.entered && <span className='direction right' onClick={() => this.moveHandler('right')}/>
-                        }
-                    </div>
-                </div>
-                <div className='down-container'>
-                    {this.props.mapReducer.entered && this.props.mapReducer.heroY > 1 
-                      ? <span className='direction down' onClick={() => this.moveHandler('down')}/>
-                      : !this.props.mapReducer.entered && <span className='direction down' onClick={() => this.moveHandler('down')}/>
-                    }
-                </div>
-            </div>
-          ): <div>
-            <button onClick={() => this.enterHandler()}>Enter New Land!</button>
-            <button onClick={() => this.props.goBack(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)}>Go Back</button>
-          </div>
-        }
-        {/* build this up to leave entered zone and rebuild map from current area. also trigger monster rebuild when switching areas. 
-        */}
-        {this.props.mapReducer.entered &&
+        <div className='map-mons'>
           <div>
-            <button onClick={this.retreat}>Retreat!</button>
-            {!this.props.monsterReducer.monsters[0] &&
-              <button onClick={() => this.discoverHandler()} >
-                  Clear and discover!
-              </button>
+            { this.state.retreating 
+              ? <div className='retreat-container'>
+                  <img className='retreat' src={this.props.heroReducer.currentHero.pix_art}/>
+                  <div className='ground-container'><div className='retreat-ground'></div></div>
+                </div>
+              : this.props.mapReducer.areaMap[0] && 
+                this.props.mapReducer.areaMap.map((row, r) => {
+                  return (
+                    <div className='row'>
+                    {row.map((spot, j) => {
+                      return (
+                        <div style={{height: '35px', width: '35px', border: 'solid black 1px', background: spot.color ? spot.color : 'black'}}>
+                          
+                          {spot.x === this.props.mapReducer.heroX && spot.y === this.props.mapReducer.heroY
+                            
+                            ? <img style={{height: '35px', width: '35px'}} src={this.props.heroReducer.currentHero.pix_art} alt='hello'/>
+                            : null
+                          }
+                          {this.props.monsterReducer.monsters.map( (mon, i) => {
+                            if(mon.X === spot.x && mon.Y === spot.y){
+                              if(spot.color){
+                                return <img key={i} style={{height: '35px', width: '35px'}} src={mon.monsterInfo.img_link} alt={`${mon.monsterInfo.name}`}/>
+                              }
+                              else return <img style={{height: '35px'}} src='https://vignette.wikia.nocookie.net/videogames-fanon/images/6/60/Question_Mark.png/revision/latest?cb=20150225221834' alt='mystery monster'/>
+                            }
+                          })
+                          }
+                        </div>
+                      )
+                    })}
+
+                    </div>
+                  )
+                })
+              
             }
-          </div>
-        }
-        <div className='infoBox'>
-          <div className='spotInfo'>
-            <h2>{x_location + ':' + y_location}</h2>
-            {area_name !== 'none' &&
-              <h2>{'Name: ' + area_name}</h2>
-            
-            }
-            <h2>{area_type}</h2>
-            <h4>{discovered_by}</h4>
           </div>
           <div className='closeMonsters'>
             {this.props.monsterReducer.combatMons.map((monster, i) => {
@@ -277,8 +220,66 @@ class WorldMap extends Component {
               )
             })}
           </div>
-
+        </div>
+        <div className='buttons-info'>
+          {area_type !== 'none' 
+            ? (
+              <div className='directions'>
+                  <div className='up-container'>
+                      {this.props.mapReducer.entered && this.props.mapReducer.heroY < 10 
+                        ? <span className='direction up' onClick={() => this.moveHandler('up')}/>
+                        : !this.props.mapReducer.entered && <span className='direction up' onClick={() => this.moveHandler('up')}/>
+                      }
+                  </div>
+                  <div className='left-right'>
+                      <div className='left-container'>
+                          {this.props.mapReducer.entered && this.props.mapReducer.heroX > 1 
+                            ? <span className='direction left' onClick={() => this.moveHandler('left')}/>
+                            : !this.props.mapReducer.entered && <span className='direction left' onClick={() => this.moveHandler('left')}/>
+                          }
+                      </div>
+                      <div className='center-divider'></div>
+                      <div className='right-container'>
+                          {this.props.mapReducer.entered && this.props.mapReducer.heroX < 10
+                            ? <span className='direction right' onClick={() => this.moveHandler('right')}/>
+                            : !this.props.mapReducer.entered && <span className='direction right' onClick={() => this.moveHandler('right')}/>
+                          }
+                      </div>
+                  </div>
+                  <div className='down-container'>
+                      {this.props.mapReducer.entered && this.props.mapReducer.heroY > 1 
+                        ? <span className='direction down' onClick={() => this.moveHandler('down')}/>
+                        : !this.props.mapReducer.entered && <span className='direction down' onClick={() => this.moveHandler('down')}/>
+                      }
+                  </div>
+              </div>
+            ): <div>
+              <button onClick={() => this.enterHandler()}>Enter New Land!</button>
+              <button onClick={() => this.props.goBack(this.props.mapReducer.mapX, this.props.mapReducer.mapY, this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)}>Go Back</button>
+            </div>
+          }
+          <div className='spotInfo'>
+            <h2>{x_location + ':' + y_location}</h2>
+            {area_name !== 'none' &&
+              <h2>{'Name: ' + area_name}</h2>
+            
+            }
+            <h2>{area_type}</h2>
+            <h4>{discovered_by}</h4>
           </div>
+        </div>
+        {/* build this up to leave entered zone and rebuild map from current area. also trigger monster rebuild when switching areas. 
+        */}
+        {this.props.mapReducer.entered &&
+          <div>
+            <button onClick={this.retreat}>Retreat!</button>
+            {!this.props.monsterReducer.monsters[0] &&
+              <button onClick={() => this.discoverHandler()} >
+                  Clear and discover!
+              </button>
+            }
+          </div>
+        }
       </div>
     );
   }

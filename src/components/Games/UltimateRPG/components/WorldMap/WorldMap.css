@@ -1,18 +1,27 @@
 .mapComponent {
   display: flex;
+  flex-direction: column;
   background: #F7F9FF;
 
-  width: calc(100vw - 80px);
+  width: calc(100vw - 500px);
   height: calc(100vh - 80px)
 }
 
 
-
+.buttons-info {
+  display: flex;
+  
+  width: 370px;
+  justify-content: space-between
+}
 
 .row {
     display: flex
   }
 
+.map-mons {
+  display: flex;
+}
 
 
 .closeMonsters {

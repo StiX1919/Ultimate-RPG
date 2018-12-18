@@ -1,7 +1,7 @@
 .as-page {
-  width: calc(100vw - 80px);
+  width: 100vw;
   height: calc(100vh - 80px);
-  background: #7F9FF
+  background: #F7F9FF
 }
 
 .attacks {

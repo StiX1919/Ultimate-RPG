@@ -66,8 +66,6 @@ class AdventureScreen extends Component {
     //             </div>
     //     })}
     //     {console.log(this.props.currentHero, 'top hero pors')}
-
-    console.log(this.props.currentMonster)
     return (
     <div className='as-page'>
       <div className="battle_interface">
