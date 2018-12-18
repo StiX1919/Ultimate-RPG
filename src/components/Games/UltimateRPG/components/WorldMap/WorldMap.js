@@ -158,9 +158,9 @@ class WorldMap extends Component {
       x_location: this.props.mapReducer.clearLocX,
       y_location: this.props.mapReducer.clearLocY
     }).then(res => {
+      this.props.getMonsters(this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)
       this.props.getMap(this.props.mapReducer.mapPrevX, this.props.mapReducer.mapPrevY)
       this.props.retreat()
-      this.props.getMonsters(this.props.mapReducer.mapX, this.props.mapReducer.mapY)
     })
   }
   
