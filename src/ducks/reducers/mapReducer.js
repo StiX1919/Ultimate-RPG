@@ -145,6 +145,7 @@ export function move(direction, state){
                     if(state.entered === false){
                         area = ++state.mapY
                         dispatch(getMap(state.mapX, state.mapY))
+                        dispatch(getMonsters(state.mapX, state.mapY))
                     }
                 } else area = state.mapY
                 break;
@@ -155,6 +156,7 @@ export function move(direction, state){
                     if(state.entered === false){
                         area = --state.mapY
                         dispatch(getMap(state.mapX, state.mapY))
+                        dispatch(getMonsters(state.mapX, state.mapY))
                     }
                 } else area = state.mapY
                 break;
