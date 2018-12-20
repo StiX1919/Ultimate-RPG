@@ -113,8 +113,8 @@ export function enterArea(X, Y, spotType){
 export function goBack(X, Y, oldX, oldY){
     return function(dispatch){
         if(X !== oldX || Y !== oldY){
-            dispatch(getMap(oldX, oldY), getMonsters(oldX, oldY))
-            
+            dispatch(getMap(oldX, oldY))
+            dispatch(getMonsters(oldX, oldY))
         }
 
         dispatch({
@@ -391,6 +391,7 @@ export default function mapReducer(state=initialState, action) {
                 [`heroPrev${letter}`]: type,
                 [`heroPrev${otherLet}`]: otherData,
                 [`map${letter}`]: area,
+                [`map${otherLet}`]: otherArea,
                 [`mapPrev${letter}`]: oldArea,
                 [`mapPrev${otherLet}`]: otherArea,
                 activeSpot,
@@ -428,8 +429,10 @@ export default function mapReducer(state=initialState, action) {
                 entered: action.payload,
                 heroX: state.retreatX,
                 heroY: state.retreatY,
-                activeSpot: state.locations.filter(spot => {return(spot.x_location === state.retreatX && spot.y_location === state.retreatY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'}
-                
+                activeSpot: state.locations.filter(spot => {return(spot.x_location === state.retreatX && spot.y_location === state.retreatY)})[0] || {area_name: 'none', area_type: 'none', x_location: 'none', y_location: 'none', discovered_by: 'none'},
+                // mapX: state.mapPrevX,
+                // mapY: state.mapPrevY
+                // not gonna work unless a check is done first
             }
 
         default:
