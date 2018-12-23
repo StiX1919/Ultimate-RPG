@@ -244,6 +244,7 @@ export function getMap(areaX, areaY){
             default: return 'white'
         }
     }
+
     
     
     return {
