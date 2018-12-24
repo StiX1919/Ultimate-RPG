@@ -245,8 +245,7 @@ export function getMap(areaX, areaY){
         }
     }
 
-    
-    
+
     return {
         type: GET_MAP,
         payload: axios.get(`/api/getMap/${areaX}/${areaY}`).then(response => {
