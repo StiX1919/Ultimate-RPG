@@ -147,7 +147,10 @@ export function move(direction, state){
                         dispatch(getMap(state.mapX, state.mapY))
                         dispatch(getMonsters(state.mapX, state.mapY))
                     }
-                } else area = state.mapY
+                } else {
+                    area = state.mapY
+                    oldArea = state.mapY
+                }
                 break;
                 case 'down':
                 if(state.heroY - 1 < ((state.mapY - 1) * 10) + 1){
@@ -158,7 +161,10 @@ export function move(direction, state){
                         dispatch(getMap(state.mapX, state.mapY))
                         dispatch(getMonsters(state.mapX, state.mapY))
                     }
-                } else area = state.mapY
+                } else {
+                    area = state.mapY
+                    oldArea = state.mapY
+                }
                 break;
                 default: area = state.mapY
             }
@@ -175,7 +181,10 @@ export function move(direction, state){
                         dispatch(getMap(state.mapX, state.mapY))
                         dispatch(getMonsters(state.mapX, state.mapY))
                     }
-                } else area = state.mapX
+                } else {
+                    area = state.mapX
+                    oldArea = state.mapX
+                }
                 break;
                 case 'left':
                 if(state.heroX - 1 < ((state.mapX - 1) * 10) + 1){
@@ -186,7 +195,10 @@ export function move(direction, state){
                         dispatch(getMap(state.mapX, state.mapY))
                         dispatch(getMonsters(state.mapX, state.mapY))
                     }
-                } else area = state.mapX
+                } else {
+                    area = state.mapX
+                    oldArea = state.mapX
+                }
                 break;
                 
                 default: area = state.mapX
@@ -385,6 +397,7 @@ export default function mapReducer(state=initialState, action) {
                     activeSpot
                 }
             }
+            console.log(action.payload, 'in reducer')
             
             return {
                 ...state,
