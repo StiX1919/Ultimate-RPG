@@ -279,13 +279,20 @@ export default function heroReducer(state=initialState, action) {
                 isLoading: true
             }
         case GET_HERO + '_FULFILLED':
-            return {
-                ...state,
-                isLoading: false,
-                currentHero: action.payload.data[0],
-                maxHP: action.payload.data[0].hero_hp,
-                maxMP: action.payload.data[0].hero_mp,
-                maxSP: action.payload.data[0].hero_sp
+            if(action.payload.data[0]){
+                return {
+                    ...state,
+                    isLoading: false,
+                    currentHero: action.payload.data[0],
+                    maxHP: action.payload.data[0].hero_hp,
+                    maxMP: action.payload.data[0].hero_mp,
+                    maxSP: action.payload.data[0].hero_sp
+                }
+            } else {
+                return {
+                    ...state,
+                    isLoading: false
+                }
             }
 
         default:

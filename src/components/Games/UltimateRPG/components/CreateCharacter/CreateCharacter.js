@@ -22,7 +22,7 @@ class CreateCharacter extends Component {
         this.changeHandler = this.changeHandler.bind(this)
     }
     componentDidMount() {
-      this.props.getHero()
+      console.log(this.props.user)
     }
 
     changeHandler(input) {
