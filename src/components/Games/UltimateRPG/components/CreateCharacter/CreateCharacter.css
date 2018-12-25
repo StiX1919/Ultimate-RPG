@@ -74,3 +74,12 @@ h5 {
     right: 0;
     top: 80px;
 }
+
+.input-modal {
+    position: absolute;
+    width: 30vw;
+    height: 40vh;
+    left: 35vw;
+    top: 30vh;
+    background-color: blue;
+}

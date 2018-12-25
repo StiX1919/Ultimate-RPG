@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import './CreateCharacter.css'
 
 import CaSeCard from './CaSeComps/CaSeCard/CaSeCard'
+import NameInput from './CaSeComps/NameInput/NameInput'
 
 import {createNewHero, chooseStats, useStats} from '../../../../../ducks/reducers/CCReducer'
 
@@ -18,12 +19,15 @@ class CreateCharacter extends Component {
             name: '',
             class: '',
             startingStats: 10,
+            inputModal: false
         }
         this.changeHandler = this.changeHandler.bind(this)
     }
-    componentDidMount() {
-      console.log(this.props.user)
-    }
+    // componentDidMount() {
+    //   if(!this.props.user.name){
+    //     this.setState({inputModal: true})
+    //   }
+    // }
 
     changeHandler(input) {
         this.setState({[input.target.name]: input.target.value})
@@ -79,6 +83,11 @@ class CreateCharacter extends Component {
         return (
             <div className='hero_Creation_Component'>
                 <h1>Create a New Hero</h1>
+                {this.state.inputModal &&
+                  <div className='input-modal'>
+                    <NameInput />
+                  </div>
+                }
 
                 <div className='hero_Creation_Box'>
                     <h3>Hero Name</h3>

@@ -21,7 +21,7 @@ let mappedMonsters = [],
     },
 
     createNewHero = (req, res) => {
-        
+        console.log(req.body, 'in server')
         const {name, heroClass, stats, luck} = req.body
         const dbInstance = req.app.get('db');
 

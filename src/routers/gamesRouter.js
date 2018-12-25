@@ -30,6 +30,8 @@ class GameRouter extends Component{
         if(!this.props.userReducer.user){
             this.props.getUser()
 
+        } else {
+            this.props.getHero()
         }
     }
         
