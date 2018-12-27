@@ -23,11 +23,14 @@ class CreateCharacter extends Component {
         }
         this.changeHandler = this.changeHandler.bind(this)
     }
-    // componentDidMount() {
-    //   if(!this.props.user.name){
-    //     this.setState({inputModal: true})
-    //   }
-    // }
+    componentDidMount() {
+      // if(!this.props.user.name){
+      //   this.setState({inputModal: true})
+      // }
+      if(this.props.user){
+        this.props.getHero()
+      }
+    }
 
     changeHandler(input) {
         this.setState({[input.target.name]: input.target.value})
