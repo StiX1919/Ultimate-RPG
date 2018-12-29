@@ -10,6 +10,8 @@ class NameInput extends Component {
     constructor(props){
         super(props)
         this.state = {
+            name: '',
+            birthDate: ''
         }
         this.changeHandler = this.changeHandler.bind(this)
     }
@@ -22,8 +24,9 @@ class NameInput extends Component {
 
         return (
             <div>
-                <input placeholder='enter name'/>
-                <input placeholder='yyyy-mm-dd'/>
+                <h1>{this.state.name} {this.state.birthDate}</h1>
+                <input name='name' placeholder='enter name'/>
+                <input name='birthDate' placeholder='yyyy-mm-dd'/>
             </div>
         )
     }
