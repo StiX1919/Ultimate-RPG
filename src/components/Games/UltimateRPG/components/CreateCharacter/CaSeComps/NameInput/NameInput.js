@@ -28,6 +28,7 @@ class NameInput extends Component {
         )
     }
 }
+//note
 
 const mapStateToProps = state => ({...state.CCReducer, ...state.userReducer, ...state.heroReducer})
 
