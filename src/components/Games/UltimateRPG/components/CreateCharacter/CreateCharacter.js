@@ -27,6 +27,8 @@ class CreateCharacter extends Component {
       if(!this.props.user.name){
         this.setState({inputModal: true})
       }
+
+      //conflicts with didmount in router when no hero
       if(this.props.user){
         this.props.getHero()
       }
