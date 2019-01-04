@@ -74,7 +74,7 @@ let mappedMonsters = [],
 
     getHero = (req, res) => {
         req.app.get('db').getHero(req.session.passport.user.user_id).then(response => {
-            console.log(response)
+            console.log(response, 'hit')
             res.status(200).json(response)
         }).catch(err => console.log(err))
     },

@@ -86,6 +86,8 @@ class CreateCharacter extends Component {
         hero_class: this.state.class,
         hero_name: this.state.name
       }
+
+      
         return (
             <div className='hero_Creation_Component'>
                 <h1>Create a New Hero</h1>
