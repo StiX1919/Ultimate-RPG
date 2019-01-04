@@ -29,7 +29,7 @@ const GET_HERO = 'GET_HERO'
 
 const initialState = {
     testNum: 0,
-    currentHero: 'none',
+    currentHero: null,
     currentEquipment: {
         head: 'empty',
         chest: 'empty',

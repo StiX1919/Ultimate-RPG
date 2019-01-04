@@ -30,9 +30,9 @@ class CreateCharacter extends Component {
 
       //conflicts with didmount in router when no hero
      //isLoading conflicts 
-      if(this.props.user){
-        this.props.getHero()
-      }
+      // if(this.props.user){
+      //   this.props.getHero()
+      // }
     }
 
     changeHandler(input) {

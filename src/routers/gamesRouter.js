@@ -30,7 +30,7 @@ class GameRouter extends Component{
         if(!this.props.userReducer.user){
             this.props.getUser()
 
-        } else if(this.props.heroReducer.currentHero !== 'none'){
+        } else if(this.props.heroReducer.currentHero === null){
             this.props.getHero()
         }
     }
@@ -59,7 +59,7 @@ class GameRouter extends Component{
                     <Route path='/UltimateRPG/CreateCharacter' render={() => 
                         this.props.userReducer.isLoading || this.props.heroReducer.isLoading
                         ? <h1>Loading...</h1>
-                        : this.props.heroReducer.currentHero !== 'none'
+                        : this.props.heroReducer.currentHero !== 'none' || this.props.heroReducer.currentHero !== null
                             ? <Redirect to={`/UltimateRPG/hero/${this.props.heroReducer.currentHero.hero_name}`}/>
                             : this.props.userReducer.user !== null
                                 ? <CreateCharacter />
