@@ -33,6 +33,7 @@ class GameRouter extends Component{
         } else if(this.props.heroReducer.currentHero === null){
             this.props.getHero()
         }
+        //Maybe remove this entirely??
     }
         
     render(){
