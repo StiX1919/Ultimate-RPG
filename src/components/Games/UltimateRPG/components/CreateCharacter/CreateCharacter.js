@@ -24,6 +24,7 @@ class CreateCharacter extends Component {
         this.changeHandler = this.changeHandler.bind(this)
     }
     componentDidMount() {
+      
       if(!this.props.user.name){
         this.setState({inputModal: true})
       }

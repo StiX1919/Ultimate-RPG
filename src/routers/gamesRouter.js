@@ -27,13 +27,13 @@ import './routerStyle.css'
 //work on getting the map update call to work before the transition to a new area today
 class GameRouter extends Component{
     componentDidMount(){
-        if(!this.props.userReducer.user){
-            this.props.getUser()
+        // if(!this.props.userReducer.user){
+        //     this.props.getUser()
 
-        } else if(this.props.heroReducer.currentHero === null){
-            this.props.getHero()
-        }
-        //Maybe remove this entirely??
+        // } else if(this.props.heroReducer.currentHero === null){
+        //     this.props.getHero()
+        // }
+        // //Maybe remove this entirely??
     }
         
     render(){
