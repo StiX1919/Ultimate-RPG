@@ -23,18 +23,10 @@ class NameInput extends Component {
     }
 
     dateHandler(input){
-        // let date = input.target.value
-        // console.log(date.length)
-        // if(date.length === 4){
-        //     date += '-'
-        // } else if (date.length === 7){
-        //     date += '-'
-        // }
         this.setState({[input.target.name]: input.target.value})
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <h1>{this.state.name} {this.state.birthDate}</h1>
