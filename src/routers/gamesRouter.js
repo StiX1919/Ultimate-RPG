@@ -27,13 +27,13 @@ import './routerStyle.css'
 //work on getting the map update call to work before the transition to a new area today
 class GameRouter extends Component{
     componentDidMount(){
-        // if(!this.props.userReducer.user){
-        //     this.props.getUser()
+        if(!this.props.userReducer.user){
+            this.props.getUser()
 
-        // } else if(this.props.heroReducer.currentHero === null){
-        //     this.props.getHero()
-        // }
-        // //Maybe remove this entirely??
+        } else if(this.props.heroReducer.currentHero === null){
+            this.props.getHero()
+        }
+        //Maybe remove this entirely??
     }
         
     render(){
@@ -60,7 +60,7 @@ class GameRouter extends Component{
                     <Route path='/UltimateRPG/CreateCharacter' render={() => 
                         this.props.userReducer.isLoading || this.props.heroReducer.isLoading
                         ? <h1>Loading...</h1>
-                        : this.props.heroReducer.currentHero !== 'none' || this.props.heroReducer.currentHero !== null
+                        : this.props.heroReducer.currentHero
                             ? <Redirect to={`/UltimateRPG/hero/${this.props.heroReducer.currentHero.hero_name}`}/>
                             : this.props.userReducer.user !== null
                                 ? <CreateCharacter />
