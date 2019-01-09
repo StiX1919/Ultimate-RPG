@@ -33,6 +33,7 @@ class NameInput extends Component {
                 <input onChange={this.changeHandler} name='firstName' placeholder='First name'/>
                 <input onChange={this.changeHandler} name='lastName' placeholder='Last name'/>
                 <input type='date' onChange={this.dateHandler} name='birthDate' placeholder='yyyy-mm-dd' value={this.state.birthDate}/>
+                <button>Submit</button>
             </div>
         )
     }
