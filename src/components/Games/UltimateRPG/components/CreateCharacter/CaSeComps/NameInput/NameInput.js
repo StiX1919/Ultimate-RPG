@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import axios from 'axios'
 
 
 import './NameInput.css'
@@ -212,6 +213,7 @@ class NameInput extends Component {
             end: rate.end + startingStats.end,
             int: rate.int + startingStats.int
           })
+          axios.post('http://localhost:3001/api/addCharm', {name: `${this.state.firstName} ${this.state.lastName}`, birthDate: this.state.birthDate})
     }
 
     render() {
