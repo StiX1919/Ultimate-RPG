@@ -20,7 +20,7 @@ let place = '/'
 
 let shop = []
 
-const {getClasses, getRaces, createNewHero, getHero, demoHero, getMap, newPlace, getMonsters, getUserCharm, getMonster} = require('./controllers/mainController.js')
+const {getClasses, getRaces, createNewHero, getHero, demoHero, getMap, newPlace, getMonsters, getUserCharm, getMonster, addUserInfo} = require('./controllers/mainController.js')
 
 const {pixMons, pixWeapons, submitArt, submitHeroArt} = require('./controllers/pixArtController')
 
@@ -149,6 +149,7 @@ app.post('/api/submitHeroArt', submitHeroArt)
 
 
 app.get('/api/getCharm', getUserCharm)
+app.post('/api/addUserInfo', addUserInfo)
 
 //LISTENING
 app.listen(port, () => {

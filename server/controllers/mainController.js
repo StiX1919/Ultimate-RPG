@@ -213,9 +213,17 @@ let mappedMonsters = [],
         req.app.get('db').query(`select * from unique_charm where user_id = ${req.user.user_id}`).then( response => {
             res.status(200).send(response)
         })
+    },
+    addUserInfo = (req, res) => {
+        console.log(req.user)
+        req.app.get('db').query(`UPDATE users
+        SET name = ${req.body.name}, birthdate = ${req.body.birthDate}
+        WHERE user_id = ${req.user.user_id}`)
     }
 
+    // {name: `${this.state.firstName} ${this.state.lastName}`, birthDate: this.state.birthDate}
 
+    // insert into unique_charm (user_id, st_growth_rate, sp_growth_rate, en_growth_rate, in_growth_rate)       values (${req.user.user_id}, ${req.body},${},${}) `)
 module.exports = {
     getClasses,
     getRaces,
@@ -226,5 +234,6 @@ module.exports = {
     newPlace,
     getMonsters,
     getMonster,
-    getUserCharm
+    getUserCharm,
+    addUserInfo
 }
