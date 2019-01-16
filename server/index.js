@@ -122,6 +122,7 @@ app.get('/api/getShop', (req, res) => {
 
 app.get('/api/getUser', (req, res, next) => {
   if(req.user) {
+    console.log('is a user')
     res.status(200).json(req.user)
   }
   else res.sendStatus(500)

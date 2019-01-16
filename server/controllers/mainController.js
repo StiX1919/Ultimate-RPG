@@ -215,7 +215,7 @@ let mappedMonsters = [],
         })
     },
     addUserInfo = (req, res) => {
-        console.log(req.user)
+        console.log(req.user, req.session, 'reqs')
         req.app.get('db').query(`UPDATE users
         SET name = ${req.body.name}, birthdate = ${req.body.birthDate}
         WHERE user_id = ${req.user.user_id}`)
