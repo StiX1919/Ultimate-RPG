@@ -213,7 +213,7 @@ class NameInput extends Component {
             end: rate.end + startingStats.end,
             int: rate.int + startingStats.int
           })
-          axios.post('http://localhost:3001/api/addUserInfo', {name: `${this.state.firstName} ${this.state.lastName}`, birthDate: this.state.birthDate})
+          axios.post('/api/addUserInfo', {name: `${this.state.firstName} ${this.state.lastName}`, birthDate: this.state.birthDate})
     }
 
     render() {
