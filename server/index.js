@@ -151,11 +151,7 @@ app.post('/api/submitHeroArt', submitHeroArt)
 
 
 app.get('/api/getCharm', getUserCharm)
-app.post('/api/addUserInfo', (req, res) => {
-  req.app.get('db').query(`UPDATE users
-  SET name = ${req.body.name}, birthdate = ${req.body.birthDate}
-  WHERE user_id = ${req.user.user_id}`).catch(err => res.status(500).send('is an error'))
-})
+app.post('/api/addUserInfo', addUserInfo)
 
 //LISTENING
 app.listen(port, () => {

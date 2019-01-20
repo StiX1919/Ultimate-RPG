@@ -215,10 +215,13 @@ let mappedMonsters = [],
         })
     },
     addUserInfo = (req, res) => {
-        console.log(req.user, req.session, 'reqs')
+        console.log('im in', req.body)
         req.app.get('db').query(`UPDATE users
         SET name = ${req.body.name}, birthdate = ${req.body.birthDate}
-        WHERE user_id = ${req.user.user_id}`)
+        WHERE user_id = ${req.user.user_id}`).then(response => {
+            console.log(response, 'success')
+            res.status(200).send(response)
+        }).catch(err => console.log(err))
     }
 
     // {name: `${this.state.firstName} ${this.state.lastName}`, birthDate: this.state.birthDate}
