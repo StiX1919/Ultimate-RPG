@@ -30,9 +30,12 @@ class GameRouter extends Component{
         if(!this.props.userReducer.user){
             this.props.getUser()
 
-        } else if(this.props.heroReducer.currentHero === null){
+        }
+         else if(!this.props.heroReducer.noHero && !this.props.heroReducer.currentHero){
+             console.log('it ran')
             this.props.getHero()
         }
+
         //Maybe remove this entirely??
     }
         

@@ -30,6 +30,7 @@ const GET_HERO = 'GET_HERO'
 const initialState = {
     testNum: 0,
     currentHero: null,
+    noHero: false,
     currentEquipment: {
         head: 'empty',
         chest: 'empty',
@@ -292,7 +293,7 @@ export default function heroReducer(state=initialState, action) {
                 return {
                     ...state,
                     isLoading: false,
-                    currentHero: 'none'
+                    noHero: true
                 }
             }
 
