@@ -36,7 +36,7 @@ class GameRouter extends Component{
             this.props.getHero()
         }
 
-        //Maybe remove this entirely??
+        //restructuring battle stats n stuff. writing in notepad
     }
         
     render(){
