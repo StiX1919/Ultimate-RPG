@@ -37,6 +37,8 @@ class GameRouter extends Component{
         }
 
         //restructuring battle stats n stuff. writing in notepad
+
+        
     }
         
     render(){
