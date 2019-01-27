@@ -19,7 +19,7 @@ const initialState = {
     races: [],
     isLoading: false,
     heroData: null,
-    stats: [{type:'Power', value: 0}, {type:'Endurance', value: 0}, {type:'Speed', value: 0}, {type:'Wisdom', value: 0}, {type:'Intelligence', value: 0},],
+    stats: [{type:'Power', value: 500}, {type:'Endurance', value: 500}, {type:'Speed', value: 500}, {type:'Wisdom', value: 500}, {type:'Intelligence', value: 500},],
 
     startingStats: 10
     
