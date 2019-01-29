@@ -28,19 +28,6 @@ const initialState = {
 
 //Action Creators
 
-// export function getClasses() {
-//     return {
-//         type: GET_CLASSES,
-//         payload: axios.get('/api/getClasses')
-//     }
-// }
-
-// export function getRaces() {
-//     return {
-//         type: GET_RACES,
-//         payload: axios.get('/api/getRaces')
-//     }
-// }
 export function useStats(stat){
     return {
         type: USE_STATS,
