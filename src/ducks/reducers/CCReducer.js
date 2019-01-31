@@ -27,7 +27,7 @@ const initialState = {
 
 
 //Action Creators
-
+//update character cards tomorrow
 
 export function useStats(stat){
     return {
