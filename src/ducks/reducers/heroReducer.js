@@ -155,6 +155,7 @@ export function getShop() {
         })
     }
 }
+//time to look into old projects
 
 export function purchaseItem(item, oldInv, cost, oldGold) {
     let newInv = oldInv
