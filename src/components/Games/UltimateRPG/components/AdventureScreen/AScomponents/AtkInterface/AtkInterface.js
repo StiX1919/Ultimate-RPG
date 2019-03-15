@@ -111,7 +111,7 @@ class AtkInterface extends Component {
 
 
   render() {
-      console.log(this.state)
+      console.log(this.props.currentMonster)
 
       let count = 0
         return (
@@ -150,7 +150,8 @@ class AtkInterface extends Component {
                         }
                     </div>
                 </div>
-                {this.props.currentMonster.hp > 0 &&
+                {this.props.currentMonster.monsterInfo.hp > 0 &&
+                    //needs a big fix. Remove active monster and open map
                     <Link to='/UltimateRPG/hero/Map'>
                         <button>Run!</button>
                     </Link>
