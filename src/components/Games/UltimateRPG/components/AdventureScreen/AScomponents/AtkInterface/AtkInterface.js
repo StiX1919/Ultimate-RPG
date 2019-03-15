@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import {attack} from '../../../../../../../ducks/reducers/monsterReducer'
+import {attack, setMonster} from '../../../../../../../ducks/reducers/monsterReducer'
 
 import {hurt, addRewards} from '../../../../../../../ducks/reducers/heroReducer'
 
@@ -152,9 +152,10 @@ class AtkInterface extends Component {
                 </div>
                 {this.props.currentMonster.monsterInfo.hp > 0 &&
                     //needs a big fix. Remove active monster and open map
-                    <Link to='/UltimateRPG/hero/Map'>
-                        <button>Run!</button>
-                    </Link>
+                        <button onClick={() => {
+                            this.props.openMap()
+                            this.props.setMonster(null)
+                        }}>Run!</button>
                 }
                 
                 
@@ -165,4 +166,4 @@ class AtkInterface extends Component {
 // not today!
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer})
 
-export default withRouter(connect(mapStateToProps, {attack, hurt, addRewards})(AtkInterface));
+export default withRouter(connect(mapStateToProps, {attack, hurt, addRewards, setMonster})(AtkInterface));

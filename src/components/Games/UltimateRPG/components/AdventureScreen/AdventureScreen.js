@@ -83,7 +83,7 @@ class AdventureScreen extends Component {
               
             :  !this.props.currentMonster
             ? null
-            : <AtkInterface />
+            : <AtkInterface openMap={this.openMap}/>
           }
           {this.state.mapOpen 
             ? <WorldMap openMap={this.openMap}/>
