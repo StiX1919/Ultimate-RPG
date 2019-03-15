@@ -151,7 +151,6 @@ class AtkInterface extends Component {
                     </div>
                 </div>
                 {this.props.currentMonster.monsterInfo.hp > 0 &&
-                    //needs a big fix. Remove active monster and open map
                         <button onClick={() => {
                             this.props.openMap()
                             this.props.setMonster(null)

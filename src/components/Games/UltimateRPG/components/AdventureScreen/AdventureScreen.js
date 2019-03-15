@@ -13,7 +13,7 @@ import RewardsBox from './AScomponents/RewardsBox/RewardsBox'
 import AtkInterface from './AScomponents/AtkInterface/AtkInterface'
 import WorldMap from '../WorldMap/WorldMap'
 
-import {getMonster, getMonsters, removeMonster} from '../../../../../ducks/reducers/monsterReducer'
+import {getMonster, getMonsters, removeMonster, setMonster} from '../../../../../ducks/reducers/monsterReducer'
 import {addRewards} from '../../../../../ducks/reducers/heroReducer'
 import {getMap} from '../../../../../ducks/reducers/mapReducer'
 
@@ -39,6 +39,9 @@ class AdventureScreen extends Component {
     }
   }
   openMap(){
+    if(this.state.mapOpen === false && this.props.currentMonster){
+      this.props.setMonster(null)
+    }
     this.setState({mapOpen: !this.state.mapOpen})
   }
 
@@ -115,4 +118,4 @@ class AdventureScreen extends Component {
 // gotta fix remove monster function. no longer recieving data from params
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer, ...state.mapReducer})
 
-export default withRouter(connect(mapStateToProps, { getMonster, getMap, getMonsters, removeMonster, addRewards })(AdventureScreen));
+export default withRouter(connect(mapStateToProps, { getMonster, getMap, getMonsters, removeMonster, addRewards, setMonster })(AdventureScreen));
