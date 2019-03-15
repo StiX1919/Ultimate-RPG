@@ -321,6 +321,7 @@ class PixelArt extends Component {
   }
 }
 
+//drag color change doesn't work if only opacity is different. 
 const mapStateToProps = state => ({pixelArt: state.pixelArt, user: state.userReducer})
 
 export default withRouter(connect(mapStateToProps, {getPixMons, getPixWeapons, submitArt, getHeroes, submitHeroArt})(PixelArt))
