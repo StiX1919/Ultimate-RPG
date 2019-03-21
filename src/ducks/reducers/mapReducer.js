@@ -235,7 +235,7 @@ export function updateArea(X, Y) {
     }
 }
 
-// rework discovory functionality to trigger area clear before moving
+
 export function getMap(areaX, areaY){
     function colorGen(place) {
         switch(place){

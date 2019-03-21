@@ -115,7 +115,7 @@ class AdventureScreen extends Component {
     );
   }
 }
-// gotta fix remove monster function. no longer recieving data from params
+
 const mapStateToProps = state => ({...state.heroReducer, ...state.monsterReducer, ...state.mapReducer})
 
 export default withRouter(connect(mapStateToProps, { getMonster, getMap, getMonsters, removeMonster, addRewards, setMonster })(AdventureScreen));
