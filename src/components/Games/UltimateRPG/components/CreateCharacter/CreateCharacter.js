@@ -78,7 +78,7 @@ class CreateCharacter extends Component {
           </div>
         )
       })
-
+//note
       let demoHero = {
         strength: this.props.stats[0].value,
         speed: this.props.stats[1].value,
