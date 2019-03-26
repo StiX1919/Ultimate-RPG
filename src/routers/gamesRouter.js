@@ -32,17 +32,12 @@ class GameRouter extends Component{
 
         }
         if(!this.props.heroReducer.noHero && !this.props.heroReducer.currentHero){
-            console.log('it ran')
             this.props.getHero()
         }
-
         //restructuring battle stats n stuff. writing in notepad
-
-        
     }
         
     render(){
-        console.log(this.props.heroReducer.currentHero, 'hero')
         return (
             <div>
                 {window.location.pathname !== '/' &&
@@ -54,7 +49,7 @@ class GameRouter extends Component{
                         <PixelArt userID={this.props.userReducer.user}/>
                     }/>
                 </Switch>
-
+{/* May not need second switch. look into removing*/}
                 <Switch>
                     <Route path='/UltimateRPG' exact render={() =>
                         this.props.userReducer.user 
@@ -81,11 +76,10 @@ class GameRouter extends Component{
                                 </Switch>
                             </div>
                         : <Redirect to='/UltimateRPG'/>
-                        
+
                     } />
                 </Switch>
             </div>
-
         )
     }
 }
