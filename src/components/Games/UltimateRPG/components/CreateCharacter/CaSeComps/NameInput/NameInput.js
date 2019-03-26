@@ -155,53 +155,50 @@ class NameInput extends Component {
             })
           
           
-             var singleNum = 0;
-              while (year >= 10 ) {
-                           singleNum=0;
-                  while (year > 0) {
-                      var rem;
-                      rem = year % 10;
-                      singleNum = singleNum + rem;
-                      year = parseInt(year / 10);
-                  }
-                  year = singleNum;
+            var singleNum = 0;
+            while (year >= 10 ) {
+              singleNum=0;
+              while (year > 0) {
+                var rem;
+                rem = year % 10;
+                singleNum = singleNum + rem;
+                year = parseInt(year / 10);
               }
-          
-              let yearObj = growthKey[singleNum]
-              
-          
-              for(let i = 1; i <= yearObj.points; i++){
-                let stat = Math.floor(Math.random() * 4)
-          
-                zodiacStats[stat] += yearObj.amount
-              }
-              //added bonuses from year born
-          
-              let monthBonus = months[month - 1],
-                dayDiff = 0,
-                side = null,
-                otherSide = null
-          
-              if(day > 15){
-                dayDiff = day - 15
-                side = monthBonus.end
-                otherSide = monthBonus.start
-              } else if (day <= 15){
-                dayDiff = 15 - day
-                side = monthBonus.start
-                otherSide = monthBonus.end
-              }
-          
-              zodiacStats[side] += dayDiff
-              zodiacStats[otherSide] -= (dayDiff * 2)
-          
-          
-            return {str: zodiacStats[0], 
-            spd: zodiacStats[1],
-            end: zodiacStats[2],
-            int: zodiacStats[3]
+              year = singleNum;
             }
-              
+
+            let yearObj = growthKey[singleNum]
+            for(let i = 1; i <= yearObj.points; i++){
+              let stat = Math.floor(Math.random() * 4)
+          
+              zodiacStats[stat] += yearObj.amount
+            }
+
+            let monthBonus = months[month - 1],
+              dayDiff = 0,
+              side = null,
+              otherSide = null
+
+            if(day > 15){
+              dayDiff = day - 15
+              side = monthBonus.end
+              otherSide = monthBonus.start
+            } else if (day <= 15){
+              dayDiff = 15 - day
+              side = monthBonus.start
+              otherSide = monthBonus.end
+            }
+          
+            zodiacStats[side] += dayDiff
+            zodiacStats[otherSide] -= (dayDiff * 2)
+          
+            return {
+              str: zodiacStats[0], 
+              spd: zodiacStats[1],
+              end: zodiacStats[2],
+              int: zodiacStats[3]
+            }
+
           }
           
           let startingStats = conversion(this.state.firstName, this.state.lastName)

@@ -32,7 +32,7 @@ class GameRouter extends Component{
 
         }
         if(!this.props.heroReducer.noHero && !this.props.heroReducer.currentHero){
-             console.log('it ran')
+            console.log('it ran')
             this.props.getHero()
         }
 
