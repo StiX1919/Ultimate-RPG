@@ -66,17 +66,15 @@ class GameRouter extends Component{
                                 ? <CreateCharacter />
                                 : <Redirect to='/UltimateRPG' />
                     }/>
-
                     <Route path='/UltimateRPG/hero' render={() => 
                         this.props.userReducer.user !== null
                         ? <div className='rpg-page'>
                                 <Switch >
-
+                                {/*this one too??*/}
                                     <Route path='/UltimateRPG/hero/:heroName' component={AdventureScreen}/>
                                 </Switch>
                             </div>
                         : <Redirect to='/UltimateRPG'/>
-
                     } />
                 </Switch>
             </div>
